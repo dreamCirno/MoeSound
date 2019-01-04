@@ -1,7 +1,7 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/4
-  Time: 19:10
+  Date: 2019/1/3
+  Time: 23:13
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Moe Sound - 登录</title>
+    <title>Moe Sound</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,44 +25,7 @@
     <![endif]-->
 </head>
 <body>
-<form action="/User?action=login" method="post">
-    <table>
-        <caption>登录</caption>
-        <tr>
-            <td>账号</td>
-            <td><input type="text" name="username"></td>
-        </tr>
-        <tr>
-            <td>密码</td>
-            <td><input type="password" name="password"></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="登录"></td>
-        </tr>
-    </table>
-</form>
-<form action="/User?action=register" method="post">
-    <table>
-        <caption>注册</caption>
-        <tr>
-            <td>账号</td>
-            <td><input type="text" name="username"></td>
-        </tr>
-        <tr>
-            <td>密码</td>
-            <td><input type="password" name="password"></td>
-        </tr>
-        <tr>
-            <td>性别</td>
-            <td><input type="radio" value="0" name="sex" checked>男生<input type="radio" value="1" name="sex">
-                女生<input type="radio" value="2" name="sex">秀吉
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="注册"></td>
-        </tr>
-    </table>
-</form>
+
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
