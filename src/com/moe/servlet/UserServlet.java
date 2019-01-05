@@ -108,7 +108,6 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                     e.printStackTrace();
                 }
                 user = new User(username, password);
-                System.out.println(user);
                 userDao = new UserDaoImpl();
                 if (userDao.changePassword(user)) {
                     out.write("<script>alert('修改成功');location.href='/login.jsp'</script>");
