@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Moe Sound</title>
+    <title>萌音 - MoeSound</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -117,6 +117,12 @@
             background: #2d3e50;
         }
     </style>
+    <!-- Live2D -->
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <!--看板娘-->
+    <link rel="stylesheet" type="text/css"
+          href="https://www.fghrsh.net/zb_users/plugin/live2d/assets/waifu.min.css?v=1.4.2">
 </head>
 <body>
 <div style="position: fixed;left: 0;top: 0;width:100%;    height: auto;border:0;bottom:60px;">
@@ -125,6 +131,33 @@
             src="web.jsp" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""
             oallowfullscreen="" msallowfullscreen=""></iframe>
 </div>
+
+<div class="waifu" style="bottom: 50px;">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script src="/js/waifu-tips.min.js?v=1.4.2-fix3"></script>
+<script src="/js/live2d.min.js?v=1.0.5"></script>
+<script type="text/javascript">
+    live2d_settings['hitokotoAPI'] = '\fghrsh.net';
+    live2d_settings['modelId'] = 6;
+    live2d_settings['modelTexturesId'] = 4;
+    live2d_settings['waifuEdgeSide'] = 'right:30';
+    live2d_settings['waifuDraggable'] = 'axis-x';
+    live2d_settings['showHitokoto'] = true;
+    live2d_settings['homePageUrl'] = 'localhost:8080'
+    initModel("/json/waifu-tips.json?v=1.4.2");
+</script>
+
 <div id="app">
     <audio id="myaudio"></audio>
     <div class="list-bottom" style="display: none;">
@@ -221,6 +254,7 @@
     <script src="https://s11.cnzz.com/z_stat.php?id=1256971235&amp;web_id=1256971235" language="JavaScript"></script>
     <script src="https://c.cnzz.com/core.php?web_id=1256971235&amp;t=z" charset="utf-8" type="text/javascript"></script>
     <a href="https://www.cnzz.com/stat/website.php?web_id=1256971235" target="_blank" title="站长统计">站长统计</a></div>
+
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
