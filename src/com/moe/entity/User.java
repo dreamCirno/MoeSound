@@ -10,6 +10,7 @@ public class User implements java.io.Serializable {
     private String head;
     private Timestamp registerTime;
     private int grade;
+    private Question question;
 
     public User() {
     }
@@ -20,13 +21,20 @@ public class User implements java.io.Serializable {
         this.password = password;
     }
 
+    // 验证密保问题
+    public User(String username, Question question) {
+        this.username = username;
+        this.question = question;
+    }
+
     // 注册
-    public User(String username, String password, int sex, String head, int grade) {
+    public User(String username, String password, int sex, String head, int grade, Question question) {
         this.username = username;
         this.password = password;
         this.sex = sex;
         this.head = head;
         this.grade = grade;
+        this.question = question;
     }
 
     public int getId() {
@@ -83,5 +91,27 @@ public class User implements java.io.Serializable {
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", sex=" + sex +
+                ", head='" + head + '\'' +
+                ", registerTime=" + registerTime +
+                ", grade=" + grade +
+                ", question=" + question +
+                '}';
     }
 }
