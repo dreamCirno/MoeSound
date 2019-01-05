@@ -41,9 +41,9 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 // 新建UserDao用作数据验证和处理
                 UserDaoImpl userDao = new UserDaoImpl();
                 if (userDao.login(user)) {
-                    out.write("<script>alert('登陆成功');location.href='/index.jsp'</script>");
+                    out.write("<script>alert('登陆成功');location.href='/login.jsp'</script>");
                 } else {
-                    out.write("<script>alert('登陆失败');location.href='/index.jsp'</script>");
+                    out.write("<script>alert('登陆失败');location.href='/login.jsp'</script>");
                 }
                 break;
             case "register":
@@ -63,11 +63,11 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 */
                 userDao = new UserDaoImpl();
                 // 新建User对象
-                user = new User(username, password, sex, head, Grade.Admin.ordinal());
+                user = new User(username, password, sex, head, Grade.User.ordinal());
                 if (userDao.register(user)) {
-                    out.write("<script>alert('注册成功');location.href='/index.jsp'</script>");
+                    out.write("<script>alert('注册成功');location.href='/login.jsp'</script>");
                 } else {
-                    out.write("<script>alert('注册失败');location.href='/index.jsp'</script>");
+                    out.write("<script>alert('注册失败');location.href='/login.jsp'</script>");
                 }
                 break;
             default:
