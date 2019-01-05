@@ -11,4 +11,12 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/User</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UploadHandleServlet</servlet-name>
+        <servlet-class>com.moe.servlet.UploadHandleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadHandleServlet</servlet-name>
+        <url-pattern>/Upload</url-pattern>
+    </servlet-mapping>
 </web-app>

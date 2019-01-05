@@ -107,4 +107,20 @@ public class UserDaoImpl implements UserDao {
         }
         return false;
     }
+
+    @Override
+    public int getUserId(String username) {
+        try {
+            String sql = "SELECT userid FROM user WHERE username = ?";
+            ResultSet rs = DBUtils.doQuery(sql, username);
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return -1;
+    }
 }

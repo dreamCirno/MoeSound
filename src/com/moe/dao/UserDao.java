@@ -45,4 +45,11 @@ public interface UserDao {
      * @return
      */
     public boolean containUsername(String username);
+
+    /**
+     * 通过用户名获取用户ID
+     * @param username
+     * @return
+     */
+    public int getUserId(String username);
 }

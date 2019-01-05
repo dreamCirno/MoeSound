@@ -19,7 +19,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="/css/app.7ff607468a9edb1eb7c284c4adb32ced.css" rel="stylesheet">
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
     <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
     <!--[if lt IE 9]>
@@ -28,13 +28,13 @@
     <![endif]-->
 
     <link rel="stylesheet" href="css/amazeui.css">
-    <link rel="stylesheet" href="//web.biu.moe/Public/v2/css/app.css?2">
-    <link rel="stylesheet" href="//web.biu.moe/Public/v2/css/animation.css">
-    <link href="https://biu.moe/static/css/app.7ff607468a9edb1eb7c284c4adb32ced.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css?2">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link href="/css/app.7ff607468a9edb1eb7c284c4adb32ced.css" rel="stylesheet">
     <script src="js/jquery/jquery.js"></script>
     <script src="js/amazeui.min.js"></script>
     <script src="https://biu.moe/static/wasm/wasm_exec.js"></script>
-    <script src="https://biu.moe/Public/v2/js/jquery.form.min.js"></script>
+    <script src="js/jquery.form.min.js"></script>
     <style>
         .get {
             background: #1E5B94;
@@ -122,7 +122,7 @@
 <div style="position: fixed;left: 0;top: 0;width:100%;    height: auto;border:0;bottom:60px;">
     <iframe name="contentFrame" id="g_iframe" scrolling="auto" frameborder="0"
             style="position: absolute;left: 0;top: 0;width:100%;height:100%;border:0;"
-            src="register.jsp" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""
+            src="web.jsp" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""
             oallowfullscreen="" msallowfullscreen=""></iframe>
 </div>
 <div id="app">
@@ -135,7 +135,7 @@
                     <div class="el-slider__runway">
                         <div class="el-slider__bar" style="width: 100%; left: 0%;"></div>
                         <div tabindex="0" class="el-slider__button-wrapper" style="left: 100%;">
-                            <div class="el-slider__button el-tooltip" aria-describedby="el-tooltip-2184"
+                            <div class="el-slider__button el-tooltip" aria-describedby="el-tooltip-1884"
                                  tabindex="0"></div>
                         </div><!----></div>
                 </div>

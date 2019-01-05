@@ -1,7 +1,9 @@
 package com.moe.servlet;
 
+import com.moe.entity.List;
 import com.moe.entity.Question;
 import com.moe.entity.User;
+import com.moe.impl.ListDaoImpl;
 import com.moe.impl.UserDaoImpl;
 import com.moe.utils.MD5;
 
@@ -50,6 +52,7 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
             case "register":
                 // 初始化
                 userDao = new UserDaoImpl();
+                ListDaoImpl listDao = new ListDaoImpl();
                 username = request.getParameter("username");
                 Question question;
                 if (!userDao.containUsername(username)) {
@@ -71,6 +74,13 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                     user = new User(username, password, sex, head, Grade.User.ordinal(), question);
                     if (userDao.register(user)) {
                         out.write("<script>alert('注册成功');location.href='/login.jsp'</script>");
+                        // 用户注册成功后，新建歌单
+                        int userId = userDao.getUserId(username);
+                        com.moe.entity.List list = new List(userId, "我喜欢的音乐");
+                        if (listDao.insertList(list)) {
+                        } else {
+                            out.write("<script>alert('我喜欢的音乐创建失败，请联系管理员！');location.href='/login.jsp'</script>");
+                        }
                     } else {
                         out.write("<script>alert('注册失败');location.href='/register.jsp'</script>");
                     }
@@ -108,7 +118,6 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                     e.printStackTrace();
                 }
                 user = new User(username, password);
-                System.out.println(user);
                 userDao = new UserDaoImpl();
                 if (userDao.changePassword(user)) {
                     out.write("<script>alert('修改成功');location.href='/login.jsp'</script>");
