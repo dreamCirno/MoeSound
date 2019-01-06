@@ -46,8 +46,8 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 UserDaoImpl userDao = new UserDaoImpl();
                 if (userDao.login(user)) {
                     HttpSession session=request.getSession();
-                    User user1=new User(userDao.getUserId(username),username);
-                    session.setAttribute("user",user1);
+                    user=new User(userDao.getUserId(username),username);
+                    session.setAttribute("user",user);
                     out.write("<script>alert('登陆成功');location.href='/web/login.jsp'</script>");
                 } else {
                     out.write("<script>alert('登陆失败');location.href='/login.jsp'</script>");
