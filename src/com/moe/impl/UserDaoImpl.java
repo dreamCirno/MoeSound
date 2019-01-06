@@ -13,7 +13,7 @@ public class UserDaoImpl implements UserDao {
     public boolean login(User user) {
         try {
             String sql = "SELECT COUNT(*) count FROM user WHERE username = ? AND password = ?";
-            ResultSet rs = DBUtils.doQuery(sql, user.getUsername(), user.getPassword());
+            ResultSet rs = DBUtils.doQuery(sql ,user.getUsername(), user.getPassword());
             while (rs.next()) {
                 if (rs.getInt(1) > 0)
                     return true;

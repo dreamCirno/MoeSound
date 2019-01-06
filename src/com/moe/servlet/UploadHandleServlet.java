@@ -11,21 +11,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "UploadHandleServlet")
 public class UploadHandleServlet extends HttpServlet {
+    PrintWriter out;
+    // 定义保存信息变量
     String str = "";
+    String imagePath;
+    String musicPath;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
+        // 设置编码格式，一定要放最首部，否则可能导致乱码
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html");
+        // 获得内置对象out
+        out = response.getWriter();
+        // 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
         String savePath = "C:\\Users\\dreamCirno\\Desktop\\MoeSound\\web" + "\\music";
-        System.out.println("ContextPath:" + this.getServletContext().getContextPath());
         //String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
         //上传时生成的临时文件保存目录
         String tempPath = this.getServletContext().getRealPath("/WEB-INF/temp");
@@ -80,11 +86,9 @@ public class UploadHandleServlet extends HttpServlet {
                     //解决普通输入项的数据的中文乱码问题
                     String value = item.getString("UTF-8");
                     //value = new String(value.getBytes("iso8859-1"),"UTF-8");
-                    System.out.println(name + "=" + value);
                 } else {//如果fileitem中封装的是上传文件
                     //得到上传的文件名称，
                     String filename = item.getName();
-                    System.out.println(filename);
                     if (filename == null || filename.trim().equals("")) {
                         continue;
                     }
@@ -102,7 +106,12 @@ public class UploadHandleServlet extends HttpServlet {
                     saveFilename = saveFilename.replace(" ", "");
                     //得到文件的保存目录
                     String realSavePath = makePath(saveFilename, savePath);
-                    System.out.println("aa:" + str + "/" + saveFilename);
+                    if (fileType(filename)) {
+                        imagePath = str + "/" + saveFilename;
+                    } else {
+                        musicPath = str + "/" + saveFilename;
+                    }
+                    System.out.println("相对路径：" + str + "/" + saveFilename);
                     //创建一个文件输出流
                     FileOutputStream out = new FileOutputStream(realSavePath + "\\" + saveFilename);
                     //创建一个缓冲区
@@ -137,8 +146,9 @@ public class UploadHandleServlet extends HttpServlet {
             message = "文件上传失败！";
             e.printStackTrace();
         }
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/message.jsp").forward(request, response);
+        request.setAttribute("imagePath", imagePath);
+        request.setAttribute("musicPath", musicPath);
+        request.getRequestDispatcher("/upload.jsp").forward(request, response);
     }
 
     /**
@@ -182,7 +192,27 @@ public class UploadHandleServlet extends HttpServlet {
         return dir;
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public boolean fileType(String fileName) {
+        if (fileName == null) {
+            fileName = "文件名为空！";
+            return false;
+        } else {
+            // 获取文件后缀名并转化为写，用于后续比较
+            String fileType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
+            // 创建图片类型数组
+            String img[] = {"bmp", "jpg", "jpeg", "png", "tiff", "gif", "pcx", "tga", "exif", "fpx", "svg", "psd",
+                    "cdr", "pcd", "dxf", "ufo", "eps", "ai", "raw", "wmf"};
+            for (int i = 0; i < img.length; i++) {
+                if (img[i].equals(fileType)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException {
         doPost(request, response);
     }
 }

@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Moe Sound</title>
+    <title>萌音 - MoeSound</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
                 data-am-sticky="{animation: 'slide-top'}" style="margin: 0px; top: 0px; left: 0px; width: 1654px;">
             <div class="am-center topbar">
                 <h1 class="am-topbar-brand">
-                    <a href="/Index/home">
+                    <a href="/web.jsp">
                         <svg style="fill:#FFF;width:100px;height:45px;margin-top:2px;"
                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.67 45">
                             <path d="M37.71,27.05c0,1.94-0.89,4.18-2.58,6.21c-1.61,1.9-5.75,5.58-12.08,11.58l-5.15-4.65l10.23-9.68
@@ -81,7 +81,7 @@
                         </li>
                         <li id="nav-client"><a href="/Index/client">客户端</a></li>
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
-                        <li id="nav-upload"><a href="/upload.jsp">上传音乐</a></li>
+                        <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 

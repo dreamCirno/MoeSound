@@ -37,6 +37,12 @@ public class User implements java.io.Serializable {
         this.question = question;
     }
 
+    // 存放Session
+    public User(int userId, String username) {
+        this.username = username;
+        this.id = userId;
+    }
+
     public int getId() {
         return id;
     }
@@ -114,4 +120,5 @@ public class User implements java.io.Serializable {
                 ", question=" + question +
                 '}';
     }
+
 }

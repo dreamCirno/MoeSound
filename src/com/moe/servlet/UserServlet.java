@@ -8,6 +8,7 @@ import com.moe.impl.UserDaoImpl;
 import com.moe.utils.MD5;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -44,7 +45,10 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 // 新建UserDao用作数据验证和处理
                 UserDaoImpl userDao = new UserDaoImpl();
                 if (userDao.login(user)) {
-                    out.write("<script>alert('登陆成功');location.href='/login.jsp'</script>");
+                    HttpSession session=request.getSession();
+                    user=new User(userDao.getUserId(username),username);
+                    session.setAttribute("user",user);
+                    out.write("<script>alert('登陆成功');location.href='/web/login.jsp'</script>");
                 } else {
                     out.write("<script>alert('登陆失败');location.href='/login.jsp'</script>");
                 }

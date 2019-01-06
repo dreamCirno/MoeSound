@@ -1,4 +1,8 @@
-<%--
+<%@ page import="com.moe.impl.MusicDaoImpl" %>
+<%@ page import="com.moe.entity.Music" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.moe.utils.TimeCalculator" %>
+<%@ page import="java.util.Date" %><%--
   User: dreamCirno
   Date: 2019/1/6
   Time: 1:56
@@ -12,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Moe Sound</title>
+    <title>萌音 - MoeSound</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +46,7 @@
                 data-am-sticky="{animation: 'slide-top'}" style="margin: 0px; top: 0px; left: 0px; width: 1654px;">
             <div class="am-center topbar">
                 <h1 class="am-topbar-brand">
-                    <a href="/Index/home">
+                    <a href="/web.jsp">
                         <svg style="fill:#FFF;width:100px;height:45px;margin-top:2px;"
                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.67 45">
                             <path d="M37.71,27.05c0,1.94-0.89,4.18-2.58,6.21c-1.61,1.9-5.75,5.58-12.08,11.58l-5.15-4.65l10.23-9.68
@@ -81,7 +85,7 @@
                         </li>
                         <li id="nav-client"><a href="/Index/client">客户端</a></li>
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
-                        <li id="nav-upload"><a href="/upload.jsp">上传音乐</a></li>
+                        <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
@@ -185,501 +189,68 @@
     <div class="am-u-sm-2 am-text-middle"><h3><span>PC和网页在线：13人<br>一周更新：29首<br>收录歌曲：25257首<br>QQ 群：318148182</span></h3>
     </div>
 
+    <%
+        MusicDaoImpl musicDao = new MusicDaoImpl();
+        List<Music> list = musicDao.selectRandomList(5);
+        request.setAttribute("random", list);
+    %>
     <div class="am-g index2">
         <div class="am-u-sm-12">
             <h2>随机推荐</h2>
 
             <div class="new-songs-box">
                 <ul class="am-padding-left-0 new-songs c a-fadein">
-                    <li class="new-song">
-                        <a class="song-link" href="/s2417">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/2417" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>物凄い狂っとるフランちゃんが物凄いうた</h3>
-                                <h5>Halozy (ななひら)</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('2417');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('2417');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s451">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/451" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>君をのせて</h3>
-                                <h5>井上あずみ</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('451');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('451');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s1482">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/1482" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>Pray ～祈り～</h3>
-                                <h5>IKU</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('1482');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('1482');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s36">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/36" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>ヱヴァンゲリヲン新劇場版:破::2EM11_B16</h3>
-                                <h5>鷺巣詩郎</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('36');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('36');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s6051">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/6051" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>虹のかけら</h3>
-                                <h5>昆夏美</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('6051');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('6051');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s4475">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/4475" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>Thank You! (765PRO Ver.)</h3>
-                                <h5>765PRO ALLSTARS</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('4475');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('4475');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s840">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/840" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>ユメセカイ </h3>
-                                <h5>戸松遥</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('840');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('840');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s7620">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/7620" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>Early Days</h3>
-                                <h5>宮良彩子</h5>
-                                <time>1147天前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('7620');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('7620');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s2932">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/2932" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>夕顔 -album version-</h3>
-                                <h5>能登麻美子</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('2932');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('2932');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s678">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/678" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>ひかりふる</h3>
-                                <h5>Kalafina</h5>
-                                <time>273天前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('678');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('678');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s62">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/62" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>二息歩行</h3>
-                                <h5>ろん</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('62');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('62');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s5699">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/5699" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>モがたいリめでもゆめみサマー！</h3>
-                                <h5>丹生谷森夏(CV.赤﨑千夏)</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('5699');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('5699');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s2300">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/2300" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>光を映す影</h3>
-                                <h5>World's End Girlfriend</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('2300');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('2300');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="new-song">
-                        <a class="song-link" href="/s3364">
-                            <div class="co">
-                                <img src="/Song/showCover/sid/3364" alt="FLASH BEST">
-                            </div>
-                            <div class="song-info">
-                                <h3>ALL 4 YOU</h3>
-                                <h5>中川かのん</h5>
-                                <time>很久前</time>
-                            </div>
-                            <div class="recom-ctrl">
-                                <button class="fm-play" onclick="playOne('3364');return false;">播放</button>
-                                <button class="fm-add" onclick="addOne('3364');return false;">添加</button>
-                            </div>
-                        </a>
-                    </li>
+                    <c:forEach items="${requestScope.random}" var="item">
+                        <li class="new-song">
+                            <a class="song-link" href="/s2417">
+                                <div class="co">
+                                    <img src="${item.imagePath}" alt="${item.imagePath}">
+                                </div>
+                                <div class="song-info">
+                                    <h3>${item.name}</h3>
+                                    <h5>${item.singer}</h5>
+                                    <time>很久前</time>
+                                </div>
+                                <div class="recom-ctrl">
+                                    <button class="fm-play" onclick="playOne('2417');return false;">播放</button>
+                                    <button class="fm-add" onclick="addOne('2417');return false;">添加</button>
+                                </div>
+                            </a>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
 
         </div>
     </div>
-
+    <%
+        musicDao = new MusicDaoImpl();
+        list = musicDao.selectRandomList(5);
+        request.setAttribute("lasted", list);
+    %>
     <div class="am-g index2"><!--分3份-->
         <div class="am-u-sm-4">
             <h2>最新更新</h2>
             <ul class="recom-songs">
-                <li class="recom-song">
-                    <a href="/s25330" class="song-link">
-                        <time>04:08</time>
-                        <div class="song-info">
-                            <span class="sh4">自分じゃない感じ</span><span class="sh5">乃木坂46</span>
+                <c:forEach items="${lasted}" var="item">
+                    <li class="recom-song">
+                        <a href="/s25330" class="song-link">
+                            <time>${lasted.duration/60}分${lasted.duration%60}秒</time>
+                            <div class="song-info">
+                                <span class="sh4">${lasted.name}</span><span class="sh5">${lasted.singer}</span>
+                            </div>
+                        </a>
+                        <div class="recom-info">
+                            <div class="recom-ctrl">
+                                <a href="###" class="am-icon-play index-song-button" onclick="playOne('25330');"></a>
+                                <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25330');"></a>
+                            </div>
+                            <span class="recom-time">4天前</span>
+                            <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
+                                                                   src="/User/showAvatar/uid/118"></a>
                         </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25330');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25330');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25329" class="song-link">
-                        <time>04:00</time>
-                        <div class="song-info">
-                            <span class="sh4">三角の空き地</span><span class="sh5">乃木坂46</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25329');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25329');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25328" class="song-link">
-                        <time>04:16</time>
-                        <div class="song-info">
-                            <span class="sh4">空扉</span><span class="sh5">乃木坂46</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25328');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25328');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25327" class="song-link">
-                        <time>04:09</time>
-                        <div class="song-info">
-                            <span class="sh4">ジコチューで行こう!</span><span class="sh5">乃木坂46</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25327');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25327');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25326" class="song-link">
-                        <time>04:45</time>
-                        <div class="song-info">
-                            <span class="sh4">あんなに好きだったのに…</span><span class="sh5">乃木坂46</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25326');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25326');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25325" class="song-link">
-                        <time>04:29</time>
-                        <div class="song-info">
-                            <span class="sh4">地球が丸いなら</span><span class="sh5">乃木坂46</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25325');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25325');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25324" class="song-link">
-                        <time>03:59</time>
-                        <div class="song-info">
-                            <span class="sh4">心のモノローグ</span><span class="sh5">乃木坂46</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25324');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25324');"></a>
-                        </div>
-                        <span class="recom-time">4天前</span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25323" class="song-link">
-                        <time>02:58</time>
-                        <div class="song-info">
-                            <span class="sh4">グッバイ・マイ・フレンド</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25323');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25323');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25322" class="song-link">
-                        <time>02:36</time>
-                        <div class="song-info">
-                            <span class="sh4">僕の涙 (インスト)</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25322');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25322');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25321" class="song-link">
-                        <time>03:31</time>
-                        <div class="song-info">
-                            <span class="sh4">Arrietty's Song</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25321');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25321');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25320" class="song-link">
-                        <time>02:21</time>
-                        <div class="song-info">
-                            <span class="sh4">あなたを決して忘れない (インスト)</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25320');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25320');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25319" class="song-link">
-                        <time>02:50</time>
-                        <div class="song-info">
-                            <span class="sh4">グッバイ・マイ・フレンド (インスト)</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25319');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25319');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25318" class="song-link">
-                        <time>02:02</time>
-                        <div class="song-info">
-                            <span class="sh4">大切な思い出 (インスト)</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25318');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25318');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25317" class="song-link">
-                        <time>03:17</time>
-                        <div class="song-info">
-                            <span class="sh4">翔の歌 (インスト)</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25317');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25317');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25316" class="song-link">
-                        <time>01:28</time>
-                        <div class="song-info">
-                            <span class="sh4">静寂の屋敷 (インスト)</span><span class="sh5">Cécile Corbel</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25316');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25316');"></a>
-                        </div>
-                        <span class="recom-time">6天前</span>
-                        <a class="user-link" href="/u1620"><img class="am-circle index-song-avatar"
-                                                                src="/User/showAvatar/uid/1620"></a>
-                    </div>
-                </li>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
         <div class="am-u-sm-4">
@@ -1010,8 +581,8 @@
 
     <style>
         .friend-img {
-            width: 88px;
-            height: 31px;
+            width: 50px;
+            height: 50px;
         }
 
         .friends {
@@ -1020,19 +591,14 @@
     </style>
     <div class="am-u-sm-12 am-cf">
         <h2>友情链接</h2>
-        <a href="http://twitter.com/biu_moe" target="_blank" class="am-icon-btn am-secondary am-icon-twitter am-fr"></a>
-        <a href="http://weibo.com/biumoe?is_all=1" target="_blank"
-           class="am-icon-btn am-secondary am-icon-weibo am-fr"></a>
+        <%--<a href="http://twitter.com/biu_moe" target="_blank" class="am-icon-btn am-secondary am-icon-twitter am-fr"></a>--%>
+        <%--<a href="http://weibo.com/biumoe?is_all=1" target="_blank"--%>
+        <%--class="am-icon-btn am-secondary am-icon-weibo am-fr"></a>--%>
         <ul class="am-avg-sm-10 am-fl">
-            <li class="friends"><a href="http://www.zhujike.com/" target="_blank"><img src="/Public/img/f.jpg"
-                                                                                       class="friend-img" alt="主机壳"></a>
+            <li class="friends"><a href="http://dreamcirno.com/" target="_blank"><img src="/img/cirno.png"
+                                                                                      class="friend-img"
+                                                                                      alt="琪露诺的完美算数教室"></a>
             </li>
-            <li class="friends"><a href="http://www.moe123.com/" target="_blank"><img src="/Public/img/moe123.gif"
-                                                                                      class="friend-img" alt="萌导航"></a>
-            </li>
-            <li class="friends"><a href="http://luxun.pro/" target="_blank"><img src="https://luxun.pro/88x31@2x.png"
-                                                                                 class="friend-img" alt="鲁迅追番"></a></li>
-            <!--li class="friends"><a href="http://www.51macf.com/" target="_blank"><img src="/Public/img/51macf.jpg" class="friend-img" alt="玛奇动漫"></a></li-->
         </ul>
     </div>
 
