@@ -22,6 +22,16 @@ public class Music implements java.io.Serializable {
         this.path = path;
     }
 
+    public Music(int id, int classifyId, String name, String singer, int duration, String imagePath, String path) {
+        this.id = id;
+        this.classifyId = classifyId;
+        this.name = name;
+        this.singer = singer;
+        this.duration = duration;
+        this.imagePath = imagePath;
+        this.path = path;
+    }
+
     public int getId() {
         return id;
     }
@@ -76,5 +86,18 @@ public class Music implements java.io.Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", classifyId=" + classifyId +
+                ", name='" + name + '\'' +
+                ", singer='" + singer + '\'' +
+                ", duration=" + duration +
+                ", imagePath='" + imagePath + '\'' +
+                ", path='" + path + '\'' +
+                '}';
     }
 }

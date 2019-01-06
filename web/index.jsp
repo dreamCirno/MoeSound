@@ -211,7 +211,7 @@
 <div style="position: fixed;left: 0;top: 80px;width:100%;    height: auto;border:0;bottom:60px;">
     <iframe name="contentFrame" id="g_iframe" scrolling="auto" frameborder="0"
             style="position: absolute;left: 0;top: 0;width:100%;height:100%;border:0;"
-            src="web.jsp" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""
+            src="/web.jsp" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""
             oallowfullscreen="" msallowfullscreen=""></iframe>
 </div>
 
@@ -332,11 +332,6 @@
         </div>
     </div>
 </div>
-<div style="display:none;">
-    <script type="text/javascript" src="https://tajs.qq.com/stats?sId=52366372" charset="UTF-8"></script>
-    <script src="https://s11.cnzz.com/z_stat.php?id=1256971235&amp;web_id=1256971235" language="JavaScript"></script>
-    <script src="https://c.cnzz.com/core.php?web_id=1256971235&amp;t=z" charset="utf-8" type="text/javascript"></script>
-    <a href="https://www.cnzz.com/stat/website.php?web_id=1256971235" target="_blank" title="站长统计">站长统计</a></div>
 
 <%--<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->--%>
 <%--<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>--%>
