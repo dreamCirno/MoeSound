@@ -79,12 +79,13 @@
                                 <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
                             </ul>
                         </li>
-                        <li id="nav-client"><a href="/Index/client">客户端</a></li>
+
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
+<c:if test="${empty sessionScope.user}">
                     <div class="am-topbar-right">
                         <div class="am-topbar-right">
                             <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
@@ -95,12 +96,34 @@
                             </button>
                         </div>
                     </div>
+                </c:if>
+                <c:if test="${not empty sessionScope.user}">
+                    <div class="am-topbar-right">
+                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                             data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                     class="am-circle my-avatar">
+                            </a>
+                            <ul id="avatarMenu" class="am-dropdown-content">
+                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
+                                <li><a href="/Collect/myList">我创建的歌单</a></li>
+                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                <li><a href="/Upload/myList">我上传的音乐</a></li>
+                                <li><a href="/User/info">个人资料管理</a></li>
+
+                                <li><a href="/User?action=logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
 
 
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="GET"
-                          action="/Song/search">
+                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                      action="/Search?page=1">
                         <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="data" value=""
+                            <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
                         </div>
                     </form>
@@ -129,9 +152,9 @@
                     <td class="am-text-truncate"><a href="/s25330">自分じゃない感じ <span class="am-badge am-badge-secondary">256K AAC</span></a>
                     </td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>04:08</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25330');"
@@ -142,9 +165,9 @@
                     <td class="am-text-truncate"><a href="/s25329">三角の空き地 <span class="am-badge am-badge-secondary">256K AAC</span></a>
                     </td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>04:00</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25329');"
@@ -155,9 +178,9 @@
                     <td class="am-text-truncate"><a href="/s25328">空扉 <span
                             class="am-badge am-badge-secondary">256K AAC</span></a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>04:16</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25328');"
@@ -168,9 +191,9 @@
                     <td class="am-text-truncate"><a href="/s25327">ジコチューで行こう! <span class="am-badge am-badge-secondary">256K AAC</span></a>
                     </td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>04:09</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25327');"
@@ -181,9 +204,9 @@
                     <td class="am-text-truncate"><a href="/s25326">あんなに好きだったのに… <span
                             class="am-badge am-badge-secondary">256K AAC</span></a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>04:45</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25326');"
@@ -194,9 +217,9 @@
                     <td class="am-text-truncate"><a href="/s25325">地球が丸いなら <span class="am-badge am-badge-secondary">256K AAC</span></a>
                     </td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>04:29</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25325');"
@@ -207,9 +230,9 @@
                     <td class="am-text-truncate"><a href="/s25324">心のモノローグ <span class="am-badge am-badge-secondary">256K AAC</span></a>
                     </td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
+                            href="/Search?data=%E4%B9%83%E6%9C%A8%E5%9D%8246&amp;stype=singer">乃木坂46</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
+                            href="/Search?data=%E3%82%B8%E3%82%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%81%A7%E8%A1%8C%E3%81%93%E3%81%86%21&amp;stype=album">ジコチューで行こう!</a>
                     </td>
                     <td>03:59</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25324');"
@@ -219,10 +242,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25323">グッバイ・マイ・フレンド <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:58</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25323');"
@@ -232,10 +255,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25322">僕の涙 (インスト) <span class="am-badge am-badge-secondary">无损</span></a>
                     </td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:36</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25322');"
@@ -245,10 +268,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25321">Arrietty's Song <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>03:31</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25321');"
@@ -258,10 +281,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25320">あなたを決して忘れない (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:21</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25320');"
@@ -271,10 +294,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25319">グッバイ・マイ・フレンド (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:50</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25319');"
@@ -284,10 +307,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25318">大切な思い出 (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:02</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25318');"
@@ -297,10 +320,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25317">翔の歌 (インスト) <span class="am-badge am-badge-secondary">无损</span></a>
                     </td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>03:17</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25317');"
@@ -310,10 +333,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25316">静寂の屋敷 (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>01:28</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25316');"
@@ -323,10 +346,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25315">あなたと共に (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:38</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25315');"
@@ -336,10 +359,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25314">不安な気持ち (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>03:13</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25314');"
@@ -349,10 +372,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25313">翔の悲しみ (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>03:13</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25313');"
@@ -362,10 +385,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25312">ザ・ワイルド・ワルツ (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>03:03</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25312');"
@@ -375,10 +398,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25311">雨 (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>01:08</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25311');"
@@ -388,10 +411,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25310">スピラー (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:01</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25310');"
@@ -401,10 +424,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25309">翔のワルツ (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:44</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25309');"
@@ -414,10 +437,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25308">荒れた庭 (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>01:14</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25308');"
@@ -427,10 +450,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25307">Arrietty's Song (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>03:31</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25307');"
@@ -440,10 +463,10 @@
                 <tr>
                     <td class="am-text-truncate"><a href="/s25306">翔の悲しみ (インスト) <span
                             class="am-badge am-badge-secondary">无损</span></a></td>
-                    <td class="am-text-truncate"><a href="/Song/search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
+                    <td class="am-text-truncate"><a href="/Search?data=C%C3%A9cile%20Corbel&amp;stype=singer">Cécile
                         Corbel</a></td>
                     <td class="am-text-truncate"><a
-                            href="/Song/search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
+                            href="/Search?data=%E5%80%9F%E3%82%8A%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%82%A2%E3%83%AA%E3%82%A8%E3%83%83%E3%83%86%E3%82%A3%20%E3%82%B5%E3%82%A6%E3%83%B3%E3%83%89%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF&amp;stype=album">借りぐらしのアリエッティ
                         サウンドトラック</a></td>
                     <td>02:47</td>
                     <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('25306');"

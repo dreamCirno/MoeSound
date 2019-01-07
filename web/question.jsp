@@ -79,12 +79,13 @@
                                 <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
                             </ul>
                         </li>
-                        <li id="nav-client"><a href="/Index/client">客户端</a></li>
+
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
+<c:if test="${empty sessionScope.user}">
                     <div class="am-topbar-right">
                         <div class="am-topbar-right">
                             <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
@@ -95,12 +96,34 @@
                             </button>
                         </div>
                     </div>
+                </c:if>
+                <c:if test="${not empty sessionScope.user}">
+                    <div class="am-topbar-right">
+                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                             data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                     class="am-circle my-avatar">
+                            </a>
+                            <ul id="avatarMenu" class="am-dropdown-content">
+                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
+                                <li><a href="/Collect/myList">我创建的歌单</a></li>
+                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                <li><a href="/Upload/myList">我上传的音乐</a></li>
+                                <li><a href="/User/info">个人资料管理</a></li>
+
+                                <li><a href="/User?action=logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
 
 
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="GET"
-                          action="/Song/search">
+                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                      action="/Search?page=1">
                         <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="data" value=""
+                            <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
                         </div>
                     </form>

@@ -1,5 +1,7 @@
 package com.moe.entity;
 
+import java.sql.Timestamp;
+
 public class Music implements java.io.Serializable {
     private int id;
     private int classifyId;
@@ -8,21 +10,24 @@ public class Music implements java.io.Serializable {
     private int duration;
     private String imagePath;
     private String path;
+    private int userId;
+    private Timestamp uploadTime;
 
     public Music() {
         super();
     }
 
-    public Music(int classifyId, String name, String singer, int duration, String imagePath, String path) {
+    public Music(int classifyId, String name, String singer, int duration, String imagePath, String path, int userId) {
         this.classifyId = classifyId;
         this.name = name;
         this.singer = singer;
         this.duration = duration;
         this.imagePath = imagePath;
         this.path = path;
+        this.userId = userId;
     }
 
-    public Music(int id, int classifyId, String name, String singer, int duration, String imagePath, String path) {
+    public Music(int id, int classifyId, String name, String singer, int duration, String imagePath, String path, int userId, Timestamp uploadTime) {
         this.id = id;
         this.classifyId = classifyId;
         this.name = name;
@@ -30,6 +35,8 @@ public class Music implements java.io.Serializable {
         this.duration = duration;
         this.imagePath = imagePath;
         this.path = path;
+        this.userId = userId;
+        this.uploadTime = uploadTime;
     }
 
     public int getId() {
@@ -86,6 +93,22 @@ public class Music implements java.io.Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Timestamp getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(Timestamp uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
     @Override

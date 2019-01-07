@@ -31,7 +31,7 @@ public class UploadHandleServlet extends HttpServlet {
         // 获得内置对象out
         out = response.getWriter();
         // 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
-        String savePath = "C:\\Users\\dreamCirno\\Desktop\\MoeSound\\web" + "\\music";
+        String savePath = this.getServletContext().getRealPath("/WEB-INF/") + "music";
         //String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
         //上传时生成的临时文件保存目录
         String tempPath = this.getServletContext().getRealPath("/WEB-INF/temp");
@@ -109,6 +109,8 @@ public class UploadHandleServlet extends HttpServlet {
                     if (fileType(filename)) {
                         imagePath = str + "/" + saveFilename;
                     } else {
+                        request.setAttribute("singer", filename.split(" - ")[0]);
+                        request.setAttribute("name", filename.split(" - ")[1].replace(".mp3", ""));
                         musicPath = str + "/" + saveFilename;
                     }
                     System.out.println("相对路径：" + str + "/" + saveFilename);
@@ -187,7 +189,7 @@ public class UploadHandleServlet extends HttpServlet {
         }
         System.out.println("savepath=" + savePath);
         System.out.println("dir:" + dir);
-        str = dir.replace("C:\\Users\\dreamCirno\\Desktop\\MoeSound\\web", "");
+        str = dir.replace(this.getServletContext().getRealPath("/WEB-INF/"), "");
         str = str.replace("\\", "/");
         return dir;
     }

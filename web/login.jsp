@@ -79,7 +79,7 @@
                                 <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
                             </ul>
                         </li>
-                        <li id="nav-client"><a href="/Index/client">客户端</a></li>
+
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
@@ -97,10 +97,10 @@
                     </div>
 
 
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="GET"
-                          action="/Song/search">
+                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                      action="/Search?page=1">
                         <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="data" value=""
+                            <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
                         </div>
                     </form>

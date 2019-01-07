@@ -13,6 +13,7 @@ public class User implements java.io.Serializable {
     private Question question;
 
     public User() {
+        super();
     }
 
     // 登录

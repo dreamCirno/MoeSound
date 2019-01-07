@@ -6,6 +6,7 @@ import com.moe.entity.User;
 public interface UserDao {
     /**
      * 登录
+     *
      * @param user
      * @return
      */
@@ -13,6 +14,7 @@ public interface UserDao {
 
     /**
      * 注册
+     *
      * @param user
      * @return
      */
@@ -20,6 +22,7 @@ public interface UserDao {
 
     /**
      * 通过用户名获取密保问题和正确答案
+     *
      * @param username
      * @return
      */
@@ -27,6 +30,7 @@ public interface UserDao {
 
     /**
      * 验证密保问题
+     *
      * @param user
      * @return
      */
@@ -34,6 +38,7 @@ public interface UserDao {
 
     /**
      * 修改密码
+     *
      * @param user
      * @return
      */
@@ -41,6 +46,7 @@ public interface UserDao {
 
     /**
      * 查询重复用户名
+     *
      * @param username
      * @return
      */
@@ -48,6 +54,7 @@ public interface UserDao {
 
     /**
      * 通过用户名获取用户ID
+     *
      * @param username
      * @return
      */

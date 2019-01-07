@@ -30,6 +30,12 @@
     <script src="/js/jquery/jquery.js"></script>
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/jquery.form.min.js"></script>
+    <script>
+        function playOne(src) {
+            $("#myaudio", parent.document).attr('src', src);
+            $("#myaudio", parent.document)[0].play();
+        }
+    </script>
 </head>
 <body>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -80,28 +86,51 @@
                                 <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
                             </ul>
                         </li>
-                        <li id="nav-client"><a href="/Index/client">客户端</a></li>
+
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
-                    <div class="am-topbar-right">
+                    <c:if test="${empty sessionScope.user}">
                         <div class="am-topbar-right">
-                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                    onclick="location.href='/login.jsp';">登录
-                            </button>
-                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                    onclick="location.href='/register.jsp';">注册
-                            </button>
+                            <div class="am-topbar-right">
+                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                        onclick="location.href='/login.jsp';">登录
+                                </button>
+                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                        onclick="location.href='/register.jsp';">注册
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.user}">
+                        <div class="am-topbar-right">
+                            <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                                 data-am-dropdown="">
+                                <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                    <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                         class="am-circle my-avatar">
+                                </a>
+                                <ul id="avatarMenu" class="am-dropdown-content">
+                                    <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
+                                    <li><a href="/Collect/myList">我创建的歌单</a></li>
+                                    <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                    <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                    <li><a href="/Upload/myList">我上传的音乐</a></li>
+                                    <li><a href="/User/info">个人资料管理</a></li>
+
+                                    <li><a href="/User?action=logout">退出登录</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:if>
 
 
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="GET"
-                          action="/Song/search">
+                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                          action="/Search?page=1">
                         <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="data" value=""
+                            <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
                         </div>
                     </form>
@@ -110,36 +139,27 @@
         </header>
     </div>
 </div>
+
 <div class="am-g am-g-fixed">
     <style>
 
     </style>
-    <script>
-        $(document).ready(function () {
-            $('#cover').attr('src', '/Song/showCover/sid/6051');
-        });
-    </script>
     <div class="am-u-sm-9"> <!-- 左半 -->
         <div class="am-g"> <!-- 歌曲信息 -->
             <div class="am-u-sm-3 am-padding-right-0 am-margin-right-0">
-                <img id="cover" style="max-width: 200px;max-height: 200px;" src="/Song/showCover/sid/6051">
+                <img id="cover" style="max-width: 200px;max-height: 200px;" src="${requestScope.music.imagePath}">
             </div>
             <div class="am-u-sm-9 am-margin-left-0 am-margin-top-0 am-padding-left-0 am-padding-top-0"
                  style="height: 200px;">
-                <div class="am-text-xl">虹のかけら <span class="am-text-default"><span
+                <div class="am-text-xl">${requestScope.music.name}<span class="am-text-default"><span
                         class="am-badge am-badge-secondary">无损</span></span> <span class="am-text-xs">04:17</span></div>
                 <div class="am-text-sm"><i class="am-icon-play"
                                            data-am-popover="{content: '播放次数', trigger: 'hover focus'}"></i> 382 <i
                         class="am-icon-heart" data-am-popover="{content: '收录歌单数', trigger: 'hover focus'}"></i> 4
                 </div>
-                <div class="am-text-lg"><a href="/Song/search?data=%E6%98%86%E5%A4%8F%E7%BE%8E&amp;stype=singer">昆夏美</a>
-                </div>
-                <div class="am-text-default"><a
-                        href="/Song/search?data=%E8%99%B9%E3%81%AE%E3%81%8B%E3%81%91%E3%82%89&amp;stype=album">『虹のかけら』</a>
-                </div>
-                <div class="am-text-sm line-clamp">2014 4月新番 一周的朋友 OP 发售日 140521</div>
+                <div class="am-text-lg">${requestScope.music.singer}</div>
                 <div class="info-bottom">
-                    <button class="am-btn am-btn-primary am-btn-sm" onclick="playOne('6051');"><i
+                    <button class="am-btn am-btn-primary am-btn-sm" onclick="playOne('${requestScope.music.path}');"><i
                             class="am-icon-play"></i> 播放
                     </button>
                     <a class="am-btn am-btn-primary am-btn-sm" href="https://biu.moe/fm#!6051" target="_blank"><i
@@ -281,68 +301,6 @@
             </div>
         </div>
     </div>
-    <script>
-        var options = {
-            success: function (ob, errStr) {
-                if (ob.status == true) {
-                    $('#comment-ul').prepend('<li class="am-comment am-comment-primary am-comment-flip">\
-              <a href="/u">\
-                <img class="am-comment-avatar" src="/User/showAvatar/uid/" alt=""/>\
-              </a>\
-              <div class="am-comment-main">\
-                <header class="am-comment-hd">\
-                  <div class="am-comment-meta">\
-                    <a href="/u" class="am-comment-author"></a>\
-                    <time datetime="">刚刚</time>\
-                  </div>\
-                </header>\
-                <div class="am-comment-bd">' + $("#content").val() + '</div>\
-              </div>\
-            </li>');
-                } else if (ob.status == false) {
-                    $('#alert-title').text('评论提交失败');
-                    $('#alert-body').text(ob.error);
-                    $('#biu-alert').modal();
-                }
-                return false;
-            },
-            error: function (ob, errStr) {
-                $('#alert-title').text('评论提交失败');
-                $('#alert-body').text('网络错误请重试');
-                $('#biu-alert').modal();
-                return false;
-            }
-        };
-        $(document).ready(function () {
-
-            $('#commentForm').submit(function (e) {
-                if ($("#content").val() == "") {
-                    $('#alert-title').text('评论提交失败');
-                    $('#alert-body').text('(╯‵□′)╯︵┻━┻ 内容呢？？？');
-                    $('#biu-alert').modal();
-                    return false;
-                }
-                $('#commentForm').ajaxSubmit(options);
-                return false;
-            });
-            $('#content').keypress(function (e) {
-                if (e.ctrlKey) {
-                    console.log('ctrl已按下');
-                }
-                console.log(e.keyCode);
-                if (e.ctrlKey && (e.keyCode == 13 || e.keyCode == 10)) {
-                    if ($("#content").val() == "") {
-                        $('#alert-title').text('评论提交失败');
-                        $('#alert-body').text('(╯‵□′)╯︵┻━┻ 内容呢？？？');
-                        $('#biu-alert').modal();
-                        return false;
-                    }
-                    $('#commentForm').ajaxSubmit(options);
-                    return false;
-                }
-            });
-        });
-    </script>
     <!--div data-role="dialog" id="shareBox" class="padding10" data-close-button="true">
         <h2>外链代码</h2>
             <div class="input-control text full-size">

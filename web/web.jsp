@@ -2,13 +2,19 @@
 <%@ page import="com.moe.entity.Music" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.moe.utils.TimeCalculator" %>
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="com.moe.impl.UserPlayingDaoImpl" %>
+<%@ page import="com.moe.entity.UserPlaying" %><%--
   User: dreamCirno
   Date: 2019/1/6
   Time: 1:56
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    MusicDaoImpl musicDao = new MusicDaoImpl();
+    List<Music> list;
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -41,54 +47,52 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 
 <div class="am-sticky-placeholder" style="height: 51px; margin: 0px 0px 19.2px;">
-    <div class="am-sticky-placeholder" style="height: 51px; margin: 0px;">
-        <header class="am-topbar am-topbar-inverse am-sticky am-animation-slide-top"
-                data-am-sticky="{animation: 'slide-top'}" style="margin: 0px; top: 0px; left: 0px; width: 1654px;">
-            <div class="am-center topbar">
-                <h1 class="am-topbar-brand">
-                    <a href="/web.jsp">
-                        <svg style="fill:#FFF;width:100px;height:45px;margin-top:2px;"
-                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.67 45">
-                            <path d="M37.71,27.05c0,1.94-0.89,4.18-2.58,6.21c-1.61,1.9-5.75,5.58-12.08,11.58l-5.15-4.65l10.23-9.68
+    <header class="am-topbar am-topbar-inverse" data-am-sticky="{animation: 'slide-top'}" style="margin: 0px;">
+        <div class="am-center topbar">
+            <h1 class="am-topbar-brand">
+                <a href="/web.jsp">
+                    <svg style="fill:#FFF;width:100px;height:45px;margin-top:2px;" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 89.67 45">
+                        <path d="M37.71,27.05c0,1.94-0.89,4.18-2.58,6.21c-1.61,1.9-5.75,5.58-12.08,11.58l-5.15-4.65l10.23-9.68
           c1.23-1.14,1.86-2.2,1.86-3.42c0-1.82-1.56-3.13-4.56-5.07c2.54-2.07,3.89-3.72,3.89-5.45c0-2.07-2.2-3.04-6.51-4.65v22.69h-7.27
           V8.79l7.86-3.25c9,3.51,13.6,5.41,13.6,10.06c0,2.07-0.89,3.89-2.75,5.58C36.57,22.82,37.71,24.68,37.71,27.05z"></path>
-                            <rect x="41.38" y="12.98" width="7.14" height="21.63"></rect>
-                            <path d="M68.14,35.46l-1.86-3.63l-7.27,3.63c-4.39-1.82-6.34-4.73-6.34-9.63v-12.8h6.93v11.66
+                        <rect x="41.38" y="12.98" width="7.14" height="21.63"></rect>
+                        <path d="M68.14,35.46l-1.86-3.63l-7.27,3.63c-4.39-1.82-6.34-4.73-6.34-9.63v-12.8h6.93v11.66
           c0,1.65,0.55,2.7,1.82,3.38c0.46-0.21,1.86-0.89,4.1-2.11V13.02h7.01v13.22c0,1.61,0.8,3.59,2.45,5.87L68.14,35.46z"></path>
-                            <path d="M49.25,6.01c0,1.45-1.21,2.66-2.23,3.35c-0.56,0.38-1.63,1.34-2.03,2.09c-0.35-0.78-1.47-1.7-2.01-2.08
+                        <path d="M49.25,6.01c0,1.45-1.21,2.66-2.23,3.35c-0.56,0.38-1.63,1.34-2.03,2.09c-0.35-0.78-1.47-1.7-2.01-2.08
           c-1.21-0.87-2.26-1.9-2.26-3.36c0-2.1,1.91-3.81,4.27-3.81C47.33,2.21,49.25,3.91,49.25,6.01z"></path>
-                        </svg>
-                    </a>
-                </h1>
+                    </svg>
+                </a>
+            </h1>
 
-                <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-                        data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-                        class="am-icon-bars"></span></button>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                    data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
 
-                <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-                    <ul class="am-nav am-nav-pills am-topbar-nav">
-                        <li id="nav-index"><a href="/web.jsp">首页</a></li>
-                        <li class="am-dropdown" data-am-dropdown="">
-                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                                分类 <span class="am-icon-caret-down"></span>
-                            </a>
-                            <ul class="am-dropdown-content">
-                                <li id="it1"><a href="/Index/type/t/1">动画</a></li>
-                                <li id="it2"><a href="/Index/type/t/2">Galgame</a></li>
-                                <li id="it3"><a href="/Index/type/t/3">偶像</a></li>
-                                <li id="it4"><a href="/Index/type/t/4">东方Project</a></li>
-                                <li id="it5"><a href="/Index/type/t/5">VOCALOID</a></li>
-                                <li id="it6"><a href="/Index/type/t/6">同人</a></li>
-                                <li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>
-                                <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
-                            </ul>
-                        </li>
-                        <li id="nav-client"><a href="/Index/client">客户端</a></li>
-                        <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
-                        <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
-                    </ul>
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li id="nav-index" class="am-active"><a href="/web.jsp">首页</a></li>
+                    <li class="am-dropdown" data-am-dropdown="">
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                            分类 <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li id="it1"><a href="/Index/type/t/1">动画</a></li>
+                            <li id="it2"><a href="/Index/type/t/2">Galgame</a></li>
+                            <li id="it3"><a href="/Index/type/t/3">偶像</a></li>
+                            <li id="it4"><a href="/Index/type/t/4">东方Project</a></li>
+                            <li id="it5"><a href="/Index/type/t/5">VOCALOID</a></li>
+                            <li id="it6"><a href="/Index/type/t/6">同人</a></li>
+                            <li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>
+                            <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
+                        </ul>
+                    </li>
 
+                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
+                </ul>
 
+                <c:if test="${empty sessionScope.user}">
                     <div class="am-topbar-right">
                         <div class="am-topbar-right">
                             <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
@@ -99,19 +103,39 @@
                             </button>
                         </div>
                     </div>
+                </c:if>
+                <c:if test="${not empty sessionScope.user}">
+                    <div class="am-topbar-right">
+                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                             data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                     class="am-circle my-avatar">
+                            </a>
+                            <ul id="avatarMenu" class="am-dropdown-content">
+                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
+                                <li><a href="/Collect/myList">我创建的歌单</a></li>
+                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                <li><a href="/Upload/myList">我上传的音乐</a></li>
+                                <li><a href="/User/info">个人资料管理</a></li>
 
-
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="GET"
-                          action="/Song/search">
-                        <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="data" value=""
-                                   placeholder="歌曲名、出处">
+                                <li><a href="/User?action=logout">退出登录</a></li>
+                            </ul>
                         </div>
-                    </form>
-                </div>
-            </div><!--最外围-->
-        </header>
-    </div>
+                    </div>
+                </c:if>
+
+                <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                      action="/Search?page=1">
+                    <div class="am-form-group">
+                        <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
+                               placeholder="歌曲名、出处">
+                    </div>
+                </form>
+            </div>
+        </div><!--最外围-->
+    </header>
 </div>
 <div class="am-g am-g-fixed">
     <div class="am-u-sm-12">
@@ -126,41 +150,31 @@
         <ul data-am-widget="gallery" class="am-gallery am-avg-sm-6 am-gallery-default index-collects am-no-layout">
             <li>
                 <div class="am-gallery-item">
-                    <a href="/c3010" class="">
-                        <img src="/Collect/showCover/lid/3010" width="150" height="150"
+                    <a href="/c2733" class="">
+                        <img src="/Collect/showCover/lid/2733" width="150" height="150"
                              style="width:150px!important;height:150px!important;">
-                        <h3 class="am-gallery-title">2016年4月ACG音乐推荐</h3>
+                        <h3 class="am-gallery-title">如果水族馆有颜色，那一定是……</h3>
+                        <div class="am-gallery-desc">8 首歌曲</div>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="am-gallery-item">
+                    <a href="/c4975" class="">
+                        <img src="/Collect/showCover/lid/4975" width="150" height="150"
+                             style="width:150px!important;height:150px!important;">
+                        <h3 class="am-gallery-title">2016年5月ACG音乐推荐</h3>
                         <div class="am-gallery-desc">16 首歌曲</div>
                     </a>
                 </div>
             </li>
             <li>
                 <div class="am-gallery-item">
-                    <a href="/c1797" class="">
-                        <img src="/Collect/showCover/lid/1797" width="150" height="150"
+                    <a href="/c8649" class="">
+                        <img src="/Collect/showCover/lid/8649" width="150" height="150"
                              style="width:150px!important;height:150px!important;">
-                        <h3 class="am-gallery-title">午后小憩.</h3>
-                        <div class="am-gallery-desc">387 首歌曲</div>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item">
-                    <a href="/c1891" class="">
-                        <img src="/Collect/showCover/lid/1891" width="150" height="150"
-                             style="width:150px!important;height:150px!important;">
-                        <h3 class="am-gallery-title">传颂之物</h3>
-                        <div class="am-gallery-desc">10 首歌曲</div>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item">
-                    <a href="/c2915" class="">
-                        <img src="/Collect/showCover/lid/2915" width="150" height="150"
-                             style="width:150px!important;height:150px!important;">
-                        <h3 class="am-gallery-title">[东方同人]Stack萌萌哒精选歌单♪(´▽｀)</h3>
-                        <div class="am-gallery-desc">5 首歌曲</div>
+                        <h3 class="am-gallery-title">刀剑神域 Alicization篇</h3>
+                        <div class="am-gallery-desc">2 首歌曲</div>
                     </a>
                 </div>
             </li>
@@ -176,22 +190,31 @@
             </li>
             <li>
                 <div class="am-gallery-item">
-                    <a href="/c4860" class="">
-                        <img src="/Collect/showCover/lid/4860" width="150" height="150"
+                    <a href="/c1891" class="">
+                        <img src="/Collect/showCover/lid/1891" width="150" height="150"
                              style="width:150px!important;height:150px!important;">
-                        <h3 class="am-gallery-title">鹿乃フィーバー！</h3>
-                        <div class="am-gallery-desc">69 首歌曲</div>
+                        <h3 class="am-gallery-title">传颂之物</h3>
+                        <div class="am-gallery-desc">10 首歌曲</div>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="am-gallery-item">
+                    <a href="/c2202" class="">
+                        <img src="/Collect/showCover/lid/2202" width="150" height="150"
+                             style="width:150px!important;height:150px!important;">
+                        <h3 class="am-gallery-title">冬日的歌献与寒冷的你</h3>
+                        <div class="am-gallery-desc">5 首歌曲</div>
                     </a>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="am-u-sm-2 am-text-middle"><h3><span>PC和网页在线：13人<br>一周更新：29首<br>收录歌曲：25257首<br>QQ 群：318148182</span></h3>
+    <div class="am-u-sm-2 am-text-middle"><h3><span>PC和网页在线：19人<br>一周更新：7首<br>收录歌曲：25257首<br>QQ 群：318148182</span></h3>
     </div>
 
     <%
-        MusicDaoImpl musicDao = new MusicDaoImpl();
-        List<Music> list = musicDao.selectRandomList(5);
+        list = musicDao.selectRandomList(10);
         request.setAttribute("random", list);
     %>
     <div class="am-g index2">
@@ -200,11 +223,11 @@
 
             <div class="new-songs-box">
                 <ul class="am-padding-left-0 new-songs c a-fadein">
-                    <c:forEach items="${requestScope.random}" var="item">
+                    <c:forEach items="${random}" var="item">
                         <li class="new-song">
-                            <a class="song-link" href="/s2417">
+                            <a class="song-link" href="/Music?musicId=${item.id}">
                                 <div class="co">
-                                    <img src="${item.imagePath}" alt="${item.imagePath}">
+                                    <img src="${item.imagePath}" alt="FLASH BEST">
                                 </div>
                                 <div class="song-info">
                                     <h3>${item.name}</h3>
@@ -212,8 +235,8 @@
                                     <time>很久前</time>
                                 </div>
                                 <div class="recom-ctrl">
-                                    <button class="fm-play" onclick="playOne('2417');return false;">播放</button>
-                                    <button class="fm-add" onclick="addOne('2417');return false;">添加</button>
+                                    <button class="fm-play" onclick="playOne('6856');return false;">播放</button>
+                                    <button class="fm-add" onclick="addOne('6856');return false;">添加</button>
                                 </div>
                             </a>
                         </li>
@@ -223,29 +246,30 @@
 
         </div>
     </div>
-    <%
-        musicDao = new MusicDaoImpl();
-        list = musicDao.selectRandomList(5);
-        request.setAttribute("lasted", list);
-    %>
+
     <div class="am-g index2"><!--分3份-->
+        <%
+            list = musicDao.selectLastedList(10);
+            request.setAttribute("lasted", list);
+        %>
         <div class="am-u-sm-4">
             <h2>最新更新</h2>
             <ul class="recom-songs">
                 <c:forEach items="${lasted}" var="item">
                     <li class="recom-song">
-                        <a href="/s25330" class="song-link">
-                            <time>${lasted.duration/60}分${lasted.duration%60}秒</time>
+                        <a href="/Music?musicId=${item.id}" class="song-link">
+                            <time>${item.duration}秒</time>
                             <div class="song-info">
-                                <span class="sh4">${lasted.name}</span><span class="sh5">${lasted.singer}</span>
+                                <span class="sh4">${item.name}</span><span class="sh5">${item.singer}</span>
                             </div>
                         </a>
                         <div class="recom-info">
                             <div class="recom-ctrl">
-                                <a href="###" class="am-icon-play index-song-button" onclick="playOne('25330');"></a>
+                                <a href="###" class="am-icon-play index-song-button"
+                                   onclick="playOne('${item.path}');"></a>
                                 <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25330');"></a>
                             </div>
-                            <span class="recom-time">4天前</span>
+                            <span class="recom-time">3天前</span>
                             <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
                                                                    src="/User/showAvatar/uid/118"></a>
                         </div>
@@ -253,276 +277,37 @@
                 </c:forEach>
             </ul>
         </div>
+        <%
+            list = musicDao.selectWeekTop(10);
+            request.setAttribute("history", list);
+        %>
         <div class="am-u-sm-4">
             <h2>一周排行</h2>
             <ul class="recom-songs">
-                <li class="recom-song">
-                    <a href="/s5647" class="song-link">
-                        <time>04:42</time>
-                        <div class="song-info">
-                            <span class="sh4">Hesitation Snow</span><span class="sh5">fripSide</span>
+                <c:forEach items="${history}" var="item">
+                    <li class="recom-song">
+                        <a href="/Music?musicId=${item.id}" class="song-link">
+                            <time>${item.duration}秒</time>
+                            <div class="song-info">
+                                <span class="sh4">${item.name}</span><span class="sh5">${item.singer}</span>
+                            </div>
+                        </a>
+                        <div class="recom-info">
+                            <div class="recom-ctrl">
+                                <a href="###" class="am-icon-play index-song-button" onclick="playOne('${item.path}');"></a>
+                                <a href="###" class="am-icon-plus index-song-button" onclick="addOne('5647');"></a>
+                            </div>
+                            <span class="recom-time"></span>
+                            <a class="user-link" href="/u30"><img class="am-circle index-song-avatar"
+                                                                  src="/User/showAvatar/uid/30"></a>
                         </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('5647');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('5647');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u30"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/30"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s6051" class="song-link">
-                        <time>04:17</time>
-                        <div class="song-info">
-                            <span class="sh4">虹のかけら</span><span class="sh5">昆夏美</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('6051');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('6051');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u55"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/55"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s5657" class="song-link">
-                        <time>05:34</time>
-                        <div class="song-info">
-                            <span class="sh4">ふたりだけのArk</span><span class="sh5">麻枝 准×やなぎなぎ</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('5657');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('5657');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u55"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/55"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s5382" class="song-link">
-                        <time>02:43</time>
-                        <div class="song-info">
-                            <span class="sh4">君想う、星屑の空。</span><span class="sh5">妹尾武</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('5382');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('5382');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u55"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/55"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s9200" class="song-link">
-                        <time>04:32</time>
-                        <div class="song-info">
-                            <span class="sh4">Yield</span><span class="sh5">Sound Horizon</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('9200');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('9200');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u90"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/90"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s5393" class="song-link">
-                        <time>05:20</time>
-                        <div class="song-info">
-                            <span class="sh4">さよならのこと</span><span class="sh5">上原れな</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('5393');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('5393');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u942"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/942"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s8563" class="song-link">
-                        <time>04:11</time>
-                        <div class="song-info">
-                            <span class="sh4">正義を信じて、握り締めて</span><span class="sh5">立花響(CV.悠木碧)</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('8563');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('8563');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s6375" class="song-link">
-                        <time>02:12</time>
-                        <div class="song-info">
-                            <span class="sh4">未来を探す私の色</span><span class="sh5"></span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('6375');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('6375');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u90"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/90"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s6481" class="song-link">
-                        <time>04:31</time>
-                        <div class="song-info">
-                            <span class="sh4">百年先も</span><span class="sh5">天誅ガールズ</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('6481');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('6481');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u55"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/55"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s3941" class="song-link">
-                        <time>01:24</time>
-                        <div class="song-info">
-                            <span class="sh4">それは、和やかで楽しい時間</span><span class="sh5">冨田敦</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('3941');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('3941');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u90"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/90"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s10583" class="song-link">
-                        <time>02:02</time>
-                        <div class="song-info">
-                            <span class="sh4">Hearts</span><span class="sh5">Barbarian On The Groove</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('10583');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('10583');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u90"><img class="am-circle index-song-avatar"
-                                                              src="/User/showAvatar/uid/90"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25281" class="song-link">
-                        <time>05:00</time>
-                        <div class="song-info">
-                            <span class="sh4">餞の鳥</span><span class="sh5">D/Zeal</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25281');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25281');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s24774" class="song-link">
-                        <time>03:46</time>
-                        <div class="song-info">
-                            <span class="sh4">UNION</span><span class="sh5">OxT</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('24774');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('24774');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/118"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s792" class="song-link">
-                        <time>04:12</time>
-                        <div class="song-info">
-                            <span class="sh4">儚くも永久のカナシ</span><span class="sh5">UVERworld</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('792');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('792');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u957"><img class="am-circle index-song-avatar"
-                                                               src="/User/showAvatar/uid/957"></a>
-                    </div>
-                </li>
-                <li class="recom-song">
-                    <a href="/s25206" class="song-link">
-                        <time>05:31</time>
-                        <div class="song-info">
-                            <span class="sh4">ONE</span><span class="sh5">Aimer</span>
-                        </div>
-                    </a>
-                    <div class="recom-info">
-                        <div class="recom-ctrl">
-                            <a href="###" class="am-icon-play index-song-button" onclick="playOne('25206');"></a>
-                            <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25206');"></a>
-                        </div>
-                        <span class="recom-time"></span>
-                        <a class="user-link" href="/u1"><img class="am-circle index-song-avatar"
-                                                             src="/User/showAvatar/uid/1"></a>
-                    </div>
-                </li>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
         <div class="am-u-sm-4">
             <h2>全站动态</h2>
             <ul class="index-news">
-                <li class="index-new"><a class="user-link" href="/u2678"><img class="am-circle index-song-avatar"
-                                                                              src="/User/showAvatar/uid/2678">
-                    DarkDay</a> 12秒前
-                    播放 <a href="/s6234">無限大クロニクル</a></li>
-                <li class="index-new"><a class="user-link" href="/u1"><img class="am-circle index-song-avatar"
-                                                                           src="/User/showAvatar/uid/1"> 小新喵~</a> 2分前
-                    播放 <a href="/s13307">プリマステラ</a></li>
                 <li class="index-new"><a class="user-link" href="/u459"><img class="am-circle index-song-avatar"
                                                                              src="/User/showAvatar/uid/459">
                     YukijiEri</a> 3分前
@@ -549,32 +334,55 @@
                     播放 <a href="/s23850">Melty Fantasia</a></li>
                 <li class="index-new"><a class="user-link" href="/u4006"><img class="am-circle index-song-avatar"
                                                                               src="/User/showAvatar/uid/4006"> 千早</a>
-                    2时前
-                    播放 <a href="/s12549">殺人考察(後) - Ⅰ everything, not nothing</a></li>
-                <li class="index-new"><a class="user-link" href="/u292"><img class="am-circle index-song-avatar"
-                                                                             src="/User/showAvatar/uid/292">
-                    sun_kind</a> 4时前
-                    播放 <a href="/s18">Shine Days</a></li>
-                <li class="index-new"><a class="user-link" href="/u3832"><img class="am-circle index-song-avatar"
-                                                                              src="/User/showAvatar/uid/3832">
-                    zer0_jjh0ng</a> 4时前
-                    播放 <a href="/s3282">glassware</a></li>
-                <li class="index-new"><a class="user-link" href="/u3779"><img class="am-circle index-song-avatar"
-                                                                              src="/User/showAvatar/uid/3779"> IL</a>
-                    4时前
-                    播放 <a href="/s23640">ホップ・ステップ・ワーイ！(Guilty Kiss Ver.)</a></li>
+                    1分前
+                    播放 <a href="/s14627">Eternity</a></li>
+                <li class="index-new"><a class="user-link" href="/u4080"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/4080"> 天空树</a>
+                    22分前
+                    播放 <a href="/s13144">明日、わたしは――</a></li>
                 <li class="index-new"><a class="user-link" href="/u3139"><img class="am-circle index-song-avatar"
                                                                               src="/User/showAvatar/uid/3139">
-                    wcloli</a> 5时前
-                    播放 <a href="/s20318">B.A.A.B.</a></li>
-                <li class="index-new"><a class="user-link" href="/u3362"><img class="am-circle index-song-avatar"
-                                                                              src="/User/showAvatar/uid/3362"> 幽雪笙桜</a>
+                    wcloli</a> 1时前
+                    播放 <a href="/s3351">Heart to Heart</a></li>
+                <li class="index-new"><a class="user-link" href="/u3750"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/3750"> 咸鱼王<span
+                        class="am-icon-android"
+                        data-am-popover="{content: '使用 Android 客户端', trigger: 'hover focus'}"></span></a> 1时前
+                    播放 <a href="/s6178">Daydream café ~ご注文はココアですか？ver.~</a></li>
+                <li class="index-new"><a class="user-link" href="/u940"><img class="am-circle index-song-avatar"
+                                                                             src="/User/showAvatar/uid/940"> 黑帝酱</a> 2时前
+                    播放 <a href="/s7420">嵐のなかの恋だから</a></li>
+                <li class="index-new"><a class="user-link" href="/u942"><img class="am-circle index-song-avatar"
+                                                                             src="/User/showAvatar/uid/942"> 雅音宮羽</a>
+                    2时前
+                    播放 <a href="/s1586">もってけ!セーラーふく</a></li>
+                <li class="index-new"><a class="user-link" href="/u3779"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/3779"> IL</a>
+                    2时前
+                    播放 <a href="/s23634">Star Divine</a></li>
+                <li class="index-new"><a class="user-link" href="/u3688"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/3688">
+                    grigori</a> 3时前
+                    播放 <a href="/s23424">夢飛行</a></li>
+                <li class="index-new"><a class="user-link" href="/u1"><img class="am-circle index-song-avatar"
+                                                                           src="/User/showAvatar/uid/1"> 小新喵~</a> 3时前
+                    播放 <a href="/s7655">冬がくれた予感</a></li>
+                <li class="index-new"><a class="user-link" href="/u3841"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/3841"> GC</a>
                     5时前
-                    播放 <a href="/s151">春隣 </a></li>
-                <li class="index-new"><a class="user-link" href="/u2683"><img class="am-circle index-song-avatar"
-                                                                              src="/User/showAvatar/uid/2683"> 萬物之靈</a>
-                    5时前
-                    播放 <a href="/s4618">月の位相</a></li>
+                    播放 <a href="/s7238">サヨナラの手前</a></li>
+                <li class="index-new"><a class="user-link" href="/u3961"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/3961"> 塚田咲希</a>
+                    6时前
+                    收藏歌曲 <a href="/s24219">With Love(M@STER VERSION)�</a></li>
+                <li class="index-new"><a class="user-link" href="/u3724"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/3724">
+                    AmebaSr</a> 6时前
+                    播放 <a href="/s8595">ORBITAL BEAT (Ver.ZABABA)</a></li>
+                <li class="index-new"><a class="user-link" href="/u4082"><img class="am-circle index-song-avatar"
+                                                                              src="/User/showAvatar/uid/4082"> raku</a>
+                    7时前
+                    播放 <a href="/s8487">魔弓・イチイバル</a></li>
             </ul>
         </div>
     </div>
@@ -589,15 +397,13 @@
             width: 100px !important;
         }
     </style>
+
     <div class="am-u-sm-12 am-cf">
         <h2>友情链接</h2>
-        <%--<a href="http://twitter.com/biu_moe" target="_blank" class="am-icon-btn am-secondary am-icon-twitter am-fr"></a>--%>
-        <%--<a href="http://weibo.com/biumoe?is_all=1" target="_blank"--%>
-        <%--class="am-icon-btn am-secondary am-icon-weibo am-fr"></a>--%>
         <ul class="am-avg-sm-10 am-fl">
-            <li class="friends"><a href="http://dreamcirno.com/" target="_blank"><img src="/img/cirno.png"
-                                                                                      class="friend-img"
-                                                                                      alt="琪露诺的完美算数教室"></a>
+            <li class="friends"><a href="http://www.dreamcirno.com/" target="_blank"><img src="/img/cirno.png"
+                                                                                          class="friend-img"
+                                                                                          alt="琪露诺的完美算数教室"></a>
             </li>
         </ul>
     </div>
@@ -605,7 +411,6 @@
     <div class="am-u-sm-12">
         <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
-
 </div>
 </body>
 </html>

@@ -28,6 +28,7 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
         response.setContentType("text/html");
         // 获得内置对象out
         out = response.getWriter();
+        System.out.println(this.getServletContext().getRealPath("/WEB-INF/"));
         String action = request.getParameter("action");
         switch (action) {
             // 登录模块
@@ -45,10 +46,10 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 // 新建UserDao用作数据验证和处理
                 UserDaoImpl userDao = new UserDaoImpl();
                 if (userDao.login(user)) {
-                    HttpSession session=request.getSession();
-                    user=new User(userDao.getUserId(username),username);
-                    session.setAttribute("user",user);
-                    out.write("<script>alert('登陆成功');location.href='/web/login.jsp'</script>");
+                    HttpSession session = request.getSession();
+                    user = new User(userDao.getUserId(username), username);
+                    session.setAttribute("user", user);
+                    out.write("<script>alert('登陆成功');location.href='/web.jsp'</script>");
                 } else {
                     out.write("<script>alert('登陆失败');location.href='/login.jsp'</script>");
                 }
@@ -83,7 +84,7 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                         com.moe.entity.List list = new List(userId, "我喜欢的音乐");
                         if (listDao.insertList(list)) {
                         } else {
-                            out.write("<script>alert('我喜欢的音乐创建失败，请联系管理员！');location.href='/login.jsp'</script>");
+                            out.write("<script>alert('我喜欢的音乐创建失败，请联系管理员！');location.href='/web.jsp'</script>");
                         }
                     } else {
                         out.write("<script>alert('注册失败');location.href='/register.jsp'</script>");
@@ -128,6 +129,10 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 } else {
                     out.write("<script>alert('修改失败');location.href='/login.jsp'</script>");
                 }
+                break;
+            case "logout":
+                request.getSession().removeAttribute("user");
+                out.write("<script>location.href='/web.jsp'</script>");
                 break;
             default:
                 break;

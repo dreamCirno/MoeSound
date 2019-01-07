@@ -80,12 +80,13 @@
                                 <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
                             </ul>
                         </li>
-                        <li id="nav-client"><a href="/Index/client">客户端</a></li>
+
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
+<c:if test="${empty sessionScope.user}">
                     <div class="am-topbar-right">
                         <div class="am-topbar-right">
                             <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
@@ -96,12 +97,34 @@
                             </button>
                         </div>
                     </div>
+                </c:if>
+                <c:if test="${not empty sessionScope.user}">
+                    <div class="am-topbar-right">
+                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                             data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                     class="am-circle my-avatar">
+                            </a>
+                            <ul id="avatarMenu" class="am-dropdown-content">
+                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
+                                <li><a href="/Collect/myList">我创建的歌单</a></li>
+                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                <li><a href="/Upload/myList">我上传的音乐</a></li>
+                                <li><a href="/User/info">个人资料管理</a></li>
+
+                                <li><a href="/User?action=logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
 
 
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="GET"
-                          action="/Song/search">
+                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                      action="/Search?page=1">
                         <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="data" value=""
+                            <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
                         </div>
                     </form>
@@ -155,9 +178,9 @@
             <tr id="t12729">
                 <td class="am-text-truncate"><a href="/s12729">恋になりたい AQUARIUM <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>05:08</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12729');"
@@ -166,9 +189,9 @@
             <tr id="t12730">
                 <td class="am-text-truncate"><a href="/s12730">待ってて愛のうた <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>06:00</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12730');"
@@ -177,9 +200,9 @@
             <tr id="t12731">
                 <td class="am-text-truncate"><a href="/s12731">届かない星だとしても <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>04:48</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12731');"
@@ -188,9 +211,9 @@
             <tr id="t12732">
                 <td class="am-text-truncate"><a href="/s12732">恋になりたい AQUARIUM (Off Vocal) <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>05:09</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12732');"
@@ -199,9 +222,9 @@
             <tr id="t12733">
                 <td class="am-text-truncate"><a href="/s12733">突撃！風雲マリンパーク <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>10:19</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12733');"
@@ -210,9 +233,9 @@
             <tr id="t12734">
                 <td class="am-text-truncate"><a href="/s12734">不思議！シーパラダイス発見 <span class="am-badge am-badge-secondary">无损</span></a>
                 </td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>12:36</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12734');"
@@ -221,9 +244,9 @@
             <tr id="t12735">
                 <td class="am-text-truncate"><a href="/s12735">ゆったりたっぷり！深海魚水族館 <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>11:24</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12735');"
@@ -232,9 +255,9 @@
             <tr id="t12736">
                 <td class="am-text-truncate"><a href="/s12736">私たちのベストヒットステージ！ <span
                         class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Song/search?data=Aqours&amp;stype=singer">Aqours</a></td>
+                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
                 <td class="am-text-truncate"><a
-                        href="/Song/search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
+                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
                     AQUARIUM</a></td>
                 <td>12:44</td>
                 <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12736');"
