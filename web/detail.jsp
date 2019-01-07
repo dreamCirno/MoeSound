@@ -1,4 +1,7 @@
-<%--
+<%@ page import="com.moe.dao.MusicDao" %>
+<%@ page import="com.moe.impl.MusicDaoImpl" %>
+<%@ page import="com.moe.entity.Music" %>
+<%@ page import="com.moe.entity.User" %><%--
   User: dreamCirno
   Date: 2019/1/6
   Time: 2:05
@@ -32,6 +35,23 @@
     <script src="/js/jquery.form.min.js"></script>
     <script>
         function playOne(src) {
+            <%
+                Music music  = (Music)request.getAttribute("music");
+                int id = music.getId();
+                MusicDaoImpl musicDao = new MusicDaoImpl();
+                if(request.getSession().getAttribute("user")==null)
+                {
+                    musicDao.updatePlayCount(id);
+                }
+                else{
+                    User user  = (User) request.getSession().getAttribute("user");
+                   if( musicDao.updatePlayCount(id,user.getId())){
+                       System.out.println("1");
+                   }else{
+                       System.out.println("2");
+                   }
+                }
+            %>
             $("#myaudio", parent.document).attr('src', src);
             $("#myaudio", parent.document)[0].play();
         }
@@ -71,21 +91,21 @@
                 <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                     <ul class="am-nav am-nav-pills am-topbar-nav">
                         <li id="nav-index"><a href="/web.jsp">首页</a></li>
-                        <li class="am-dropdown" data-am-dropdown="">
-                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                                分类 <span class="am-icon-caret-down"></span>
-                            </a>
-                            <ul class="am-dropdown-content">
-                                <li id="it1"><a href="/Index/type/t/1">动画</a></li>
-                                <li id="it2"><a href="/Index/type/t/2">Galgame</a></li>
-                                <li id="it3"><a href="/Index/type/t/3">偶像</a></li>
-                                <li id="it4"><a href="/Index/type/t/4">东方Project</a></li>
-                                <li id="it5"><a href="/Index/type/t/5">VOCALOID</a></li>
-                                <li id="it6"><a href="/Index/type/t/6">同人</a></li>
-                                <li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>
-                                <li id="it0"><a href="/Index/type/t/0">未分类</a></li>
-                            </ul>
-                        </li>
+<li class="am-dropdown" data-am-dropdown="">
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                            分类 <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
+                            <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
+                            <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
+                            <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
+                            <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
+                            <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
+                            <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
+                            <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
+                        </ul>
+                    </li>
 
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
@@ -147,7 +167,7 @@
     <div class="am-u-sm-9"> <!-- 左半 -->
         <div class="am-g"> <!-- 歌曲信息 -->
             <div class="am-u-sm-3 am-padding-right-0 am-margin-right-0">
-                <img id="cover" style="max-width: 200px;max-height: 200px;" src="${requestScope.music.imagePath}">
+                <img id="cover" style="max-width: 200px;max-height: 200px;" src="music${requestScope.music.imagePath}">
             </div>
             <div class="am-u-sm-9 am-margin-left-0 am-margin-top-0 am-padding-left-0 am-padding-top-0"
                  style="height: 200px;">
@@ -159,7 +179,7 @@
                 </div>
                 <div class="am-text-lg">${requestScope.music.singer}</div>
                 <div class="info-bottom">
-                    <button class="am-btn am-btn-primary am-btn-sm" onclick="playOne('${requestScope.music.path}');"><i
+                    <button class="am-btn am-btn-primary am-btn-sm" onclick="playOne('/music/${requestScope.music.path}');"><i
                             class="am-icon-play"></i> 播放
                     </button>
                     <a class="am-btn am-btn-primary am-btn-sm" href="https://biu.moe/fm#!6051" target="_blank"><i

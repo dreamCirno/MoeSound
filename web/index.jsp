@@ -28,7 +28,7 @@
     <![endif]-->
 
 
-    <link rel="stylesheet" href="css/amazeui.css">
+    <link rel="stylesheet" href="/css/amazeui.css">
     <link rel="stylesheet" href="/css/app.css?2">
     <link rel="stylesheet" href="/css/animation.css">
     <link href="/css/app.7ff607468a9edb1eb7c284c4adb32ced.css" rel="stylesheet">
@@ -126,7 +126,7 @@
     </style>
     <!-- Live2D -->
     <!-- 实现拖动效果，需引入 JQuery UI -->
-    <script src="https://www.fghrsh.net/zb_users/plugin/live2d/assets/jquery-ui.min.js"></script>
+    <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
     <!--看板娘-->
     <link rel="stylesheet" type="text/css"
           href="https://www.fghrsh.net/zb_users/plugin/live2d/assets/waifu.min.css?v=1.4.2">
@@ -158,17 +158,17 @@
         <span class="fui-cross"></span>
     </div>
 </div>
-<script src="https://www.fghrsh.net/zb_users/plugin/live2d/assets/waifu-tips.min.js?v=1.4.2-fix3"></script>
-<script src="https://www.fghrsh.net/zb_users/plugin/live2d/assets/live2d.min.js?v=1.0.5"></script>
+<script src="/js/waifu-tips.min.js"></script>
+<script src="/js/live2d.min.js"></script>
 <script type="text/javascript">
-    live2d_settings['hitokotoAPI'] = '\fghrsh.net';
+    //live2d_settings['hitokotoAPI'] = '\fghrsh.net';
     live2d_settings['modelId'] = 6;
     live2d_settings['modelTexturesId'] = 4;
     live2d_settings['waifuEdgeSide'] = 'right:30';
     live2d_settings['waifuDraggable'] = 'axis-x';
     live2d_settings['showHitokoto'] = true;
     live2d_settings['homePageUrl'] = 'localhost:8080'
-    initModel("/json/waifu-tips.json?v=1.4.2");
+    initModel("https://www.fghrsh.net/zb_users/plugin/live2d/assets/waifu-tips.json?v=1.4.2");
 </script>
 
 <div id="app">

@@ -111,6 +111,51 @@ public class Music implements java.io.Serializable {
         this.uploadTime = uploadTime;
     }
 
+    public String getTimeString(int duration) {
+        String str = "";
+        if (duration / 60 < 10) {
+            str += "0" + duration / 60;
+        } else {
+            str += "" + duration / 60;
+        }
+        str += ":";
+        if (duration % 60 < 10) {
+            str += "0" + duration % 60;
+        } else {
+            str += "" + duration % 60;
+        }
+        return str;
+    }
+
+    public String getTimeDifference(Timestamp formatTime) {
+        String str = "";
+        long t1 = 0;
+        long t2 = 0;
+        t1 = formatTime.getTime();
+        t2 = new Timestamp(System.currentTimeMillis()).getTime();
+        //因为t1/t2都是时间戳都是毫秒为单位，所以需要格式化他们的时间
+        int day = (int) ((t2 - t1) / 1000 / 60 / 60 / 24);
+        int hours = (int) ((t2 - t1) / (1000 * 60 * 60));
+        int minutes = (int) (((t2 - t1) / 1000 - hours * (60 * 60)) / 60);
+        int second = (int) ((t2 - t1) / 1000 - hours * (60 * 60) - minutes * 60);
+        if (day > 0) {
+            str = day + "天";
+        } else {
+            if (hours > 0) {
+                str = hours + "小时";
+            } else {
+                if (minutes > 0) {
+                    str = minutes + "分";
+                } else {
+                    if (second > 0) {
+                        str = second + "秒";
+                    }
+                }
+            }
+        }
+        return str;
+    }
+
     @Override
     public String toString() {
         return "Music{" +

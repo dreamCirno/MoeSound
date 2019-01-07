@@ -1,6 +1,7 @@
 package com.moe.dao;
 
 import com.moe.entity.Music;
+import com.moe.entity.UserActive;
 
 import java.util.List;
 
@@ -62,8 +63,66 @@ public interface MusicDao {
 
     /**
      * 获取一周TOP榜
+     *
      * @param count
      * @return
      */
     public List<Music> selectWeekTop(int count);
+
+    /**
+     * 更新歌曲播放量
+     *
+     * @param id
+     * @return
+     */
+    public boolean updatePlayCount(int id);
+
+    /**
+     * 更新歌曲播放量
+     *
+     * @param id
+     * @param userId
+     * @return
+     */
+    public boolean updatePlayCount(int id, int userId);
+
+    /**
+     * 获取全站动态
+     *
+     * @param count
+     * @return
+     */
+    public List<UserActive> selectUserActive(int count);
+
+    /**
+     * 通过分类获取列表
+     *
+     * @param sort
+     * @param page
+     * @param count
+     * @return
+     */
+    public List<Music> selectListByClassify(int sort, int page, int count);
+
+    /**
+     * 通过分类查找歌曲量
+     *
+     * @param sort
+     * @return
+     */
+    public int selectCountByClassify(int sort);
+
+    /**
+     * 获取一周上传量
+     *
+     * @return
+     */
+    public int selectWeekCount();
+
+    /**
+     * 获取已收录歌曲量
+     *
+     * @return
+     */
+    public int selectTotalCount();
 }

@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBUtils {
     private static final String DRIVERPATH = "com.mysql.cj.jdbc.Driver";
-    private static final String CONNSTRING = "jdbc:mysql://localhost:3306/moe?serverTimezone=GMT";
+    private static final String CONNSTRING = "jdbc:mysql://localhost:3306/moe?serverTimezone=Asia/Shanghai";
     private static final String CONNUSERNAME = "root";
     private static final String CONNPASSWORD = "1234";
     private static Connection conn = null;

@@ -43,4 +43,12 @@
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/Search</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ClassifyServlet</servlet-name>
+        <servlet-class>com.moe.servlet.ClassifyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClassifyServlet</servlet-name>
+        <url-pattern>/Classify</url-pattern>
+    </servlet-mapping>
 </web-app>

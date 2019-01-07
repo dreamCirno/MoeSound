@@ -28,7 +28,6 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
         response.setContentType("text/html");
         // 获得内置对象out
         out = response.getWriter();
-        System.out.println(this.getServletContext().getRealPath("/WEB-INF/"));
         String action = request.getParameter("action");
         switch (action) {
             // 登录模块
@@ -49,7 +48,7 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                     HttpSession session = request.getSession();
                     user = new User(userDao.getUserId(username), username);
                     session.setAttribute("user", user);
-                    out.write("<script>alert('登陆成功');location.href='/web.jsp'</script>");
+                    out.write("<script>location.href='/web.jsp'</script>");
                 } else {
                     out.write("<script>alert('登陆失败');location.href='/login.jsp'</script>");
                 }
