@@ -125,4 +125,18 @@ public interface MusicDao {
      * @return
      */
     public int selectTotalCount();
+
+    /**
+     * 查询注册用户在该歌曲的播放量
+     * @param id
+     * @return
+     */
+    public int selectUserPlayCount(int id);
+
+    /**
+     * 查询非注册用户在该歌曲的播放量
+     * @param id
+     * @return
+     */
+    public int selectGuestPlayCount(int id);
 }

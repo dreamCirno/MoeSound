@@ -1,7 +1,12 @@
 <%@ page import="com.moe.dao.MusicDao" %>
 <%@ page import="com.moe.impl.MusicDaoImpl" %>
 <%@ page import="com.moe.entity.Music" %>
-<%@ page import="com.moe.entity.User" %><%--
+<%@ page import="com.moe.entity.User" %>
+<%@ page import="com.moe.impl.ClassifyDaoImpl" %>
+<%@ page import="com.moe.impl.UserDaoImpl" %>
+<%@ page import="com.moe.factory.Factory" %>
+<%@ page import="com.moe.entity.Discuss" %>
+<%@ page import="java.util.List" %><%--
   User: dreamCirno
   Date: 2019/1/6
   Time: 2:05
@@ -45,11 +50,7 @@
                 }
                 else{
                     User user  = (User) request.getSession().getAttribute("user");
-                   if( musicDao.updatePlayCount(id,user.getId())){
-                       System.out.println("1");
-                   }else{
-                       System.out.println("2");
-                   }
+                    musicDao.updatePlayCount(id,user.getId());
                 }
             %>
             $("#myaudio", parent.document).attr('src', src);
@@ -91,21 +92,21 @@
                 <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                     <ul class="am-nav am-nav-pills am-topbar-nav">
                         <li id="nav-index"><a href="/web.jsp">首页</a></li>
-<li class="am-dropdown" data-am-dropdown="">
-                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                            分类 <span class="am-icon-caret-down"></span>
-                        </a>
-                        <ul class="am-dropdown-content">
-                            <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
-                            <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
-                            <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
-                            <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
-                            <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
-                            <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
-                            <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
-                            <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
-                        </ul>
-                    </li>
+                        <li class="am-dropdown" data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                分类 <span class="am-icon-caret-down"></span>
+                            </a>
+                            <ul class="am-dropdown-content">
+                                <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
+                                <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
+                                <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
+                                <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
+                                <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
+                                <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
+                                <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
+                                <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
+                            </ul>
+                        </li>
 
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
@@ -164,6 +165,12 @@
     <style>
 
     </style>
+    <%
+        int userPlayCount = musicDao.selectUserPlayCount(music.getId());
+        int guestPlayCount = musicDao.selectGuestPlayCount(music.getId());
+        request.setAttribute("userPlayCount", userPlayCount);
+        request.setAttribute("guestPlayCount", guestPlayCount);
+    %>
     <div class="am-u-sm-9"> <!-- 左半 -->
         <div class="am-g"> <!-- 歌曲信息 -->
             <div class="am-u-sm-3 am-padding-right-0 am-margin-right-0">
@@ -172,14 +179,17 @@
             <div class="am-u-sm-9 am-margin-left-0 am-margin-top-0 am-padding-left-0 am-padding-top-0"
                  style="height: 200px;">
                 <div class="am-text-xl">${requestScope.music.name}<span class="am-text-default"><span
-                        class="am-badge am-badge-secondary">无损</span></span> <span class="am-text-xs">04:17</span></div>
+                        class="am-badge am-badge-secondary">无损</span></span> <span
+                        class="am-text-xs">${requestScope.music.getTimeString(requestScope.music.duration)}</span></div>
                 <div class="am-text-sm"><i class="am-icon-play"
-                                           data-am-popover="{content: '播放次数', trigger: 'hover focus'}"></i> 382 <i
-                        class="am-icon-heart" data-am-popover="{content: '收录歌单数', trigger: 'hover focus'}"></i> 4
+                                           data-am-popover="{content: '播放次数', trigger: 'hover focus'}"></i> ${userPlayCount+guestPlayCount}
+                    <i
+                            class="am-icon-heart" data-am-popover="{content: '收录歌单数', trigger: 'hover focus'}"></i> 4
                 </div>
                 <div class="am-text-lg">${requestScope.music.singer}</div>
                 <div class="info-bottom">
-                    <button class="am-btn am-btn-primary am-btn-sm" onclick="playOne('/music/${requestScope.music.path}');"><i
+                    <button class="am-btn am-btn-primary am-btn-sm"
+                            onclick="playOne('/music/${requestScope.music.path}');"><i
                             class="am-icon-play"></i> 播放
                     </button>
                     <a class="am-btn am-btn-primary am-btn-sm" href="https://biu.moe/fm#!6051" target="_blank"><i
@@ -206,8 +216,8 @@
         </div>
         <div> <!-- 评论框 -->
             <h3>评论</h3>
-            <form id="commentForm" class="am-form" method="POST" action="/Song/doComment">
-                <input type="hidden" name="sid" value="6051">
+            <form id="commentForm" class="am-form" method="POST" action="/Discuss">
+                <input type="hidden" name="sid" value="${requestScope.music.getId()}">
                 <fieldset>
                     <div class="am-form-group">
                         <textarea rows="5" style="width:790px;" id="content" placeholder="说点什么吧 =w="
@@ -218,65 +228,83 @@
                     </div>
                 </fieldset>
             </form>
+            <%
+                List<Discuss> discussList = Factory.getDiscussDaoInstance().selectComment(music.getId());
+                request.setAttribute("discuss", discussList);
+            %>
             <ul class="am-comments-list am-comments-list-flip" id="comment-ul">
-                <li class="am-comment ">
-                    <a href="/u4074">
-                        <img class="am-comment-avatar" src="/User/showAvatar/uid/4074" alt=""> <!-- 评论者头像 -->
-                    </a>
+                <c:forEach items="${discuss}" var="item">
+                    <li class="am-comment ">
+                        <a href="/u4074">
+                            <img class="am-comment-avatar" src="/img/cirno.png" alt=""> <!-- 评论者头像 -->
+                        </a>
 
-                    <div class="am-comment-main"> <!-- 评论内容容器 -->
-                        <header class="am-comment-hd">
-                            <!--<h3 class="am-comment-title">评论标题</h3>-->
-                            <div class="am-comment-meta"> <!-- 评论元数据 -->
-                                <a href="/u4074" class="am-comment-author">子非鱼</a> <!-- 评论者 -->
-                                <time datetime="">2019-01-04 10:24:24</time>
-                            </div>
-                        </header>
+                        <div class="am-comment-main"> <!-- 评论内容容器 -->
+                            <header class="am-comment-hd">
+                                <!--<h3 class="am-comment-title">评论标题</h3>-->
+                                <div class="am-comment-meta"> <!-- 评论元数据 -->
+                                    <a href="/u4074" class="am-comment-author">${item.username}</a> <!-- 评论者 -->
+                                    <time datetime="">${item.publishTime}</time>
+                                </div>
+                            </header>
 
-                        <div class="am-comment-bd">111</div> <!-- 评论内容 -->
-                    </div>
-                </li>
+                            <div class="am-comment-bd">${item.content}</div> <!-- 评论内容 -->
+                        </div>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </div>
+    <%
+        ClassifyDaoImpl classifyDao = new ClassifyDaoImpl();
+        String typeName = classifyDao.selectNameById(music.getClassifyId());
+        request.setAttribute("typeName", typeName);
+    %>
     <div class="am-u-sm-3 am-margin-left-0 am-margin-top-0 am-padding-left-0 am-padding-top-0"> <!-- 右半 -->
         <div class="am-text-nowrap"><!-- 分类 -->
             <h3 class="margin-top:-10px;">分类：
-                <a href="/Index/type/t/1">动画</a>
+                <a href="/Index/type/t/1">${typeName}</a>
             </h3>
         </div>
+        <%
+            UserDaoImpl userDao = new UserDaoImpl();
+            User user = userDao.selectSongUploadHistory(music.getId());
+            request.setAttribute("history", user);
+        %>
         <div class="am-text-nowrap"><!-- 用户资料 -->
             <div class="am-text-sm song-up-info">
-                <a href="/u55"><img src="/User/showAvatar/uid/55" class="am-circle" width="36" height="36"></a>
+                <a href="/u55"><img src="/img/cirno.png" class="am-circle" width="36" height="36"></a>
                 <span class="am-text-bottom">
-            <a href="/u55"><span class="am-text-bottom">Sharuru</span></a>
-             上传@很久以前        </span>
+            <a href="/u55"><span class="am-text-bottom">${requestScope.history.getUsername()}</span></a>
+             上传@${requestScope.history.getRegisterTime()}        </span>
             </div>
-            <div class="am-text-sm song-up-info">
-                <a href="/u4073"><img src="/User/showAvatar/uid/4073" class="am-circle" width="36" height="36"></a>
-                <span class="am-text-bottom">
-            <a href="/u4073"><span class="am-text-bottom">saberKing</span></a>
-            <a href="/Song/history/sid/6051"><span class="am-text-bottom"> 编辑@2019年01月05日 12:23</span></a>
-        </span>
-            </div>
-            <div class="am-text-sm song-up-info">
-                <img src="/Public/img/moem.jpg" width="36" height="36"><span class="am-text-bottom">系统</span>
-                <span class="am-text-bottom"> 歌词@2015年12月31日 05:04</span>
-            </div>
+            <%--<div class="am-text-sm song-up-info">--%>
+            <%--<a href="/u4073"><img src="/User/showAvatar/uid/4073" class="am-circle" width="36" height="36"></a>--%>
+            <%--<span class="am-text-bottom">--%>
+            <%--<a href="/u4073"><span class="am-text-bottom">saberKing</span></a>--%>
+            <%--<a href="/Song/history/sid/6051"><span class="am-text-bottom"> 编辑@2019年01月05日 12:23</span></a>--%>
+            <%--</span>--%>
+            <%--</div>--%>
+            <%--<div class="am-text-sm song-up-info">--%>
+            <%--<img src="/Public/img/moem.jpg" width="36" height="36"><span class="am-text-bottom">系统</span>--%>
+            <%--<span class="am-text-bottom"> 歌词@2015年12月31日 05:04</span>--%>
+            <%--</div>--%>
         </div> <!-- 用户资料 -->
+
         <div>
             <h3>包含这首歌的歌单</h3>
-            <p class="include-collect"><a href="/c3554"><img src="/User/showAvatar/uid/1600" class="am-circle"
-                                                             width="24" height="24"></a> <a href="/c3554"><span
+            <p class="include-collect"><a href="/c3554"><!--<img src="/User/showAvatar/uid/1600" class="am-circle"
+                                                             width="24" height="24">--></a> <a href="/c3554"><span
                     class="am-text-bottom">亮晶晶喜欢的音乐</span></a></p>
-            <p class="include-collect"><a href="/c11"><img src="/User/showAvatar/uid/1" class="am-circle" width="24"
-                                                           height="24"></a> <a href="/c11"><span class="am-text-bottom">小新喵~喜欢的音乐</span></a>
+            <p class="include-collect"><a href="/c11"><!--<img src="/User/showAvatar/uid/1" class="am-circle" width="24"
+                                                           height="24"></a> <a href="/c11">--><span
+                    class="am-text-bottom">小新喵~喜欢的音乐</span></a>
             </p>
-            <p class="include-collect"><a href="/c576"><img src="/User/showAvatar/uid/292" class="am-circle" width="24"
-                                                            height="24"></a> <a href="/c576"><span
+            <p class="include-collect"><a href="/c576"><!--<img src="/User/showAvatar/uid/292" class="am-circle" width="24"
+                                                            height="24"></a> <a href="/c576">--><span
                     class="am-text-bottom">OP/ED</span></a></p>
-            <p class="include-collect"><a href="/c8676"><img src="/User/showAvatar/uid/4024" class="am-circle"
-                                                             width="24" height="24"></a> <a href="/c8676"><span
+            <p class="include-collect"><a href="/c8676"><!--<img src="/User/showAvatar/uid/4024" class="am-circle"
+                                                             width="24" height="24">--></a> <a href="/c8676"><span
                     class="am-text-bottom">俄方风格喜欢的音乐</span></a></p></div>
     </div>
 

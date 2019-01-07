@@ -13,7 +13,7 @@ public class UserDaoImpl implements UserDao {
     public boolean login(User user) {
         try {
             String sql = "SELECT COUNT(*) count FROM user WHERE username = ? AND password = ?";
-            ResultSet rs = DBUtils.doQuery(sql ,user.getUsername(), user.getPassword());
+            ResultSet rs = DBUtils.doQuery(sql, user.getUsername(), user.getPassword());
             while (rs.next()) {
                 if (rs.getInt(1) > 0)
                     return true;
@@ -122,5 +122,22 @@ public class UserDaoImpl implements UserDao {
             DBUtils.closeAll();
         }
         return -1;
+    }
+
+    @Override
+    public User selectSongUploadHistory(int songId) {
+        User user = new User();
+        try {
+            String sql = "SELECT UserName,UploadTime FROM music INNER JOIN `user` ON music.UserID = `user`.UserID WHERE musicID = ?";
+            ResultSet rs = DBUtils.doQuery(sql, songId);
+            while (rs.next()) {
+                user = new User(rs.getString(1), rs.getTimestamp(2));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return user;
     }
 }

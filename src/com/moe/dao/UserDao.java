@@ -59,4 +59,11 @@ public interface UserDao {
      * @return
      */
     public int getUserId(String username);
+
+    /**
+     * 获取歌曲上传资料：用户名和上传日期
+     * @param songId
+     * @return
+     */
+    public User selectSongUploadHistory(int songId);
 }

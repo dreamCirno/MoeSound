@@ -51,4 +51,12 @@
         <servlet-name>ClassifyServlet</servlet-name>
         <url-pattern>/Classify</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DiscussServlet</servlet-name>
+        <servlet-class>com.moe.servlet.DiscussServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DiscussServlet</servlet-name>
+        <url-pattern>/Discuss</url-pattern>
+    </servlet-mapping>
 </web-app>

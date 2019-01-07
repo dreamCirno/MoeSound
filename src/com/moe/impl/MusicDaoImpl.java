@@ -270,4 +270,38 @@ public class MusicDaoImpl implements MusicDao {
         }
         return count;
     }
+
+    @Override
+    public int selectUserPlayCount(int id) {
+        int count = -1;
+        try {
+            String sql = "SELECT COUNT(*) FROM yplaymusic WHERE MusicID = ?";
+            ResultSet rs = DBUtils.doQuery(sql, id);
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return count;
+    }
+
+    @Override
+    public int selectGuestPlayCount(int id) {
+        int count = -1;
+        try {
+            String sql = "SELECT count FROM nplaymusic WHERE musicID= ?";
+            ResultSet rs = DBUtils.doQuery(sql, id);
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return count;
+    }
 }

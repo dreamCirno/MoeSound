@@ -22,6 +22,12 @@ public class User implements java.io.Serializable {
         this.password = password;
     }
 
+    // 用户上传歌曲历史信息
+    public User(String username, Timestamp uploadTime) {
+        this.username = username;
+        this.registerTime = uploadTime;
+    }
+
     // 验证密保问题
     public User(String username, Question question) {
         this.username = username;
@@ -106,6 +112,35 @@ public class User implements java.io.Serializable {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public String getTimeDifference(Timestamp formatTime) {
+        String str = "";
+        long t1 = 0;
+        long t2 = 0;
+        t1 = formatTime.getTime();
+        t2 = new Timestamp(System.currentTimeMillis()).getTime();
+        //因为t1/t2都是时间戳都是毫秒为单位，所以需要格式化他们的时间
+        int day = (int) ((t2 - t1) / 1000 / 60 / 60 / 24);
+        int hours = (int) ((t2 - t1) / (1000 * 60 * 60));
+        int minutes = (int) (((t2 - t1) / 1000 - hours * (60 * 60)) / 60);
+        int second = (int) ((t2 - t1) / 1000 - hours * (60 * 60) - minutes * 60);
+        if (day > 0) {
+            str = day + "天";
+        } else {
+            if (hours > 0) {
+                str = hours + "小时";
+            } else {
+                if (minutes > 0) {
+                    str = minutes + "分";
+                } else {
+                    if (second > 0) {
+                        str = second + "秒";
+                    }
+                }
+            }
+        }
+        return str;
     }
 
     @Override
