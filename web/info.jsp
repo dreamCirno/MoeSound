@@ -1,10 +1,13 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/5
-  Time: 20:59
+  Date: 2019/1/8
+  Time: 9:41
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${empty sessionScope.user}">
+    <c:redirect url="/login.jsp"></c:redirect>
+</c:if>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -133,50 +136,156 @@
         </header>
     </div>
 </div>
-
 <div class="am-g am-g-fixed">
     <div class="am-u-sm-12">
-        <!--h2 style="margin-top:0px;">登录 MoeSound</h2-->
+        <!--h2 style="margin-top:0px;">登录 Biu.Moe</h2-->
         <div class="am-u-sm-6">
-            <form action="/User?action=newpwd" method="POST" class="am-form" id="biuform">
+            <form action="/User?action=update" method="POST" class="am-form" id="biuform">
                 <fieldset>
-                    <legend>修改密码</legend>
-                    <input name="username" value="${requestScope.username}" hidden="hidden">
+                    <legend>个人资料管理</legend>
                     <div class="am-form-group">
-                        <label for="password">新密码：</label>
-                        <input type="text" id="password" name="password">
+                        <label for="name">昵称：</label>
+                        <input type="text" name="name" id="name" value="${sessionScope.user.username}">
                     </div>
-                    <input type="submit" value="提交" class="am-btn am-round am-btn-primary" id="dosubmit">
+                    <div class="am-form-group">
+                        <label for="gender">性别：</label>
+                        <c:choose>
+                            <c:when test="${sessionScope.user.sex==0}">
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="0" checked=""> 汉子
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="1"> 妹子
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="2"> 秀吉
+                                </label>
+                            </c:when>
+                            <c:when test="${sessionScope.user.sex==1}">
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="0"> 汉子
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="1" checked=""> 妹子
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="2"> 秀吉
+                                </label>
+                            </c:when>
+                            <c:otherwise>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="0" checked=""> 汉子
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="1"> 妹子
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="2" checked=""> 秀吉
+                                </label>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <h3>修改密码</h3>
+                    <div class="am-form-group">
+                        <label for="password">旧密码</label>
+                        <input type="password" id="oldpass" name="oldpass">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="password">新密码</label>
+                        <input type="password" id="newpass" name="newpass">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="password2">重复新密码：</label>
+                        <input type="password" id="password2" name="password2">
+                    </div>
+                    <input type="submit" value="保存" class="am-btn am-round am-btn-primary" id="dosubmit">
                 </fieldset>
             </form>
         </div>
     </div>
+    <script type="text/javascript">
+        function resetKey() {
+            $.get('/User/resetApiKey', function (ob) {
+                $('#apisecret').text(ob);
+            });
+        }
+    </script>
     <!--div class="grid" style="margin:.625rem 0;">
         <div class="row cells1">
             <div class="cell colspan1">
-                <h1 id="thetitle">快把我的密码还给我QAQ</h1>
+                <h1>个人资料~</h1>
             </div>
-            <form method="POST" action="/User/doForgotPw" id="biuform">
-                <div class="cell colspan1" id="formBody">
-                    <div class="input-control modern text iconic">
-                        <input type="text" name="email">
-                        <span class="label">注册邮箱</span>
-                        <span class="informer">这是必填项(｡・`ω´･)</span>
-                        <span class="placeholder"></span>
-                        <span class="icon mif-user"></span>
+            <form method="POST" action="/User/saveInfo" id="biuform">
+                <div class="cell colspan1">
+                    <div class="input-control modern iconic" data-role="input">
+                        <input name="name" placeholder="该叫你什么呢=w=" value="dreamCirno" />
+                        <span class="label">昵称</span>
+                        <span class="icon mif-pencil"></span>
                     </div>
                 </div>
                 <div class="cell colspan1">
-                    <br /><br />
-                    <h2 id="">提交后收件箱若不存在，建议观察垃圾箱_(:з」∠)_</h2>
+                    <div class="input-control modern iconic" data-role="input">
+                        <input name="qq" placeholder="QQ 不填会变成阿卡林" value="240773979" />
+                        <span class="label">QQ（仅用于提取头像不公开）</span>
+                        <span class="icon"><img src="//web.biu.moe/Public/img/qq.png"></span>
+                    </div>
                 </div>
                 <div class="cell colspan1">
-                    <input type="submit" class="button primary" id="dosubmit" value="提交">
+                    <div class="input-control modern iconic" data-role="input">
+                        <span class="icon mif-mars" style="margin-top: -15px;"></span>
+                        <span style="margin-left:10px;">
+                            <label class="input-control radio small-check">
+                                <input type="radio" name="gender" value="M" checked />
+                                <span class="check"></span>
+                                <span class="caption">汉子</span>
+                            </label>
+                        </span>
+                        <span>
+                            <label class="input-control radio small-check">
+                                <input type="radio" name="gender" value="F"  />
+                                <span class="check"></span>
+                                <span class="caption">妹子</span>
+                            </label>
+                        </span>
+                        <span>
+                            <label class="input-control radio small-check">
+                                <input type="radio" name="gender" value="X"  />
+                                <span class="check"></span>
+                                <span class="caption">秀吉</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+
+                <h2>需不需要修改密码呢→_→</h2>
+                <div class="cell colspan1">
+                    <div class="input-control modern password iconic" data-role="input">
+                        <input type="password" name="oldpass" placeholder="快把旧密码丢进来吧！" />
+                        <span class="label">旧密码</span>
+                        <span class="informer">为空不修改(｡・`ω´･)</span>
+                        <span class="placeholder"></span>
+                        <span class="icon mif-lock"></span>
+                        <button class="button helper-button reveal"><span class="mif-looks"></span></button>
+                    </div>
+                </div>
+                <div class="cell colspan1">
+                    <div class="input-control modern password iconic" data-role="input">
+                        <input type="password" name="newpass" placeholder="新密码交给我吧！" />
+                        <span class="label">新密码</span>
+                        <span class="informer">我会好好保存的(　・ˍ・)</span>
+                        <span class="placeholder"></span>
+                        <span class="icon mif-lock"></span>
+                        <button class="button helper-button reveal"><span class="mif-looks"></span></button>
+                    </div>
+                </div>
+                <br />
+                <div class="cell colspan1">
+                    <input type="submit" class="button primary" id="dosubmit" value="保存" />
                 </div>
             </form>
         </div>
     </div-->
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             $('#biuform').submit(function (e) {
                 $('#dosubmit').attr('disabled', true);
@@ -187,21 +296,19 @@
             var options = {
                 success: function (ob, errStr) {
                     if (ob.status == true) {
-                        showNotice('找回密码成功', '请到收件箱查看', 'success');
-                        $("#thetitle").text("申请已提交，请查收邮件");
-                        $("#formBody").fadeOut();
-                        $('#dosubmit').fadeOut();
+                        showNotice('保存成功', '_(:з」∠)_', 'success');
+                        setTimeout("location.reload();", 2000);
                     } else if (ob.status == false) {
-                        showNotice('找回密码失败', ob.error, 'alert');
+                        showNotice('保存失败', ob.error, 'alert');
                         $('#dosubmit').attr('disabled', false);
-                        $('#dosubmit').attr('value', '提交');
+                        $('#dosubmit').attr('value', '保存');
                     }
                     return false;
                 },
                 error: function (ob, errStr) {
-                    showNotice('找回密码失败', '网络错误请重试', 'alert');
+                    showNotice('保存失败', '网络错误请重试', 'alert');
                     $('#dosubmit').attr('disabled', false);
-                    $('#dosubmit').attr('value', '提交');
+                    $('#dosubmit').attr('value', '保存');
                     return false;
                 }
             }
@@ -209,60 +316,9 @@
     </script>
 
     <div class="am-u-sm-12">
-        <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
+        <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
 
 </div>
-<script>
-    $(function () {
-        /*
-        if(location.href.substr(19,11)=='/Index/home')
-        {
-          $('#nav-index').addClass('am-active');
-        }else if(location.href.substr(11,3)=='/fm')
-        {
-          $('#nav-fm').addClass('am-active');
-        }else if(location.href.substr(14,7)=='/Upload')
-        {
-          $('#nav-upload').addClass('am-active');
-        }
-        }else if(location.href.substr(14,8)=='/Bangumi')
-        {
-          $('#nav-bangumi').addClass('am-active');
-        }
-        */
-
-        if (location.pathname == '/Index/home') {
-            $('#nav-index').addClass('am-active');
-        } else if (location.pathname == '/fm') {
-            $('#nav-fm').addClass('am-active');
-        } else if (location.pathname == '/Index/client') {
-            $('#nav-client').addClass('am-active');
-        } else if (location.pathname == '/Upload') {
-            $('#nav-upload').addClass('am-active');
-        } else if (location.pathname == '/Bangumi') {
-            $('#nav-bangumi').addClass('am-active');
-        } else if (location.pathname == '/Live') {
-            $('#nav-live').addClass('am-active');
-        } else if (location.pathname == '/Comic') {
-            $('#nav-comic').addClass('am-active');
-        }
-    });
-
-    var showAvatarMenu = function () {
-        $('#myAvatar').dropdown('open');
-    }
-
-    $(document).mouseover(function (e) {
-        if ($('#myAvatar').has(e.target).length == 0 && $('#avatarMenu').has(e.target).length == 0)
-            $('#myAvatar').dropdown('close');
-    });
-</script>
-</body>
-</html>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

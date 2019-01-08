@@ -3,6 +3,8 @@ package com.moe.servlet;
 import com.moe.entity.List;
 import com.moe.entity.Question;
 import com.moe.entity.User;
+import com.moe.entity.UserDetail;
+import com.moe.factory.Factory;
 import com.moe.impl.ListDaoImpl;
 import com.moe.impl.UserDaoImpl;
 import com.moe.utils.MD5;
@@ -11,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import static com.moe.factory.Factory.getUserDaoInstance;
 
 @WebServlet(name = "UserServlet")
 public class UserServlet extends javax.servlet.http.HttpServlet {
@@ -46,7 +50,7 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 UserDaoImpl userDao = new UserDaoImpl();
                 if (userDao.login(user)) {
                     HttpSession session = request.getSession();
-                    user = new User(userDao.getUserId(username), username);
+                    user = getUserDaoInstance().selectUserSession(userDao.getUserId(username));
                     session.setAttribute("user", user);
                     out.write("<script>location.href='/web.jsp'</script>");
                 } else {
@@ -132,6 +136,43 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
             case "logout":
                 request.getSession().removeAttribute("user");
                 out.write("<script>location.href='/web.jsp'</script>");
+                break;
+            case "update":
+                user = (User) request.getSession().getAttribute("user");
+                if (user != null) {
+                    username = request.getParameter("name");
+                    int gender = Integer.parseInt(request.getParameterValues("gender")[0]);
+                    String oldpass = request.getParameter("oldpass");
+                    String newpass = request.getParameter("newpass");
+                    int userId = user.getId();
+                    // 验证用户名和旧密码是否匹配
+                    try {
+                        user = new User(user.getUsername(), MD5.md5Encrypt(oldpass));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (getUserDaoInstance().login(user)) {
+                        try {
+                            user = new User(userId, username, gender, MD5.md5Encrypt(newpass));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (getUserDaoInstance().updateUser(user)) {
+                            request.getSession().removeAttribute("user");
+                            out.write("<script>alert('修改成功，请重新登录');location.href='/login.jsp'</script>");
+                        } else {
+                            out.write("<script>alert('修改失败，该用户名已被使用');location.href='/web.jsp'</script>");
+                        }
+                    }
+                } else {
+                    out.write("<script>alert('请先登录');location.href='/login.jsp'</script>");
+                }
+                break;
+            case "userdetail":
+                int id = Integer.parseInt(request.getParameter("id"));
+                UserDetail userDetail = Factory.getUserDaoInstance().selectUserDetail(id);
+                request.setAttribute("userdetail", userDetail);
+                request.getRequestDispatcher("/user.jsp").forward(request, response);
                 break;
             default:
                 break;

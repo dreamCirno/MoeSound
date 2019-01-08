@@ -6,7 +6,10 @@
 <%@ page import="com.moe.impl.UserDaoImpl" %>
 <%@ page import="com.moe.factory.Factory" %>
 <%@ page import="com.moe.entity.Discuss" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.moe.dao.ListDao" %>
+<%@ page import="com.moe.impl.ListDaoImpl" %>
+<%@ page import="com.moe.entity.ListConnect" %><%--
   User: dreamCirno
   Date: 2019/1/6
   Time: 2:05
@@ -134,12 +137,13 @@
                                          class="am-circle my-avatar">
                                 </a>
                                 <ul id="avatarMenu" class="am-dropdown-content">
-                                    <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
-                                    <li><a href="/Collect/myList">我创建的歌单</a></li>
-                                    <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                    <li><i class="avatarMenuI"></i><a
+                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                    <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
                                     <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                    <li><a href="/Upload/myList">我上传的音乐</a></li>
-                                    <li><a href="/User/info">个人资料管理</a></li>
+                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                    <li><a href="/info.jsp">个人资料管理</a></li>
 
                                     <li><a href="/User?action=logout">退出登录</a></li>
                                 </ul>
@@ -181,10 +185,11 @@
                 <div class="am-text-xl">${requestScope.music.name}<span class="am-text-default"><span
                         class="am-badge am-badge-secondary">无损</span></span> <span
                         class="am-text-xs">${requestScope.music.getTimeString(requestScope.music.duration)}</span></div>
-                <div class="am-text-sm"><i class="am-icon-play"
-                                           data-am-popover="{content: '播放次数', trigger: 'hover focus'}"></i> ${userPlayCount+guestPlayCount}
-                    <i
-                            class="am-icon-heart" data-am-popover="{content: '收录歌单数', trigger: 'hover focus'}"></i> 4
+                <div class="am-text-sm">
+                    <i class="am-icon-play"
+                       data-am-popover="{content: '播放次数', trigger: 'hover focus'}"></i> ${userPlayCount+guestPlayCount}
+                    <%--<i--%>
+                    <%--class="am-icon-heart" data-am-popover="{content: '收录歌单数', trigger: 'hover focus'}"></i> 4--%>
                 </div>
                 <div class="am-text-lg">${requestScope.music.singer}</div>
                 <div class="info-bottom">
@@ -192,25 +197,28 @@
                             onclick="playOne('/music/${requestScope.music.path}');"><i
                             class="am-icon-play"></i> 播放
                     </button>
-                    <a class="am-btn am-btn-primary am-btn-sm" href="https://biu.moe/fm#!6051" target="_blank"><i
-                            class="am-icon-music"></i> 弹幕</a>
-                    <button class="am-btn am-btn-primary am-btn-sm" onclick="addOne(6051);"><i class="am-icon-plus"></i>
-                        收藏
-                    </button>
-                    <button class="am-btn am-btn-primary am-btn-sm" onclick="location.href='/song/edit/sid/6051'"><i
-                            class="am-icon-edit"></i> 资料
-                    </button>
-                    <button class="am-btn am-btn-primary am-btn-sm" data-am-modal="{target: '#lrc'}"><i
-                            class="am-icon-file-text-o"></i> 歌词
-                    </button>
-                    <button class="am-btn am-btn-primary am-btn-sm" onclick="location.href='/Upload/fix/sid/6051'"
-                            data-am-popover="{content: '上传更高音质的源文件或者修复有问题的源文件', trigger: 'hover focus'}"><i
-                            class="am-icon-file-sound-o"></i> 上传
-                    </button>
-                    <button class="am-btn am-btn-primary am-btn-sm"
-                            data-am-modal="{target: '#sharebox', closeViaDimmer: 0, width: 450, height: 250}"><i
-                            class="am-icon-share"></i> 分享
-                    </button>
+                    <%--<a class="am-btn am-btn-primary am-btn-sm" href="https://biu.moe/fm#!6051" target="_blank"><i--%>
+                    <%--class="am-icon-music"></i> 弹幕</a>--%>
+                    <a class="am-btn am-btn-primary am-btn-sm" href="/List?action=mark&musicid=${requestScope.music.id}"
+                       target="_self"><i
+                            class="am-icon-plus"></i> 收藏</a>
+                    <%--<button class="am-btn am-btn-primary am-btn-sm" onclick="addOne(6051);"><i class="am-icon-plus"></i>--%>
+                    <%--收藏--%>
+                    <%--</button>--%>
+                    <%--<button class="am-btn am-btn-primary am-btn-sm" onclick="location.href='/song/edit/sid/6051'"><i--%>
+                    <%--class="am-icon-edit"></i> 资料--%>
+                    <%--</button>--%>
+                    <%--<button class="am-btn am-btn-primary am-btn-sm" data-am-modal="{target: '#lrc'}"><i--%>
+                    <%--class="am-icon-file-text-o"></i> 歌词--%>
+                    <%--</button>--%>
+                    <%--<button class="am-btn am-btn-primary am-btn-sm" onclick="location.href='/Upload/fix/sid/6051'"--%>
+                    <%--data-am-popover="{content: '上传更高音质的源文件或者修复有问题的源文件', trigger: 'hover focus'}"><i--%>
+                    <%--class="am-icon-file-sound-o"></i> 上传--%>
+                    <%--</button>--%>
+                    <%--<button class="am-btn am-btn-primary am-btn-sm"--%>
+                    <%--data-am-modal="{target: '#sharebox', closeViaDimmer: 0, width: 450, height: 250}"><i--%>
+                    <%--class="am-icon-share"></i> 分享--%>
+                    <%--</button>--%>
                 </div>
             </div>
         </div>
@@ -258,12 +266,13 @@
     <%
         ClassifyDaoImpl classifyDao = new ClassifyDaoImpl();
         String typeName = classifyDao.selectNameById(music.getClassifyId());
+        request.setAttribute("typeId", music.getClassifyId());
         request.setAttribute("typeName", typeName);
     %>
     <div class="am-u-sm-3 am-margin-left-0 am-margin-top-0 am-padding-left-0 am-padding-top-0"> <!-- 右半 -->
         <div class="am-text-nowrap"><!-- 分类 -->
             <h3 class="margin-top:-10px;">分类：
-                <a href="/Index/type/t/1">${typeName}</a>
+                <a href="/Classify?sort=${typeId}&page=1">${typeName}</a>
             </h3>
         </div>
         <%

@@ -18,7 +18,7 @@ import java.util.List;
 public class ClassifyServlet extends HttpServlet {
     PrintWriter out;
     // 设置页面显示最大条数
-    final int PAGECOUNT = 10;
+    final int PAGECOUNT = 5;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 设置编码格式，一定要放最首部，否则可能导致乱码

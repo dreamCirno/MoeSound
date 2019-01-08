@@ -238,8 +238,11 @@
                 <div class="player-cover"><img id="player-cover-img" src="https://web.biu.moe/Public/img/biu.png"
                                                alt=""></div>
                 <h2 style="color: rgb(255, 255, 255);">欢迎光临 MoeSound </h2>
-                <h3> 「请在网页里点击歌曲的播放按钮」</h3> <h4><span class="level-info">无损</span> <span>44.1kHz</span> <span
-                    style="margin-right: 5px;">16bits</span> 00:00 / 00:00</h4>
+                <h3> 「请在网页里点击歌曲的播放按钮」</h3>
+                <%--<h4>--%>
+                    <%--<span class="level-info">无损</span> <span>44.1kHz</span> <span--%>
+                    <%--style="margin-right: 5px;">16bits</span> 00:00 / 00:00--%>
+                <%--</h4>--%>
                 <div class="slider">
                     <div class="bar-bottom">
                         <div class="bar-top"></div>

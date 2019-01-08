@@ -190,7 +190,7 @@ public class MusicDaoImpl implements MusicDao {
     public List<UserActive> selectUserActive(int count) {
         List<UserActive> list = new ArrayList<UserActive>();
         try {
-            String sql = "SELECT MusicName,UserName,PlayTime,yplaymusic.musicId FROM yplaymusic INNER JOIN `user` ON yplaymusic.UserID = `user`.UserID INNER JOIN music ON yplaymusic.MusicID = music.MusicID ORDER BY PlayTime DESC LIMIT ?";
+            String sql = "SELECT UserName,MusicName,PlayTime,yplaymusic.musicId FROM yplaymusic INNER JOIN `user` ON yplaymusic.UserID = `user`.UserID INNER JOIN music ON yplaymusic.MusicID = music.MusicID ORDER BY PlayTime DESC LIMIT ?";
             ResultSet rs = DBUtils.doQuery(sql, count);
             while (rs.next()) {
                 list.add(new UserActive(rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getInt(4)));
@@ -303,5 +303,22 @@ public class MusicDaoImpl implements MusicDao {
             DBUtils.closeAll();
         }
         return count;
+    }
+
+    @Override
+    public List<UserActive> selectUserActiveByUserId(int userId, int limit) {
+        List<UserActive> list = new ArrayList<UserActive>();
+        try {
+            String sql = "SELECT UserName,MusicName,PlayTime,yplaymusic.musicId FROM yplaymusic INNER JOIN `user` ON yplaymusic.UserID = `user`.UserID INNER JOIN music ON yplaymusic.MusicID = music.MusicID WHERE user.UserID = ? ORDER BY PlayTime DESC LIMIT ?";
+            ResultSet rs = DBUtils.doQuery(sql, userId, limit);
+            while (rs.next()) {
+                list.add(new UserActive(rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getInt(4)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return list;
     }
 }

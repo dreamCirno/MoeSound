@@ -30,6 +30,12 @@
     <script src="/js/jquery/jquery.js"></script>
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/jquery.form.min.js"></script>
+    <script>
+        function playOne(src) {
+            $("#myaudio", parent.document).attr('src', src);
+            $("#myaudio", parent.document)[0].play();
+        }
+    </script>
 </head>
 <body>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -65,64 +71,65 @@
                 <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                     <ul class="am-nav am-nav-pills am-topbar-nav">
                         <li id="nav-index"><a href="/web.jsp">首页</a></li>
-<li class="am-dropdown" data-am-dropdown="">
-                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                            分类 <span class="am-icon-caret-down"></span>
-                        </a>
-                        <ul class="am-dropdown-content">
-                            <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
-                            <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
-                            <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
-                            <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
-                            <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
-                            <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
-                            <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
-                            <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
-                        </ul>
-                    </li>
+                        <li class="am-dropdown" data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                分类 <span class="am-icon-caret-down"></span>
+                            </a>
+                            <ul class="am-dropdown-content">
+                                <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
+                                <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
+                                <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
+                                <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
+                                <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
+                                <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
+                                <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
+                                <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
+                            </ul>
+                        </li>
 
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
-<c:if test="${empty sessionScope.user}">
-                    <div class="am-topbar-right">
+                    <c:if test="${empty sessionScope.user}">
                         <div class="am-topbar-right">
-                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                    onclick="location.href='/login.jsp';">登录
-                            </button>
-                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                    onclick="location.href='/register.jsp';">注册
-                            </button>
+                            <div class="am-topbar-right">
+                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                        onclick="location.href='/login.jsp';">登录
+                                </button>
+                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                        onclick="location.href='/register.jsp';">注册
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </c:if>
-                <c:if test="${not empty sessionScope.user}">
-                    <div class="am-topbar-right">
-                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
-                             data-am-dropdown="">
-                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
-                                     class="am-circle my-avatar">
-                            </a>
-                            <ul id="avatarMenu" class="am-dropdown-content">
-                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
-                                <li><a href="/Collect/myList">我创建的歌单</a></li>
-                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
-                                <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                <li><a href="/Upload/myList">我上传的音乐</a></li>
-                                <li><a href="/User/info">个人资料管理</a></li>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.user}">
+                        <div class="am-topbar-right">
+                            <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                                 data-am-dropdown="">
+                                <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                    <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                         class="am-circle my-avatar">
+                                </a>
+                                <ul id="avatarMenu" class="am-dropdown-content">
+                                    <li><i class="avatarMenuI"></i><a
+                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                    <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
+                                    <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                    <li><a href="/info.jsp">个人资料管理</a></li>
 
-                                <li><a href="/User?action=logout">退出登录</a></li>
-                            </ul>
+                                    <li><a href="/User?action=logout">退出登录</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </c:if>
+                    </c:if>
 
 
                     <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
-                      action="/Search?page=1">
+                          action="/Search?page=1">
                         <div class="am-form-group">
                             <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
@@ -137,31 +144,33 @@
     <div class="am-u-sm-12">
         <div class="am-g">
             <div class="am-u-sm-2 am-padding-right-0 am-margin-right-0">
-                <img src="/Collect/showCover/lid/2733" width="180" height="180">
+                <img src="/img/biu.png" width="180" height="180">
             </div>
             <div class="am-u-sm-10 am-margin-left-0 am-margin-top-0 am-padding-left-sm am-padding-top-0">
-                <h1 class="am-margin-top-0 am-margin-bottom-0">《如果水族馆有颜色，那一定是……》<span class="am-text-default"
-                                                                                      style="font-weight:normal;"><a
-                        href="/u840"><img style="vertical-align: sub;" class="am-round" src="/User/showAvatar/uid/840"
-                                          width="20" height="20"> MinaseNonoka</a>更新于 2016年04月25日 12:11:58</span></h1>
-                <div class="am-margin-left-xs"><i class="am-icon-music"
-                                                  data-am-popover="{content: '收录歌曲数量', trigger: 'hover focus'}"></i> 8
-                    <i class="am-icon-heart" data-am-popover="{content: '收藏歌单人数', trigger: 'hover focus'}"></i> 12 <i
-                            class="am-icon-hand-o-up" data-am-popover="{content: '点击', trigger: 'hover focus'}"></i>
-                    1062
-                </div>
-                <div class="am-margin-left-xs">Aqours 2nd单曲《恋になりたい AQUARIUM》<br><br>为什么会变成这样呢？<br>第一次成为偶像，第一次和自己的青梅竹马一起有了共同努力的事情。<br>两件快乐的事情重合到了一起，而这两份快乐，又能给我带来更多的快乐。本应是梦境一般的幸福时光。<br><br>但是，为什么，为什么会变成这样呢？<br><br>是我先的，明明都是我先的。成为青梅竹马也好，一起上学也好。把千歌从我手里抢走这事，为什么她会那么熟练啊，她到底，做过多少次了啊。
-                </div>
-                <div class="am-margin-top-xs">
-                    <button class="am-btn am-btn-primary am-round am-btn-sm"
-                            onclick="playList('12729,12730,12731,12732,12733,12734,12735,12736');"><span
-                            class="am-icon-play"></span> 播放整个歌单
-                    </button>
-                    <button class="am-btn am-btn-primary am-round am-btn-sm"
-                            onclick="location.href='/Collect/likeCollect/lid/2733';"><span class="am-icon-heart"></span>
-                        收藏这个歌单
-                    </button>
-                </div>
+                <h1 class="am-margin-top-0 am-margin-bottom-0">${requestScope.info.name}<span class="am-text-default"
+                                                                                              style="font-weight:normal;"><a
+                        href="/u840"><img style="vertical-align: sub;" class="am-round" src="/img/cirno.png"
+                                          width="20"
+                                          height="20"> ${requestScope.owner} </a>创建于 ${requestScope.info.createTime}</span>
+                </h1>
+                <%--<div class="am-margin-left-xs"><i class="am-icon-music"--%>
+                <%--data-am-popover="{content: '收录歌曲数量', trigger: 'hover focus'}"></i> 8--%>
+                <%--<i class="am-icon-heart" data-am-popover="{content: '收藏歌单人数', trigger: 'hover focus'}"></i> 12 <i--%>
+                <%--class="am-icon-hand-o-up" data-am-popover="{content: '点击', trigger: 'hover focus'}"></i>--%>
+                <%--1062--%>
+                <%--</div>--%>
+                <%--<div class="am-margin-left-xs">Aqours 2nd单曲《恋になりたい AQUARIUM》<br><br>为什么会变成这样呢？<br>第一次成为偶像，第一次和自己的青梅竹马一起有了共同努力的事情。<br>两件快乐的事情重合到了一起，而这两份快乐，又能给我带来更多的快乐。本应是梦境一般的幸福时光。<br><br>但是，为什么，为什么会变成这样呢？<br><br>是我先的，明明都是我先的。成为青梅竹马也好，一起上学也好。把千歌从我手里抢走这事，为什么她会那么熟练啊，她到底，做过多少次了啊。--%>
+                <%--</div>--%>
+                <%--<div class="am-margin-top-xs">--%>
+                <%--<button class="am-btn am-btn-primary am-round am-btn-sm"--%>
+                <%--onclick="playList('12729,12730,12731,12732,12733,12734,12735,12736');"><span--%>
+                <%--class="am-icon-play"></span> 播放整个歌单--%>
+                <%--</button>--%>
+                <%--<button class="am-btn am-btn-primary am-round am-btn-sm"--%>
+                <%--onclick="location.href='/Collect/likeCollect/lid/2733';"><span class="am-icon-heart"></span>--%>
+                <%--收藏这个歌单--%>
+                <%--</button>--%>
+                <%--</div>--%>
             </div>
         </div>
         <table class="am-table am-table-hover am-table-compact am-text-truncate am-text-sm" style="table-layout:fixed;">
@@ -169,100 +178,22 @@
             <tr>
                 <th style="width:185px;">歌曲名称</th>
                 <th style="width:100px;">歌手名称</th>
-                <th style="width:185px;">专辑名称</th>
                 <th style="width:30px;">长度</th>
                 <th style="width:30px;">管理</th>
             </tr>
             </thead>
             <tbody>
-            <tr id="t12729">
-                <td class="am-text-truncate"><a href="/s12729">恋になりたい AQUARIUM <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>05:08</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12729');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12730">
-                <td class="am-text-truncate"><a href="/s12730">待ってて愛のうた <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>06:00</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12730');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12731">
-                <td class="am-text-truncate"><a href="/s12731">届かない星だとしても <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>04:48</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12731');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12732">
-                <td class="am-text-truncate"><a href="/s12732">恋になりたい AQUARIUM (Off Vocal) <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>05:09</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12732');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12733">
-                <td class="am-text-truncate"><a href="/s12733">突撃！風雲マリンパーク <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>10:19</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12733');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12734">
-                <td class="am-text-truncate"><a href="/s12734">不思議！シーパラダイス発見 <span class="am-badge am-badge-secondary">无损</span></a>
-                </td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>12:36</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12734');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12735">
-                <td class="am-text-truncate"><a href="/s12735">ゆったりたっぷり！深海魚水族館 <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>11:24</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12735');"
-                       href="###"></a></td>
-            </tr>
-            <tr id="t12736">
-                <td class="am-text-truncate"><a href="/s12736">私たちのベストヒットステージ！ <span
-                        class="am-badge am-badge-secondary">无损</span></a></td>
-                <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">Aqours</a></td>
-                <td class="am-text-truncate"><a
-                        href="/Search?data=%E6%81%8B%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%9F%E3%81%84%20AQUARIUM&amp;stype=album">恋になりたい
-                    AQUARIUM</a></td>
-                <td>12:44</td>
-                <td><a class="am-icon-play am-text-default" style="cursor:pointer;" onclick="playOne('12736');"
-                       href="###"></a></td>
-            </tr>
+            <c:forEach items="${requestScope.list}" var="item">
+                <tr id="t12729">
+                    <td class="am-text-truncate"><a href="/Music?musicId=${item.id}">${item.name} <span
+                            class="am-badge am-badge-secondary">无损</span></a></td>
+                    <td class="am-text-truncate"><a href="/Search?data=Aqours&amp;stype=singer">${item.singer}</a></td>
+                    <td>${item.getTimeString(item.duration)}</td>
+                    <td><a class="am-icon-play am-text-default" style="cursor:pointer;"
+                           onclick="playOne('/music/${item.path}');"
+                           href="###"></a></td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

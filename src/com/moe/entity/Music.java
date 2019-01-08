@@ -17,6 +17,13 @@ public class Music implements java.io.Serializable {
         super();
     }
 
+    // 个人详细信息展示
+    public Music(int musicId, String name, String path) {
+        this.id = musicId;
+        this.name = name;
+        this.path = path;
+    }
+
     public Music(int classifyId, String name, String singer, int duration, String imagePath, String path, int userId) {
         this.classifyId = classifyId;
         this.name = name;

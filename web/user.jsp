@@ -1,10 +1,13 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/5
-  Time: 20:59
+  Date: 2019/1/8
+  Time: 9:38
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${empty sessionScope.user}">
+    <c:redirect url="/login.jsp"></c:redirect>
+</c:if>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -105,13 +108,13 @@
                                     <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
                                          class="am-circle my-avatar">
                                 </a>
-<ul id="avatarMenu" class="am-dropdown-content">
+                                <ul id="avatarMenu" class="am-dropdown-content">
                                     <li><i class="avatarMenuI"></i><a
-                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                        href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
                                     <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
-                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
+                                    <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
                                     <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                    <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
                                     <li><a href="/info.jsp">个人资料管理</a></li>
 
                                     <li><a href="/User?action=logout">退出登录</a></li>
@@ -133,136 +136,111 @@
         </header>
     </div>
 </div>
-
 <div class="am-g am-g-fixed">
+    <style>
+    </style>
     <div class="am-u-sm-12">
-        <!--h2 style="margin-top:0px;">登录 MoeSound</h2-->
-        <div class="am-u-sm-6">
-            <form action="/User?action=newpwd" method="POST" class="am-form" id="biuform">
-                <fieldset>
-                    <legend>修改密码</legend>
-                    <input name="username" value="${requestScope.username}" hidden="hidden">
-                    <div class="am-form-group">
-                        <label for="password">新密码：</label>
-                        <input type="text" id="password" name="password">
-                    </div>
-                    <input type="submit" value="提交" class="am-btn am-round am-btn-primary" id="dosubmit">
-                </fieldset>
-            </form>
+        <div class="am-g">
+            <div class="am-u-sm-1 am-padding-right-0 am-margin-right-0">
+                <img id="cover" class="am-circle" height="100" width="100" src="/img/cirno.png">
+            </div>
+            <div class="am-u-sm-3 am-margin-top-0 am-margin-left-xs am-padding-top-0" style="height: 100px;">
+                <div class="am-text-lg">${userdetail.username} <span class="am-icon-mars"></span></div>
+                <div>创建 ${userdetail.createListCount} 份歌单</div>
+                <%--<div class="am-margin-top-sm">--%>
+                <%--<a class="am-btn am-btn-primary am-btn-xs am-round" href="/Message/view/uid/3309"><span--%>
+                <%--class="am-icon-envelope"></span> 发私信</a>--%>
+                <%--</div>--%>
+            </div>
+            <div class="am-u-sm-3 am-margin-top-0 am-padding-top-0" style="height: 100px;">
+                <%--<div>在线 33 小时</div>--%>
+                <div>注册时间：${userdetail.registerTime}</div>
+                <div>最后访问：${userdetail.lastTime}</div>
+            </div>
+            <div class="am-u-sm-4 am-margin-top-0 am-margin-left-xs am-padding-top-0" style="height: 100px;">
+                <div>上传 ${userdetail.uploadCount} 首音乐</div>
+                <%--<div>编辑歌曲资料 1 次</div>--%>
+                <%--<div>整理番剧信息 0 次</div>--%>
+            </div>
         </div>
     </div>
-    <!--div class="grid" style="margin:.625rem 0;">
+    <div class="am-u-sm-12">
+        <div class="am-g">
+            <div class="am-u-sm-6 am-margin-top-0 am-padding-top-0">
+                <h2>最新动态</h2>
+                <ul class="index-news">
+                    <c:forEach items="${userdetail.userActives}" var="item">
+                        <li class="index-new">
+                                ${item.getTimeDifference(item.playTime)}前 播放<a href="/Music?musicId=${item.musicId}">${item.musicName}</a>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+            <div class="am-u-sm-6 am-margin-top-0 am-padding-top-0">
+                <h2>创建的歌单</h2>
+                <ul class="am-list">
+                    <c:forEach items="${userdetail.list}" var="item">
+                    <li><a href="/List?action=select&list=${item.id}" class="am-text-truncate"><i class="am-icon-home am-icon-list am-icon-fw"></i>
+                        ${item.name}</a>
+                    </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--div class="grid" style="margin:.5rem 0;">
         <div class="row cells1">
             <div class="cell colspan1">
-                <h1 id="thetitle">快把我的密码还给我QAQ</h1>
-            </div>
-            <form method="POST" action="/User/doForgotPw" id="biuform">
-                <div class="cell colspan1" id="formBody">
-                    <div class="input-control modern text iconic">
-                        <input type="text" name="email">
-                        <span class="label">注册邮箱</span>
-                        <span class="informer">这是必填项(｡・`ω´･)</span>
-                        <span class="placeholder"></span>
-                        <span class="icon mif-user"></span>
+                <div class="flex-grid">
+                    <div class="row">
+                        <div class="cell colspan2">
+                        <img id="cover" height="200" width="200" src="/User/showAvatar/uid/3309" />
+                        </div>
+                        <div class="cell colspan6" style="margin-left:10px;margin-top:-10px;">
+                        <h2>dreamCirno <span class="am-icon-mars"></span></h2>
+                        <h2>创建 1 份歌单</h2>
+                        <h2>上传 0 首音乐</h2>
+                        <p></p>
+                        </div>
+                        <div class="cell colspan4">
+                        <table>
+                            <tr><td><h2>注册时间：</h2></td><td><h2>2017年12月11日</h2></td></tr>
+                            <tr><td><h2>最后访问：</h2></td><td><h2>2019年01月08日</h2></td></tr>
+                            <tr><td></td><td><a class="button primary" href="/Message/view/uid/3309">发送私信</a><td></tr>
+
+                        </table>
+                        </div>
                     </div>
                 </div>
-                <div class="cell colspan1">
-                    <br /><br />
-                    <h2 id="">提交后收件箱若不存在，建议观察垃圾箱_(:з」∠)_</h2>
-                </div>
-                <div class="cell colspan1">
-                    <input type="submit" class="button primary" id="dosubmit" value="提交">
-                </div>
-            </form>
+            </div>
+        </div>
+    </div>
+    <!--第二部分>
+    <div class="grid">
+        <div class="row cells2">
+            <div class="cell">
+                <h2>dreamCirno创建的歌单</h2>
+                <table class="table hovered">
+                    <tbody>
+                    <tr>
+                            <td><a href="/c7162">dreamCirno喜欢的音乐</a></td>
+                        </tr>                </tbody>
+                </table>
+            </div>
+            <div class="cell">
+                <h2>dreamCirno最近上传的歌曲</h2>
+                <table class="table hovered">
+                    <tbody>
+                                    </tbody>
+                </table>
+            </div>
         </div>
     </div-->
-    <script>
-        $(document).ready(function () {
-            $('#biuform').submit(function (e) {
-                $('#dosubmit').attr('disabled', true);
-                $('#dosubmit').attr('value', '正在处理中...');
-                $(this).ajaxSubmit(options);
-                return false;
-            });
-            var options = {
-                success: function (ob, errStr) {
-                    if (ob.status == true) {
-                        showNotice('找回密码成功', '请到收件箱查看', 'success');
-                        $("#thetitle").text("申请已提交，请查收邮件");
-                        $("#formBody").fadeOut();
-                        $('#dosubmit').fadeOut();
-                    } else if (ob.status == false) {
-                        showNotice('找回密码失败', ob.error, 'alert');
-                        $('#dosubmit').attr('disabled', false);
-                        $('#dosubmit').attr('value', '提交');
-                    }
-                    return false;
-                },
-                error: function (ob, errStr) {
-                    showNotice('找回密码失败', '网络错误请重试', 'alert');
-                    $('#dosubmit').attr('disabled', false);
-                    $('#dosubmit').attr('value', '提交');
-                    return false;
-                }
-            }
-        });
-    </script>
 
     <div class="am-u-sm-12">
-        <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
+        <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
 
 </div>
-<script>
-    $(function () {
-        /*
-        if(location.href.substr(19,11)=='/Index/home')
-        {
-          $('#nav-index').addClass('am-active');
-        }else if(location.href.substr(11,3)=='/fm')
-        {
-          $('#nav-fm').addClass('am-active');
-        }else if(location.href.substr(14,7)=='/Upload')
-        {
-          $('#nav-upload').addClass('am-active');
-        }
-        }else if(location.href.substr(14,8)=='/Bangumi')
-        {
-          $('#nav-bangumi').addClass('am-active');
-        }
-        */
-
-        if (location.pathname == '/Index/home') {
-            $('#nav-index').addClass('am-active');
-        } else if (location.pathname == '/fm') {
-            $('#nav-fm').addClass('am-active');
-        } else if (location.pathname == '/Index/client') {
-            $('#nav-client').addClass('am-active');
-        } else if (location.pathname == '/Upload') {
-            $('#nav-upload').addClass('am-active');
-        } else if (location.pathname == '/Bangumi') {
-            $('#nav-bangumi').addClass('am-active');
-        } else if (location.pathname == '/Live') {
-            $('#nav-live').addClass('am-active');
-        } else if (location.pathname == '/Comic') {
-            $('#nav-comic').addClass('am-active');
-        }
-    });
-
-    var showAvatarMenu = function () {
-        $('#myAvatar').dropdown('open');
-    }
-
-    $(document).mouseover(function (e) {
-        if ($('#myAvatar').has(e.target).length == 0 && $('#avatarMenu').has(e.target).length == 0)
-            $('#myAvatar').dropdown('close');
-    });
-</script>
-</body>
-</html>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

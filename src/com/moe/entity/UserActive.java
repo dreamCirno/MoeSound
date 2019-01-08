@@ -1,5 +1,7 @@
 package com.moe.entity;
 
+import com.moe.factory.Factory;
+
 import java.sql.Timestamp;
 
 public class UserActive implements java.io.Serializable {
@@ -50,6 +52,11 @@ public class UserActive implements java.io.Serializable {
     public void setMusicId(int musicId) {
         this.musicId = musicId;
     }
+
+    public int getUserId(String username) {
+        return Factory.getUserDaoInstance().selectIdByUsername(username);
+    }
+
 
     public String getTimeDifference(Timestamp formatTime) {
         String str = "";

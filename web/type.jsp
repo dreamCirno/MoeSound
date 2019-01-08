@@ -29,6 +29,12 @@
     <script src="/js/jquery/jquery.js"></script>
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/jquery.form.min.js"></script>
+    <script>
+        function playOne(src) {
+            $("#myaudio", parent.document).attr('src', src);
+            $("#myaudio", parent.document)[0].play();
+        }
+    </script>
 </head>
 <body>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -106,12 +112,13 @@
                                          class="am-circle my-avatar">
                                 </a>
                                 <ul id="avatarMenu" class="am-dropdown-content">
-                                    <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
-                                    <li><a href="/Collect/myList">我创建的歌单</a></li>
-                                    <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                    <li><i class="avatarMenuI"></i><a
+                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                    <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
                                     <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                    <li><a href="/Upload/myList">我上传的音乐</a></li>
-                                    <li><a href="/User/info">个人资料管理</a></li>
+                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                    <li><a href="/info.jsp">个人资料管理</a></li>
 
                                     <li><a href="/User?action=logout">退出登录</a></li>
                                 </ul>
@@ -155,8 +162,10 @@
                         <td>${item.getTimeString(item.duration)}</td>
                         <td><a class="am-icon-play am-text-default" style="cursor:pointer;"
                                onclick="playOne('/music/${item.path}');"
-                               href="###"></a> <a class="am-icon-plus am-text-default" style="cursor:pointer;"
-                                                  onclick="addOne(25330);" href="###"></a></td>
+                               href="###"></a>
+                            <a class="am-icon-plus am-text-default" style="cursor:pointer;"
+                               href="/List?action=mark&musicid=${item.id}" target="_self"></a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -166,34 +175,50 @@
             <ul class="am-pagination">
                 共${requestScope.count}首
                 <!-- 如果返回页数超过1页 -->
-                <c:if test="${requestScope.count/requestScope.pageCount>1}">
-                    <c:if test="${requestScope.page==1}">
-                        <li class="am-disabled"><a href="/Classify?page=${requestScope.page-1}&sort=${requestScope.sort}">上一页</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${requestScope.page!=1}">
-                        <li><a href="/Classify?page=${requestScope.page-1}&sort=${requestScope.sort}">上一页</a></li>
-                    </c:if>
+                <c:if test="${requestScope.page==1}">
+                    <li class="am-disabled">
+                        <a href="/Classify?page=${requestScope.page-1}&sort=${requestScope.sort}">上一页</a>
+                    </li>
                 </c:if>
-                <c:forEach begin="1" end="${requestScope.count/requestScope.pageCount}" step="1" var="item">
-                    <c:if test="${requestScope.page==item}">
-                        <li class="am-active"><a href="###">${requestScope.page}</a></li>
-                    </c:if>
-                    <c:if test="${requestScope.page!=item}">
-                        <li>
-                            <a href="/Classify?page=${item}&sort=${requestScope.sort}">${item}</a>
-                        </li>
-                    </c:if>
-                </c:forEach>
+                <c:if test="${requestScope.page!=1}">
+                    <li>
+                        <a href="/Classify?page=${requestScope.page-1}&sort=${requestScope.sort}">上一页</a>
+                    </li>
+                </c:if>
+                <c:if test="${requestScope.count%requestScope.pageCount>0}">
+                    <c:forEach begin="1" end="${requestScope.count/requestScope.pageCount+1}" step="1" var="item">
+                        <c:if test="${requestScope.page==item}">
+                            <li class="am-active"><a href="###">${requestScope.page}</a></li>
+                        </c:if>
+                        <c:if test="${requestScope.page!=item}">
+                            <li>
+                                <a href="/Classify?page=${item}&sort=${requestScope.sort}">${item}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${requestScope.count%requestScope.pageCount==0}">
+                    <c:forEach begin="1" end="${requestScope.count/requestScope.pageCount}" step="1" var="item">
+                        <c:if test="${requestScope.page==item}">
+                            <li class="am-active"><a href="###">${requestScope.page}</a></li>
+                        </c:if>
+                        <c:if test="${requestScope.page!=item}">
+                            <li>
+                                <a href="/Classify?page=${item}&sort=${requestScope.sort}">${item}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
                 <!-- 如果返回页数超过1页 -->
-                <c:if test="${requestScope.count/requestScope.pageCount>1}">
-                    <c:if test="${requestScope.page==requestScope.count}">
-                        <li class="am-disabled"><a href="/Classify?page=${requestScope.page+1}&sort=${requestScope.sort}">下一页</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${requestScope.page!=requestScope.count}">
-                        <li><a href="/Classify?page=${requestScope.page+1}&sort=${requestScope.sort}">下一页</a></li>
-                    </c:if>
+                <c:if test="${(requestScope.count/requestScope.pageCount)-requestScope.page<0}">
+                    <li class="am-disabled">
+                        <a href="/Classify?page=${requestScope.page+1}&sort=${requestScope.sort}">下一页</a>
+                    </li>
+                </c:if>
+                <c:if test="${(requestScope.count/requestScope.pageCount)-requestScope.page>=0}">
+                    <li>
+                        <a href="/Classify?page=${requestScope.page+1}&sort=${requestScope.sort}">下一页</a>
+                    </li>
                 </c:if>
             </ul>
         </div>

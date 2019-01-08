@@ -105,16 +105,17 @@
                                 <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
                                      class="am-circle my-avatar">
                             </a>
-                            <ul id="avatarMenu" class="am-dropdown-content">
-                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
-                                <li><a href="/Collect/myList">我创建的歌单</a></li>
-                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
-                                <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                <li><a href="/Upload/myList">我上传的音乐</a></li>
-                                <li><a href="/User/info">个人资料管理</a></li>
+<ul id="avatarMenu" class="am-dropdown-content">
+                                    <li><i class="avatarMenuI"></i><a
+                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                    <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
+                                    <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                    <li><a href="/info.jsp">个人资料管理</a></li>
 
-                                <li><a href="/User?action=logout">退出登录</a></li>
-                            </ul>
+                                    <li><a href="/User?action=logout">退出登录</a></li>
+                                </ul>
                         </div>
                     </div>
                 </c:if>
@@ -174,7 +175,6 @@
                     <input type="submit" value="注册" class="am-btn am-round am-btn-primary" id="dosubmit">
                 </fieldset>
             </form>
-            ※ Moe.Re 老用户可直接登录无需注册
         </div>
     </div>
     <div class="am-u-sm-12">

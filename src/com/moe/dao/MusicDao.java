@@ -128,6 +128,7 @@ public interface MusicDao {
 
     /**
      * 查询注册用户在该歌曲的播放量
+     *
      * @param id
      * @return
      */
@@ -135,8 +136,18 @@ public interface MusicDao {
 
     /**
      * 查询非注册用户在该歌曲的播放量
+     *
      * @param id
      * @return
      */
     public int selectGuestPlayCount(int id);
+
+    /**
+     * 根据用户ID获取用户听歌动态
+     *
+     * @param userId
+     * @param limit
+     * @return
+     */
+    public List<UserActive> selectUserActiveByUserId(int userId, int limit);
 }

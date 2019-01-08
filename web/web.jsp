@@ -1,7 +1,8 @@
 <%@ page import="com.moe.impl.MusicDaoImpl" %>
 <%@ page import="com.moe.entity.Music" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.moe.entity.UserActive" %><%--
+<%@ page import="com.moe.entity.UserActive" %>
+<%@ page import="com.moe.factory.Factory" %><%--
   User: dreamCirno
   Date: 2019/1/6
   Time: 1:56
@@ -80,12 +81,12 @@
                             分类 <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
-                            <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
-                            <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
-                            <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
-                            <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
-                            <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
+                            <li id="it1"><a href="/Classify?sort=1&page=1">动画</a></li>
+                            <li id="it2"><a href="/Classify?sort=2&page=1">Galgame</a></li>
+                            <li id="it3"><a href="/Classify?sort=3&page=1">偶像</a></li>
+                            <li id="it4"><a href="/Classify?sort=4&page=1">东方Project</a></li>
+                            <li id="it5"><a href="/Classify?sort=5&page=1">VOCALOID</a></li>
+                            <li id="it6"><a href="/Classify?sort=6&page=1">同人</a></li>
                             <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
                             <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
                         </ul>
@@ -116,12 +117,13 @@
                                      class="am-circle my-avatar">
                             </a>
                             <ul id="avatarMenu" class="am-dropdown-content">
-                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
-                                <li><a href="/Collect/myList">我创建的歌单</a></li>
-                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
+                                <li><i class="avatarMenuI"></i><a
+                                        href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                    <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
                                 <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                <li><a href="/Upload/myList">我上传的音乐</a></li>
-                                <li><a href="/User/info">个人资料管理</a></li>
+                                    <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                <li><a href="/info.jsp">个人资料管理</a></li>
 
                                 <li><a href="/User?action=logout">退出登录</a></li>
                             </ul>
@@ -149,70 +151,26 @@
             </div>
         </div>
     </div>
-    <%--<div class="am-u-sm-10">--%>
-    <%--<ul data-am-widget="gallery" class="am-gallery am-avg-sm-6 am-gallery-default index-collects am-no-layout">--%>
-    <%--<li>--%>
-    <%--<div class="am-gallery-item">--%>
-    <%--<a href="/c2733" class="">--%>
-    <%--<img src="/Collect/showCover/lid/2733" width="150" height="150"--%>
-    <%--style="width:150px!important;height:150px!important;">--%>
-    <%--<h3 class="am-gallery-title">如果水族馆有颜色，那一定是……</h3>--%>
-    <%--<div class="am-gallery-desc">8 首歌曲</div>--%>
-    <%--</a>--%>
-    <%--</div>--%>
-    <%--</li>--%>
-    <%--<li>--%>
-    <%--<div class="am-gallery-item">--%>
-    <%--<a href="/c4975" class="">--%>
-    <%--<img src="/Collect/showCover/lid/4975" width="150" height="150"--%>
-    <%--style="width:150px!important;height:150px!important;">--%>
-    <%--<h3 class="am-gallery-title">2016年5月ACG音乐推荐</h3>--%>
-    <%--<div class="am-gallery-desc">16 首歌曲</div>--%>
-    <%--</a>--%>
-    <%--</div>--%>
-    <%--</li>--%>
-    <%--<li>--%>
-    <%--<div class="am-gallery-item">--%>
-    <%--<a href="/c8649" class="">--%>
-    <%--<img src="/Collect/showCover/lid/8649" width="150" height="150"--%>
-    <%--style="width:150px!important;height:150px!important;">--%>
-    <%--<h3 class="am-gallery-title">刀剑神域 Alicization篇</h3>--%>
-    <%--<div class="am-gallery-desc">2 首歌曲</div>--%>
-    <%--</a>--%>
-    <%--</div>--%>
-    <%--</li>--%>
-    <%--<li>--%>
-    <%--<div class="am-gallery-item">--%>
-    <%--<a href="/c1810" class="">--%>
-    <%--<img src="/Collect/showCover/lid/1810" width="150" height="150"--%>
-    <%--style="width:150px!important;height:150px!important;">--%>
-    <%--<h3 class="am-gallery-title">点兔点兔萌萌哒</h3>--%>
-    <%--<div class="am-gallery-desc">10 首歌曲</div>--%>
-    <%--</a>--%>
-    <%--</div>--%>
-    <%--</li>--%>
-    <%--<li>--%>
-    <%--<div class="am-gallery-item">--%>
-    <%--<a href="/c1891" class="">--%>
-    <%--<img src="/Collect/showCover/lid/1891" width="150" height="150"--%>
-    <%--style="width:150px!important;height:150px!important;">--%>
-    <%--<h3 class="am-gallery-title">传颂之物</h3>--%>
-    <%--<div class="am-gallery-desc">10 首歌曲</div>--%>
-    <%--</a>--%>
-    <%--</div>--%>
-    <%--</li>--%>
-    <%--<li>--%>
-    <%--<div class="am-gallery-item">--%>
-    <%--<a href="/c2202" class="">--%>
-    <%--<img src="/Collect/showCover/lid/2202" width="150" height="150"--%>
-    <%--style="width:150px!important;height:150px!important;">--%>
-    <%--<h3 class="am-gallery-title">冬日的歌献与寒冷的你</h3>--%>
-    <%--<div class="am-gallery-desc">5 首歌曲</div>--%>
-    <%--</a>--%>
-    <%--</div>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
+    <%
+        List<com.moe.entity.List> playlist = Factory.getListDaoInstance().selectRandomList(6);
+        request.setAttribute("playlist", playlist);
+    %>
+    <div class="am-u-sm-10">
+        <ul data-am-widget="gallery" class="am-gallery am-avg-sm-6 am-gallery-default index-collects am-no-layout">
+            <c:forEach items="${requestScope.playlist}" var="item">
+                <li>
+                    <div class="am-gallery-item">
+                        <a href="/List?action=select&list=${item.id}" class="">
+                            <img src="/img/biu.png" width="150" height="150"
+                                 style="width:150px!important;height:150px!important;">
+                            <h3 class="am-gallery-title">${item.name}</h3>
+                            <div class="am-gallery-desc">${item.count} 首歌曲</div>
+                        </a>
+                    </div>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
     <%
         int weekCount = musicDao.selectWeekCount();
         int totalCount = musicDao.selectTotalCount();
@@ -225,7 +183,7 @@
     </div>
 
     <%
-        list = musicDao.selectRandomList(10);
+        list = musicDao.selectRandomList(14);
         request.setAttribute("random", list);
     %>
     <div class="am-g index2">
@@ -238,7 +196,7 @@
                         <li class="new-song">
                             <a class="song-link" href="/Music?musicId=${item.id}">
                                 <div class="co">
-                                    <img src="music${item.imagePath}" alt="FLASH BEST">
+                                    <img src="/music/${item.imagePath}" alt="${item.name}">
                                 </div>
                                 <div class="song-info">
                                     <h3>${item.name}</h3>
@@ -246,9 +204,11 @@
                                     <time>${item.getTimeDifference(item.getUploadTime())}前</time>
                                 </div>
                                 <div class="recom-ctrl">
-                                    <button class="fm-play" onclick="playOne('/music/${item.path}');return false;">播放
-                                    </button>
-                                    <button class="fm-add" onclick="addOne('6856');return false;">添加</button>
+                                        <%--<button class="fm-play" onclick="playOne('/music/${item.path}');return false;">播放--%>
+                                        <%--</button>--%>
+                                    <a class="fm-play" onclick="playOne('/music/${item.path}');return false;" href="#"
+                                       target="_self">播放</a>
+                                    <a class="fm-add" href="/List?action=mark&musicid=${item.id}" target="_self">收藏</a>
                                 </div>
                             </a>
                         </li>
@@ -279,7 +239,8 @@
                             <div class="recom-ctrl">
                                 <a href="###" class="am-icon-play index-song-button"
                                    onclick="playOne('/music/${item.path}');"></a>
-                                <a href="###" class="am-icon-plus index-song-button" onclick="addOne('25330');"></a>
+                                <a href="/List?action=mark&musicid=${item.id}"
+                                   class="am-icon-plus index-song-button"></a>
                             </div>
                             <span class="recom-time">${item.getTimeDifference(item.getUploadTime())}前</span>
                             <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
@@ -308,7 +269,8 @@
                             <div class="recom-ctrl">
                                 <a href="###" class="am-icon-play index-song-button"
                                    onclick="playOne('/music/${item.path}');"></a>
-                                <a href="###" class="am-icon-plus index-song-button" onclick="addOne('5647');"></a>
+                                <a href="/List?action=mark&musicid=${item.id}"
+                                   class="am-icon-plus index-song-button"></a>
                             </div>
                             <span class="recom-time"></span>
                             <a class="user-link" href="/u30"><img class="am-circle index-song-avatar"
@@ -326,10 +288,10 @@
             <h2>全站动态</h2>
             <ul class="index-news">
                 <c:forEach items="${active}" var="item">
-                    <li class="index-new"><a class="user-link" href="/u459"><img class="am-circle index-song-avatar"
+                    <li class="index-new"><a class="user-link" href="/User?action=userdetail&id=${item.getUserId(item.username)}"><img class="am-circle index-song-avatar"
                                                                                  src="/img/cirno.png">
-                            ${item.musicName}</a> ${item.getTimeDifference(item.getPlayTime())}前
-                        播放 <a href="/Music?musicId=${item.musicId}">${item.username}</a>
+                            ${item.username}</a> ${item.getTimeDifference(item.getPlayTime())}前
+                        播放 <a href="/Music?musicId=${item.musicId}">${item.musicName}</a>
                     </li>
                 </c:forEach>
             </ul>

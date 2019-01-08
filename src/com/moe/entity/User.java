@@ -45,9 +45,18 @@ public class User implements java.io.Serializable {
     }
 
     // 存放Session
-    public User(int userId, String username) {
+    public User(int userId, String username, int sex) {
         this.username = username;
         this.id = userId;
+        this.sex = sex;
+    }
+
+    // 更改用户信息
+    public User(int userId, String username, int sex, String password) {
+        this.id = userId;
+        this.username = username;
+        this.sex = sex;
+        this.password = password;
     }
 
     public int getId() {

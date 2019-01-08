@@ -70,64 +70,65 @@
                 <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                     <ul class="am-nav am-nav-pills am-topbar-nav">
                         <li id="nav-index"><a href="/web.jsp">首页</a></li>
-<li class="am-dropdown" data-am-dropdown="">
-                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                            分类 <span class="am-icon-caret-down"></span>
-                        </a>
-                        <ul class="am-dropdown-content">
-                            <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
-                            <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
-                            <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
-                            <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
-                            <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
-                            <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
-                            <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
-                            <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
-                        </ul>
-                    </li>
+                        <li class="am-dropdown" data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                分类 <span class="am-icon-caret-down"></span>
+                            </a>
+                            <ul class="am-dropdown-content">
+                                <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
+                                <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
+                                <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
+                                <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
+                                <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
+                                <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
+                                <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
+                                <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
+                            </ul>
+                        </li>
 
                         <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                         <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     </ul>
 
 
-<c:if test="${empty sessionScope.user}">
-                    <div class="am-topbar-right">
+                    <c:if test="${empty sessionScope.user}">
                         <div class="am-topbar-right">
-                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                    onclick="location.href='/login.jsp';">登录
-                            </button>
-                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                    onclick="location.href='/register.jsp';">注册
-                            </button>
+                            <div class="am-topbar-right">
+                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                        onclick="location.href='/login.jsp';">登录
+                                </button>
+                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                        onclick="location.href='/register.jsp';">注册
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </c:if>
-                <c:if test="${not empty sessionScope.user}">
-                    <div class="am-topbar-right">
-                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
-                             data-am-dropdown="">
-                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
-                                     class="am-circle my-avatar">
-                            </a>
-                            <ul id="avatarMenu" class="am-dropdown-content">
-                                <li><i class="avatarMenuI"></i><a href="/u3309">我的主页</a></li>
-                                <li><a href="/Collect/myList">我创建的歌单</a></li>
-                                <li><a href="/Collect/myLike">我收藏的歌单</a></li>
-                                <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                <li><a href="/Upload/myList">我上传的音乐</a></li>
-                                <li><a href="/User/info">个人资料管理</a></li>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.user}">
+                        <div class="am-topbar-right">
+                            <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                                 data-am-dropdown="">
+                                <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                    <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                         class="am-circle my-avatar">
+                                </a>
+                                <ul id="avatarMenu" class="am-dropdown-content">
+                                    <li><i class="avatarMenuI"></i><a
+                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                    <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
+                                    <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                    <li><a href="/info.jsp">个人资料管理</a></li>
 
-                                <li><a href="/User?action=logout">退出登录</a></li>
-                            </ul>
+                                    <li><a href="/User?action=logout">退出登录</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </c:if>
+                    </c:if>
 
 
                     <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
-                      action="/Search?page=1">
+                          action="/Search?page=1">
                         <div class="am-form-group">
                             <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
                                    placeholder="歌曲名、出处">
@@ -141,25 +142,25 @@
 <div class="am-g am-g-fixed">
     <div class="am-u-sm-12">
         <h2 style="margin-top:0px;">${requestScope.keyword} 搜索结果</h2>
-        <div class="am-form-group">
-            <label class="am-radio-inline">
-                <input type="radio" name="stype" value="title" checked=""
-                       onclick="location.href='/Search?data=%E5%88%9D%E9%9F%B3';"> 搜歌曲名、作品名
-            </label>
-            <label class="am-radio-inline">
-                <input type="radio" name="stype" value="singer"
-                       onclick="location.href='/Search?data=%E5%88%9D%E9%9F%B3&amp;stype=singer';"> 搜歌手
-            </label>
-            <label class="am-radio-inline">
-                <input type="radio" name="stype" value="album"
-                       onclick="location.href='/Search?data=%E5%88%9D%E9%9F%B3&amp;stype=album';"> 搜专辑
-            </label>
-        </div>
+        <%--<div class="am-form-group">--%>
+            <%--<label class="am-radio-inline">--%>
+                <%--<input type="radio" name="stype" value="title" checked=""--%>
+                       <%--onclick="location.href='/Search?data=%E5%88%9D%E9%9F%B3';"> 搜歌曲名、作品名--%>
+            <%--</label>--%>
+            <%--<label class="am-radio-inline">--%>
+                <%--<input type="radio" name="stype" value="singer"--%>
+                       <%--onclick="location.href='/Search?data=%E5%88%9D%E9%9F%B3&amp;stype=singer';"> 搜歌手--%>
+            <%--</label>--%>
+            <%--<label class="am-radio-inline">--%>
+                <%--<input type="radio" name="stype" value="album"--%>
+                       <%--onclick="location.href='/Search?data=%E5%88%9D%E9%9F%B3&amp;stype=album';"> 搜专辑--%>
+            <%--</label>--%>
+        <%--</div>--%>
         <div>
-            <button class="am-btn am-btn-primary am-round am-btn-sm"
-                    onclick="playList('44,3061,3530,3835,3856,3877,3884,3885,4063,4541,5196,5293,8958,8965,9997,10814,10820,11490,13177,14850,17934,18510,22942,22943,24514');">
-                <span class="am-icon-play"></span> 播放本页搜索结果
-            </button>
+            <%--<button class="am-btn am-btn-primary am-round am-btn-sm"--%>
+                    <%--onclick="playList('44,3061,3530,3835,3856,3877,3884,3885,4063,4541,5196,5293,8958,8965,9997,10814,10820,11490,13177,14850,17934,18510,22942,22943,24514');">--%>
+                <%--<span class="am-icon-play"></span> 播放本页搜索结果--%>
+            <%--</button>--%>
             <table class="am-table am-table-hover am-table-compact am-text-truncate am-text-sm"
                    style="table-layout:fixed;">
                 <thead>
@@ -189,34 +190,46 @@
             <ul class="am-pagination">
                 共${requestScope.count}首
                 <!-- 如果返回页数超过1页 -->
-                <c:if test="${requestScope.count/requestScope.pageCount>1}">
-                    <c:if test="${requestScope.page==1}">
-                        <li class="am-disabled"><a href="/Search?page=${requestScope.page-1}&keyword=${keyword}">上一页</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${requestScope.page!=1}">
-                        <li><a href="/Search?page=${requestScope.page-1}&keyword=${keyword}">上一页</a></li>
-                    </c:if>
+                <c:if test="${requestScope.page==1}">
+                    <li class="am-disabled"><a href="/Search?page=${requestScope.page-1}&keyword=${keyword}">上一页</a>
+                    </li>
                 </c:if>
-                <c:forEach begin="1" end="${requestScope.count/requestScope.pageCount}" step="1" var="item">
-                    <c:if test="${requestScope.page==item}">
-                        <li class="am-active"><a href="###">${requestScope.page}</a></li>
-                    </c:if>
-                    <c:if test="${requestScope.page!=item}">
-                        <li>
-                            <a href="/Search?page=${item}&keyword=${keyword}">${item}</a>
-                        </li>
-                    </c:if>
-                </c:forEach>
+                <c:if test="${requestScope.page!=1}">
+                    <li><a href="/Search?page=${requestScope.page-1}&keyword=${keyword}">上一页</a></li>
+                </c:if>
+
+                <c:if test="${requestScope.count%requestScope.pageCount>0}">
+                    <c:forEach begin="1" end="${requestScope.count/requestScope.pageCount+1}" step="1" var="item">
+                        <c:if test="${requestScope.page==item}">
+                            <li class="am-active"><a href="###">${requestScope.page}</a></li>
+                        </c:if>
+                        <c:if test="${requestScope.page!=item}">
+                            <li>
+                                <a href="/Search?page=${item}&keyword=${keyword}">${item}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${requestScope.count%requestScope.pageCount==0}">
+                    <c:forEach begin="1" end="${requestScope.count/requestScope.pageCount}" step="1" var="item">
+                        <c:if test="${requestScope.page==item}">
+                            <li class="am-active"><a href="###">${requestScope.page}</a></li>
+                        </c:if>
+                        <c:if test="${requestScope.page!=item}">
+                            <li>
+                                <a href="/Search?page=${item}&keyword=${keyword}">${item}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+
                 <!-- 如果返回页数超过1页 -->
-                <c:if test="${requestScope.count/requestScope.pageCount>1}">
-                    <c:if test="${requestScope.page==requestScope.count}">
-                        <li class="am-disabled"><a href="/Search?page=${requestScope.page+1}&keyword=${keyword}">下一页</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${requestScope.page!=requestScope.count}">
-                        <li><a href="/Search?page=${requestScope.page+1}&keyword=${keyword}">下一页</a></li>
-                    </c:if>
+                <c:if test="${(requestScope.count/requestScope.pageCount)-requestScope.page<0}">
+                    <li class="am-disabled"><a href="/Search?page=${requestScope.page+1}&keyword=${keyword}">下一页</a>
+                    </li>
+                </c:if>
+                <c:if test="${(requestScope.count/requestScope.pageCount)-requestScope.page>=0}">
+                    <li><a href="/Search?page=${requestScope.page+1}&keyword=${keyword}">下一页</a></li>
                 </c:if>
             </ul>
         </div>

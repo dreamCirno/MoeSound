@@ -1,7 +1,7 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/5
-  Time: 20:59
+  Date: 2019/1/8
+  Time: 14:05
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -133,50 +133,139 @@
         </header>
     </div>
 </div>
-
 <div class="am-g am-g-fixed">
     <div class="am-u-sm-12">
-        <!--h2 style="margin-top:0px;">登录 MoeSound</h2-->
+        <h2 style="margin-top:0px;">我创建的歌单</h2>
+        <div>
+            <table class="am-table">
+                <thead>
+                <tr>
+                    <th style="width:50px;">收藏</th>
+                    <th>歌单名称</th>
+                    <th>创建时间</th>
+                    <th>最后修改</th>
+                    <th>管理</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="radio" name="nowcollect" onclick="changeCollect('0');" value="0" checked=""></td>
+                    <td><a href="/c7162">我喜欢的音乐</a></td>
+                    <td>2017年12月11日 00:36:43</td>
+                    <td>2019年01月02日 19:30:03</td>
+                    <td>
+                        <button class="am-btn am-round am-btn-primary am-btn-sm" onclick="location.href='/c7162';"><span
+                                class="am-icon-wrench"></span> 管理
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="/c7163">电台不再播放</a></td>
+                    <td>2017年12月11日 00:36:43</td>
+                    <td>2017年12月11日 00:36:43</td>
+                    <td>
+                        <button class="am-btn am-round am-btn-primary am-btn-sm" onclick="location.href='/c7163';"><span
+                                class="am-icon-wrench"></span> 管理
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            ※ 2016年1月起用新的收藏模式，本页选择收藏歌单后，在网页中点击+或者播放列表点击收藏全部，将会直接进入对应的歌单<br>
+            ※ 《我喜欢的音乐》和《电台不再播放》由系统自动创建，用户不可删除
+            <hr>
+        </div>
         <div class="am-u-sm-6">
-            <form action="/User?action=newpwd" method="POST" class="am-form" id="biuform">
+            <form action="/Collect/createCollect" class="am-form" method="POST" id="biuform">
                 <fieldset>
-                    <legend>修改密码</legend>
-                    <input name="username" value="${requestScope.username}" hidden="hidden">
+                    <legend>新建歌单</legend>
                     <div class="am-form-group">
-                        <label for="password">新密码：</label>
-                        <input type="text" id="password" name="password">
+                        <label for="title">新歌单名称：</label>
+                        <input type="text" id="title" name="title">
                     </div>
-                    <input type="submit" value="提交" class="am-btn am-round am-btn-primary" id="dosubmit">
+                    <div class="am-form-group">
+                        <label for="image">封面（尽量正方形大于200x200）：</label>
+                        <input type="file" id="image" name="image">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="remark">备注（限制500字）：</label>
+                        <textarea id="remark" name="remark"></textarea>
+                    </div>
+                    <input type="submit" value="新建歌单" class="am-btn am-round am-btn-primary" id="dosubmit">
                 </fieldset>
             </form>
         </div>
     </div>
-    <!--div class="grid" style="margin:.625rem 0;">
+    <!--div class="grid" style="margin:0 0;">
         <div class="row cells1">
             <div class="cell colspan1">
-                <h1 id="thetitle">快把我的密码还给我QAQ</h1>
+                <h2>我创建的歌单</h2>
             </div>
-            <form method="POST" action="/User/doForgotPw" id="biuform">
-                <div class="cell colspan1" id="formBody">
-                    <div class="input-control modern text iconic">
-                        <input type="text" name="email">
-                        <span class="label">注册邮箱</span>
-                        <span class="informer">这是必填项(｡・`ω´･)</span>
-                        <span class="placeholder"></span>
-                        <span class="icon mif-user"></span>
-                    </div>
-                </div>
-                <div class="cell colspan1">
-                    <br /><br />
-                    <h2 id="">提交后收件箱若不存在，建议观察垃圾箱_(:з」∠)_</h2>
-                </div>
-                <div class="cell colspan1">
-                    <input type="submit" class="button primary" id="dosubmit" value="提交">
-                </div>
-            </form>
+            <div class="cell colspan1">
+                <table class="table hovered">
+                    <thead>
+                    <tr>
+                    <th>收藏</th>
+                    <th>歌单名称</th>
+                    <th>创建时间</th>
+                    <th>最后修改</th>
+                    <th>管理</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:65px;"><input type="radio" name="nowcollect" onclick="changeCollect('0');" value="0" checked></td>
+                            <td style=""><a href="/c7162">我喜欢的音乐</a></td>
+                            <td style="">2017年12月11日 00:36:43</td>
+                            <td style="">2019年01月02日 19:30:03</td>
+                            <td style=""><button class="button primary" onclick="location.href='/c7162';"><span class="mif-wrench"></span> 管理</button></td>
+                        </tr>
+                                        <tr>
+                            <td style=""></td>
+                            <td style=""><a href="/c7163">电台不再播放</a></td>
+                            <td style="">2017年12月11日 00:36:43</td>
+                            <td style="">2017年12月11日 00:36:43</td>
+                            <td style=""><button class="button primary" onclick="location.href='/c7163';"><span class="mif-wrench"></span> 管理</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="cell colspan1">
+                ※ 2016年1月起用新的收藏模式，本页选择收藏歌单后，在网页中点击+或者播放列表点击收藏全部，将会直接进入对应的歌单<br>
+                ※ 《我喜欢的音乐》和《电台不再播放》由系统自动创建，用户不可删除<br><br>
+                新歌单名称：<br>
+                <form action="/Collect/createCollect" method="POST" id="biuform">
+                <div class="input-control text" style="width:300px;">
+                    <input type="text" name="title">
+                </div><br>备注：<br>
+                <div class="input-control textarea" style="width:600px;">
+                    <textarea name="remark"></textarea>
+                </div><br>
+                <input type="submit" value="新建歌单" class="button primary" id="dosubmit">
+                </form>
+            </div>
         </div>
     </div-->
     <script>
+        function changeCollect(lid) {
+            $.get('/Collect/changeNowCollect/lid/' + lid, function (ob) {
+                if (ob == '1') {
+                    showNotice('成功', '收藏歌单已切换', 'success');
+                } else {
+                    showNotice('失败', '请刷新重试', 'alert');
+                }
+            });
+        }
+
+        function delCollect(lid, title) {
+            if (confirm('确认删除歌单' + title + '？'))
+                location.href = '/Collect/deleteCollect/lid/' + lid;
+        }
+
         $(document).ready(function () {
             $('#biuform').submit(function (e) {
                 $('#dosubmit').attr('disabled', true);
@@ -187,21 +276,19 @@
             var options = {
                 success: function (ob, errStr) {
                     if (ob.status == true) {
-                        showNotice('找回密码成功', '请到收件箱查看', 'success');
-                        $("#thetitle").text("申请已提交，请查收邮件");
-                        $("#formBody").fadeOut();
-                        $('#dosubmit').fadeOut();
+                        showNotice('成功', '歌单已创建', 'success');
+                        setTimeout("location.reload();", 2000);
                     } else if (ob.status == false) {
-                        showNotice('找回密码失败', ob.error, 'alert');
+                        showNotice('失败', ob.error, 'alert');
                         $('#dosubmit').attr('disabled', false);
-                        $('#dosubmit').attr('value', '提交');
+                        $('#dosubmit').attr('value', '保存修改');
                     }
                     return false;
                 },
                 error: function (ob, errStr) {
-                    showNotice('找回密码失败', '网络错误请重试', 'alert');
+                    showNotice('失败', '网络错误请重试', 'alert');
                     $('#dosubmit').attr('disabled', false);
-                    $('#dosubmit').attr('value', '提交');
+                    $('#dosubmit').attr('value', '新建歌单');
                     return false;
                 }
             }
@@ -209,60 +296,9 @@
     </script>
 
     <div class="am-u-sm-12">
-        <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
+        <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
 
 </div>
-<script>
-    $(function () {
-        /*
-        if(location.href.substr(19,11)=='/Index/home')
-        {
-          $('#nav-index').addClass('am-active');
-        }else if(location.href.substr(11,3)=='/fm')
-        {
-          $('#nav-fm').addClass('am-active');
-        }else if(location.href.substr(14,7)=='/Upload')
-        {
-          $('#nav-upload').addClass('am-active');
-        }
-        }else if(location.href.substr(14,8)=='/Bangumi')
-        {
-          $('#nav-bangumi').addClass('am-active');
-        }
-        */
-
-        if (location.pathname == '/Index/home') {
-            $('#nav-index').addClass('am-active');
-        } else if (location.pathname == '/fm') {
-            $('#nav-fm').addClass('am-active');
-        } else if (location.pathname == '/Index/client') {
-            $('#nav-client').addClass('am-active');
-        } else if (location.pathname == '/Upload') {
-            $('#nav-upload').addClass('am-active');
-        } else if (location.pathname == '/Bangumi') {
-            $('#nav-bangumi').addClass('am-active');
-        } else if (location.pathname == '/Live') {
-            $('#nav-live').addClass('am-active');
-        } else if (location.pathname == '/Comic') {
-            $('#nav-comic').addClass('am-active');
-        }
-    });
-
-    var showAvatarMenu = function () {
-        $('#myAvatar').dropdown('open');
-    }
-
-    $(document).mouseover(function (e) {
-        if ($('#myAvatar').has(e.target).length == 0 && $('#avatarMenu').has(e.target).length == 0)
-            $('#myAvatar').dropdown('close');
-    });
-</script>
-</body>
-</html>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

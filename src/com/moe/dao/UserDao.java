@@ -2,6 +2,7 @@ package com.moe.dao;
 
 import com.moe.entity.Question;
 import com.moe.entity.User;
+import com.moe.entity.UserDetail;
 
 public interface UserDao {
     /**
@@ -66,4 +67,39 @@ public interface UserDao {
      * @return
      */
     public User selectSongUploadHistory(int songId);
+
+    /**
+     * 通过用户ID获取用户名
+     * @param id
+     * @return
+     */
+    public String selectUsernameById(int id);
+
+    /**
+     * 通过用户ID获取设置Session的User
+     * @param id
+     * @return
+     */
+    public User selectUserSession(int id);
+
+    /**
+     * 更改用户信息
+     * @param user
+     * @return
+     */
+    public boolean updateUser(User user);
+
+    /**
+     * 查询用户细节信息
+     * @param id
+     * @return
+     */
+    public UserDetail selectUserDetail(int id);
+
+    /**
+     * 通过用户名获取用户ID
+     * @param username
+     * @return
+     */
+    public int selectIdByUsername(String username);
 }

@@ -59,4 +59,12 @@
         <servlet-name>DiscussServlet</servlet-name>
         <url-pattern>/Discuss</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ListServlet</servlet-name>
+        <servlet-class>com.moe.servlet.ListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListServlet</servlet-name>
+        <url-pattern>/List</url-pattern>
+    </servlet-mapping>
 </web-app>
