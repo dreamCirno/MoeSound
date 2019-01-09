@@ -1,16 +1,22 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/8
-  Time: 9:41
+  Date: 2019/1/9
+  Time: 16:02
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${empty sessionScope.user}">
-    <c:redirect url="/login.jsp"></c:redirect>
-</c:if>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <c:if test="${empty sessionScope.user}">
+        <c:redirect url="/login.jsp"></c:redirect>
+    </c:if>
+    <c:if test="${sessionScope.user.grade>0}">
+        <script>
+            alert('禁止访问');
+            location.href = '/web.jsp';
+        </script>
+    </c:if>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -138,8 +144,7 @@
     <div class="am-u-sm-12">
         <!--h2 style="margin-top:0px;">登录 Biu.Moe</h2-->
         <div class="am-u-sm-6">
-            <form action="/User?action=updateInfo&userId=${requestScope.userinfo.id}" method="POST" class="am-form"
-                  id="biuform">
+            <form action="/User?action=updateByAdmin&userId=${requestScope.userinfo.id}" method="POST" class="am-form" id="biuform">
                 <fieldset>
                     <legend>个人资料管理</legend>
                     <div class="am-form-group">
@@ -186,20 +191,17 @@
                     </div>
                     <div class="am-form-group">
                         <h3>密保问题</h3>
-                        <p>问题：<input type="text" name="question" id="question" value="${userinfo.question.question}">
-                        </p>
-                        <p>答案：<input type="text" name="answer" id="answer" value="${userinfo.question.answer}"></p>
+                        <p>问题：<input type="text" name="question" id="question"
+                                     value="${requestScope.userinfo.question.question}"/></p>
+                        <p>答案：<input type="text" name="answer" id="answer"
+                                     value="${requestScope.userinfo.question.answer}"></p>
                     </div>
                     <input type="submit" value="修改信息" class="am-btn am-round am-btn-primary" id="dosubmit">
                 </fieldset>
             </form>
-            <form action="/User?action=updatepass" method="POST" class="am-form" id="biuform">
+            <form action="/User?action=updatePassByAdmin&userId=${requestScope.userinfo.id}" method="POST" class="am-form" id="biuform">
                 <fieldset>
                     <h3>修改密码</h3>
-                    <div class="am-form-group">
-                        <label for="password">旧密码</label>
-                        <input type="password" id="oldpass" name="oldpass">
-                    </div>
                     <div class="am-form-group">
                         <label for="password">新密码</label>
                         <input type="password" id="newpass" name="newpass">
@@ -332,3 +334,4 @@
 </div>
 </body>
 </html>
+

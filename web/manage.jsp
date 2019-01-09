@@ -1,16 +1,25 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/8
-  Time: 9:38
+  Date: 2019/1/9
+  Time: 9:39
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${empty sessionScope.user}">
-    <c:redirect url="/login.jsp"></c:redirect>
-</c:if>
+<%--<c:if test="${empty sessionScope.user}">--%>
+<%--<c:redirect url="/login.jsp"></c:redirect>--%>
+<%--</c:if>--%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <c:if test="${empty sessionScope.user}">
+        <c:redirect url="/login.jsp"></c:redirect>
+    </c:if>
+    <c:if test="${sessionScope.user.grade>0}">
+        <script>
+            alert('禁止访问');
+            location.href = '/web.jsp';
+        </script>
+    </c:if>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,105 +144,80 @@
     </header>
 </div>
 <div class="am-g am-g-fixed">
-    <style>
-    </style>
     <div class="am-u-sm-12">
-        <div class="am-g">
-            <div class="am-u-sm-1 am-padding-right-0 am-margin-right-0">
-                <img id="cover" class="am-circle" height="100" width="100" src="/img/cirno.png">
-            </div>
-            <div class="am-u-sm-3 am-margin-top-0 am-margin-left-xs am-padding-top-0" style="height: 100px;">
-                <div class="am-text-lg">${userdetail.username} <span class="am-icon-mars"></span></div>
-                <div>创建 ${userdetail.createListCount} 份歌单</div>
-                <%--<div class="am-margin-top-sm">--%>
-                <%--<a class="am-btn am-btn-primary am-btn-xs am-round" href="/Message/view/uid/3309"><span--%>
-                <%--class="am-icon-envelope"></span> 发私信</a>--%>
-                <%--</div>--%>
-            </div>
-            <div class="am-u-sm-3 am-margin-top-0 am-padding-top-0" style="height: 100px;">
-                <%--<div>在线 33 小时</div>--%>
-                <div>注册时间：${userdetail.registerTime}</div>
-                <div>最后访问：${userdetail.lastTime}</div>
-            </div>
-            <div class="am-u-sm-4 am-margin-top-0 am-margin-left-xs am-padding-top-0" style="height: 100px;">
-                <div>上传 ${userdetail.uploadCount} 首音乐</div>
-                <%--<div>编辑歌曲资料 1 次</div>--%>
-                <%--<div>整理番剧信息 0 次</div>--%>
-            </div>
-        </div>
-    </div>
-    <div class="am-u-sm-12">
-        <div class="am-g">
-            <div class="am-u-sm-6 am-margin-top-0 am-padding-top-0">
-                <h2>最新动态</h2>
-                <ul class="index-news">
-                    <c:forEach items="${userdetail.userActives}" var="item">
-                        <li class="index-new">
-                                ${item.getTimeDifference(item.playTime)}前 播放<a href="/Music?musicId=${item.musicId}">${item.musicName}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-            <div class="am-u-sm-6 am-margin-top-0 am-padding-top-0">
-                <h2>创建的歌单</h2>
-                <ul class="am-list">
-                    <c:forEach items="${userdetail.list}" var="item">
-                    <li><a href="/List?action=select&list=${item.id}" class="am-text-truncate"><i class="am-icon-home am-icon-list am-icon-fw"></i>
-                        ${item.name}</a>
-                    </li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--div class="grid" style="margin:.5rem 0;">
-        <div class="row cells1">
-            <div class="cell colspan1">
-                <div class="flex-grid">
-                    <div class="row">
-                        <div class="cell colspan2">
-                        <img id="cover" height="200" width="200" src="/User/showAvatar/uid/3309" />
-                        </div>
-                        <div class="cell colspan6" style="margin-left:10px;margin-top:-10px;">
-                        <h2>dreamCirno <span class="am-icon-mars"></span></h2>
-                        <h2>创建 1 份歌单</h2>
-                        <h2>上传 0 首音乐</h2>
-                        <p></p>
-                        </div>
-                        <div class="cell colspan4">
-                        <table>
-                            <tr><td><h2>注册时间：</h2></td><td><h2>2017年12月11日</h2></td></tr>
-                            <tr><td><h2>最后访问：</h2></td><td><h2>2019年01月08日</h2></td></tr>
-                            <tr><td></td><td><a class="button primary" href="/Message/view/uid/3309">发送私信</a><td></tr>
-
-                        </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--第二部分>
-    <div class="grid">
-        <div class="row cells2">
-            <div class="cell">
-                <h2>dreamCirno创建的歌单</h2>
-                <table class="table hovered">
-                    <tbody>
+        <h2 style="margin-top:0px;">用户管理</h2>
+        <%--<div class="am-form-group">--%>
+        <%--<label class="am-radio-inline">--%>
+        <%--<input type="radio" name="stype" value="title" checked=""--%>
+        <%--onclick="location.href='/Song/search?data=%E5%88%86%E7%B1%BB';"> 搜用户名--%>
+        <%--</label>--%>
+        <%--<label class="am-radio-inline">--%>
+        <%--<input type="radio" name="stype" value="singer"--%>
+        <%--onclick="location.href='/Song/search?data=%E5%88%86%E7%B1%BB&amp;stype=singer';"> 搜ID--%>
+        <%--</label>--%>
+        <%--</div>--%>
+        <div>
+            <table class="am-table am-table-hover am-table-compact am-text-truncate am-text-sm"
+                   style="table-layout:fixed;">
+                <thead>
+                <tr>
+                    <th style="width:100px;">用户ID</th>
+                    <th style="width:185px;">用户名称</th>
+                    <th style="width:30px;">性别</th>
+                    <th style="width:185px;">注册时间</th>
+                    <th style="width:30px;">管理</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${requestScope.userlist}" var="item">
                     <tr>
-                            <td><a href="/c7162">dreamCirno喜欢的音乐</a></td>
-                        </tr>                </tbody>
-                </table>
-            </div>
-            <div class="cell">
-                <h2>dreamCirno最近上传的歌曲</h2>
-                <table class="table hovered">
-                    <tbody>
-                                    </tbody>
-                </table>
-            </div>
+                        <td class="am-text-truncate"><a href="/User?action=userdetail&id=${item.id}">
+                            <c:if test="${item.grade==0}">
+                            <span class="am-badge am-badge-danger">管理员</span> ${item.id} </a>
+                            </c:if>
+                            <c:if test="${item.grade==1}">
+                                <span class="am-badge am-badge-secondary">普通用户</span> ${item.id} </a>
+                            </c:if>
+                        </td>
+                        <td class="am-text-truncate"><a
+                                href="/User?action=userdetail&id=${item.id}">${item.username}</a>
+                        </td>
+                        <td class="am-text-truncate">
+                            <c:choose>
+                                <c:when test="${item.sex==0}">
+                                    汉子
+                                </c:when>
+                                <c:when test="${item.sex==1}">
+                                    妹子
+                                </c:when>
+                                <c:when test="${item.sex==2}">
+                                    秀吉
+                                </c:when>
+                            </c:choose>
+                        </td>
+                        <td class="am-text-truncate">${item.registerTime}</td>
+                        <td>
+                            <a class="am-icon-edit am-text-default" style="cursor:pointer;"
+                               href="/User?action=getInfo&userId=${item.id}"></a>
+                            <a class="am-icon-level-up am-text-default" style="cursor:pointer;"
+                               href="/User?action=levelup&userId=${item.id}"></a>
+                            <a class="am-icon-remove am-text-default" style="cursor:pointer;"
+                               href="/User?action=delete&userId=${item.id}"></a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </div-->
+        <%--<div>--%>
+            <%--<ul class="am-pagination">--%>
+                <%--共7首--%>
+                <%--<li class="am-disabled"><a href="###">上一页</a></li>--%>
+                <%--<li class="am-disabled"><a href="###">下一页</a></li>--%>
+            <%--</ul>--%>
+        <%--</div>--%>
+    </div>
+
 
     <div class="am-u-sm-12">
         <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>

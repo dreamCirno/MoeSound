@@ -4,6 +4,8 @@ import com.moe.entity.Question;
 import com.moe.entity.User;
 import com.moe.entity.UserDetail;
 
+import java.util.List;
+
 public interface UserDao {
     /**
      * 登录
@@ -63,6 +65,7 @@ public interface UserDao {
 
     /**
      * 获取歌曲上传资料：用户名和上传日期
+     *
      * @param songId
      * @return
      */
@@ -70,6 +73,7 @@ public interface UserDao {
 
     /**
      * 通过用户ID获取用户名
+     *
      * @param id
      * @return
      */
@@ -77,6 +81,7 @@ public interface UserDao {
 
     /**
      * 通过用户ID获取设置Session的User
+     *
      * @param id
      * @return
      */
@@ -84,6 +89,7 @@ public interface UserDao {
 
     /**
      * 更改用户信息
+     *
      * @param user
      * @return
      */
@@ -91,6 +97,7 @@ public interface UserDao {
 
     /**
      * 查询用户细节信息
+     *
      * @param id
      * @return
      */
@@ -98,8 +105,41 @@ public interface UserDao {
 
     /**
      * 通过用户名获取用户ID
+     *
      * @param username
      * @return
      */
     public int selectIdByUsername(String username);
+
+    /**
+     * 查询用户列表
+     *
+     * @param page
+     * @param count
+     * @return
+     */
+    public List<User> selectUserList(int page, int count);
+
+    /**
+     * 删除用户
+     *
+     * @param userId
+     * @return
+     */
+    public boolean deleteUser(int userId);
+
+    /**
+     * 提升用户为管理员
+     *
+     * @param userId
+     * @return
+     */
+    public boolean updateUserToAdmin(int userId);
+
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    public User selectUserInfo(int userId);
 }

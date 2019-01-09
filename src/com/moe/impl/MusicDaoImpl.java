@@ -8,13 +8,14 @@ import com.moe.utils.DBUtils;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MusicDaoImpl implements MusicDao {
     @Override
     public boolean insertMusic(Music music) {
         try {
             String sql = "INSERT INTO music (classifyId,musicName,singer,duration,imagePath,path,userId) VALUES (?,?,?,?,?,?,?)";
-            int result = DBUtils.doUpdate(sql, music.getClassifyId(), music.getName(), music.getSinger(), music.getDuration(), music.getImagePath(), music.getPath(), music.getUserId());
+            int result = DBUtils.doUpdate(sql, music.getClassifyId(), music.getName(), music.getSinger(), new Random().nextInt(300) % (300 - 120 + 1) + 120, music.getImagePath(), music.getPath(), music.getUserId());
             if (result > 0) {
                 return true;
             }
@@ -320,5 +321,43 @@ public class MusicDaoImpl implements MusicDao {
             DBUtils.closeAll();
         }
         return list;
+    }
+
+    @Override
+    public boolean updateMusic(Music music) {
+        try {
+            String sql = "UPDATE music SET musicName=?,singer=?,classifyId=? WHERE musicId = ?";
+            int result = DBUtils.doUpdate(sql, music.getName(), music.getSinger(), music.getClassifyId(), music.getId());
+            if (result > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteMusic(int musicId) {
+        try {
+            String sql = "DELETE FROM listconnect WHERE MusicID = ?";
+            int result = DBUtils.doUpdate(sql, musicId);
+            sql = "DELETE FROM nplaymusic WHERE MusicID = ?";
+            result += DBUtils.doUpdate(sql, musicId);
+            sql = "DELETE FROM yplaymusic WHERE MusicID = ?";
+            result += DBUtils.doUpdate(sql, musicId);
+            sql = "DELETE FROM music WHERE MusicID = ?";
+            result += DBUtils.doUpdate(sql, musicId);
+            if (result > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return false;
     }
 }

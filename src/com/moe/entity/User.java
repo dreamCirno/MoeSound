@@ -1,5 +1,8 @@
 package com.moe.entity;
 
+import com.moe.factory.Factory;
+
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class User implements java.io.Serializable {
@@ -22,6 +25,12 @@ public class User implements java.io.Serializable {
         this.password = password;
     }
 
+    // 修改密码
+    public User(int id, String password) {
+        this.id = id;
+        this.password = password;
+    }
+
     // 用户上传歌曲历史信息
     public User(String username, Timestamp uploadTime) {
         this.username = username;
@@ -31,6 +40,13 @@ public class User implements java.io.Serializable {
     // 验证密保问题
     public User(String username, Question question) {
         this.username = username;
+        this.question = question;
+    }
+
+    // 修改信息
+    public User(String username, int sex, Question question) {
+        this.username = username;
+        this.sex = sex;
         this.question = question;
     }
 
@@ -45,10 +61,11 @@ public class User implements java.io.Serializable {
     }
 
     // 存放Session
-    public User(int userId, String username, int sex) {
+    public User(int userId, String username, int sex, int grade) {
         this.username = username;
         this.id = userId;
         this.sex = sex;
+        this.grade = grade;
     }
 
     // 更改用户信息
@@ -57,6 +74,15 @@ public class User implements java.io.Serializable {
         this.username = username;
         this.sex = sex;
         this.password = password;
+    }
+
+    // 管理员用户信息
+    public User(int userId, String username, int sex, int grade, Timestamp registerTime) {
+        this.id = userId;
+        this.username = username;
+        this.sex = sex;
+        this.grade = grade;
+        this.registerTime = registerTime;
     }
 
     public int getId() {

@@ -150,4 +150,20 @@ public interface MusicDao {
      * @return
      */
     public List<UserActive> selectUserActiveByUserId(int userId, int limit);
+
+    /**
+     * 修改歌曲信息
+     *
+     * @param music
+     * @return
+     */
+    public boolean updateMusic(Music music);
+
+    /**
+     * 删除歌曲
+     *
+     * @param musicId
+     * @return
+     */
+    public boolean deleteMusic(int musicId);
 }

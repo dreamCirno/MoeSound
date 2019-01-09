@@ -1,13 +1,10 @@
 <%--
   User: dreamCirno
-  Date: 2019/1/8
-  Time: 9:38
+  Date: 2019/1/9
+  Time: 10:26
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${empty sessionScope.user}">
-    <c:redirect url="/login.jsp"></c:redirect>
-</c:if>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -32,6 +29,12 @@
     <script src="/js/jquery/jquery.js"></script>
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/jquery.form.min.js"></script>
+    <script>
+        function playOne(src) {
+            $("#myaudio", parent.document).attr('src', src);
+            $("#myaudio", parent.document)[0].play();
+        }
+    </script>
 </head>
 <body>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -135,108 +138,73 @@
     </header>
 </div>
 <div class="am-g am-g-fixed">
-    <style>
-    </style>
     <div class="am-u-sm-12">
-        <div class="am-g">
-            <div class="am-u-sm-1 am-padding-right-0 am-margin-right-0">
-                <img id="cover" class="am-circle" height="100" width="100" src="/img/cirno.png">
-            </div>
-            <div class="am-u-sm-3 am-margin-top-0 am-margin-left-xs am-padding-top-0" style="height: 100px;">
-                <div class="am-text-lg">${userdetail.username} <span class="am-icon-mars"></span></div>
-                <div>创建 ${userdetail.createListCount} 份歌单</div>
-                <%--<div class="am-margin-top-sm">--%>
-                <%--<a class="am-btn am-btn-primary am-btn-xs am-round" href="/Message/view/uid/3309"><span--%>
-                <%--class="am-icon-envelope"></span> 发私信</a>--%>
-                <%--</div>--%>
-            </div>
-            <div class="am-u-sm-3 am-margin-top-0 am-padding-top-0" style="height: 100px;">
-                <%--<div>在线 33 小时</div>--%>
-                <div>注册时间：${userdetail.registerTime}</div>
-                <div>最后访问：${userdetail.lastTime}</div>
-            </div>
-            <div class="am-u-sm-4 am-margin-top-0 am-margin-left-xs am-padding-top-0" style="height: 100px;">
-                <div>上传 ${userdetail.uploadCount} 首音乐</div>
-                <%--<div>编辑歌曲资料 1 次</div>--%>
-                <%--<div>整理番剧信息 0 次</div>--%>
-            </div>
-        </div>
-    </div>
-    <div class="am-u-sm-12">
-        <div class="am-g">
-            <div class="am-u-sm-6 am-margin-top-0 am-padding-top-0">
-                <h2>最新动态</h2>
-                <ul class="index-news">
-                    <c:forEach items="${userdetail.userActives}" var="item">
-                        <li class="index-new">
-                                ${item.getTimeDifference(item.playTime)}前 播放<a href="/Music?musicId=${item.musicId}">${item.musicName}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-            <div class="am-u-sm-6 am-margin-top-0 am-padding-top-0">
-                <h2>创建的歌单</h2>
-                <ul class="am-list">
-                    <c:forEach items="${userdetail.list}" var="item">
-                    <li><a href="/List?action=select&list=${item.id}" class="am-text-truncate"><i class="am-icon-home am-icon-list am-icon-fw"></i>
-                        ${item.name}</a>
-                    </li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--div class="grid" style="margin:.5rem 0;">
-        <div class="row cells1">
-            <div class="cell colspan1">
-                <div class="flex-grid">
-                    <div class="row">
-                        <div class="cell colspan2">
-                        <img id="cover" height="200" width="200" src="/User/showAvatar/uid/3309" />
-                        </div>
-                        <div class="cell colspan6" style="margin-left:10px;margin-top:-10px;">
-                        <h2>dreamCirno <span class="am-icon-mars"></span></h2>
-                        <h2>创建 1 份歌单</h2>
-                        <h2>上传 0 首音乐</h2>
-                        <p></p>
-                        </div>
-                        <div class="cell colspan4">
-                        <table>
-                            <tr><td><h2>注册时间：</h2></td><td><h2>2017年12月11日</h2></td></tr>
-                            <tr><td><h2>最后访问：</h2></td><td><h2>2019年01月08日</h2></td></tr>
-                            <tr><td></td><td><a class="button primary" href="/Message/view/uid/3309">发送私信</a><td></tr>
-
-                        </table>
+        <!--h2 style="margin-top:0px;">登录 MoeSound</h2-->
+        <div class="am-u-sm-6">
+            <%--<form action="${pageContext.request.contextPath}/Upload" enctype="multipart/form-data" method="post">--%>
+            <form action="/Manage?action=edit" method="post">
+                <!--
+                上传用户：<input type="text" name="username"><br/>
+                --上传文件2：<input type="file" name="file2"><br/>
+                上传文件1：<input type="file" name="file1" multiple="multiple"><br/>
+                -->
+                <fieldset>
+                    <legend>修改歌曲信息</legend>
+                    <input name="musicId" value="${param.musicId}" hidden="hidden">
+                    <div class="am-form-group">
+                        歌曲名：
+                        <div class="input-control text" data-role="input">
+                            <input type="text" class="input-control" name="title" id="title" value="${requestScope.name}"
+                                   style="width:800px">
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="am-form-group">
+                        歌手：
+                        <div class="input-control text" data-role="input">
+                            <input type="text" class="input-control" name="singer" id="singer" value="${requestScope.singer}"
+                                   style="width:800px">
+                        </div>
+                    </div>
+                    <div class="am-form-group" style="width:800px">
+                        <label for="month">分类</label>
+                        <label class="am-radio-inline">
+                            <input type="radio" name="type1" value="1" data-am-ucheck="" class="am-ucheck-radio"><span
+                                class="am-ucheck-icons"><i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>
+                            动画
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" name="type1" value="2" data-am-ucheck="" class="am-ucheck-radio"><span
+                                class="am-ucheck-icons"><i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>
+                            Galgame
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" name="type1" value="3" data-am-ucheck="" class="am-ucheck-radio"><span
+                                class="am-ucheck-icons"><i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>
+                            偶像
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" name="type1" value="4" data-am-ucheck="" class="am-ucheck-radio"><span
+                                class="am-ucheck-icons"><i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>
+                            东方Project
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" name="type1" value="5" data-am-ucheck="" class="am-ucheck-radio"><span
+                                class="am-ucheck-icons"><i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>
+                            VOCALOID
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" name="type1" value="6" data-am-ucheck="" class="am-ucheck-radio"><span
+                                class="am-ucheck-icons"><i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>
+                            同人（MAD用曲和其它）
+                        </label>
+                    </div>
+                    <input type="submit" value="修改">
+                </fieldset>
+            </form>
         </div>
     </div>
-    <!--第二部分>
-    <div class="grid">
-        <div class="row cells2">
-            <div class="cell">
-                <h2>dreamCirno创建的歌单</h2>
-                <table class="table hovered">
-                    <tbody>
-                    <tr>
-                            <td><a href="/c7162">dreamCirno喜欢的音乐</a></td>
-                        </tr>                </tbody>
-                </table>
-            </div>
-            <div class="cell">
-                <h2>dreamCirno最近上传的歌曲</h2>
-                <table class="table hovered">
-                    <tbody>
-                                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div-->
-
     <div class="am-u-sm-12">
-        <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
+        <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
 
 </div>

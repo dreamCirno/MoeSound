@@ -1,5 +1,7 @@
 package com.moe.entity;
 
+import com.moe.factory.Factory;
+
 import java.sql.Timestamp;
 
 public class Discuss implements java.io.Serializable {
@@ -17,6 +19,12 @@ public class Discuss implements java.io.Serializable {
         this.musicId = musicId;
         this.userId = userId;
         this.content = content;
+    }
+
+    public Discuss(int musicId, int userId, Timestamp publishTime) {
+        this.musicId = musicId;
+        this.userId = userId;
+        this.publishTime = publishTime;
     }
 
     public Discuss(String username, String content, Timestamp publishTime) {
@@ -63,5 +71,20 @@ public class Discuss implements java.io.Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getUserIdByUsername(String username) {
+        return Factory.getUserDaoInstance().selectIdByUsername(username);
+    }
+
+    @Override
+    public String toString() {
+        return "Discuss{" +
+                "musicId=" + musicId +
+                ", userId=" + userId +
+                ", content='" + content + '\'' +
+                ", publishTime=" + publishTime +
+                ", username='" + username + '\'' +
+                '}';
     }
 }

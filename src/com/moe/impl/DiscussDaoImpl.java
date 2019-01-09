@@ -41,4 +41,20 @@ public class DiscussDaoImpl implements DiscussDao {
         }
         return list;
     }
+
+    @Override
+    public boolean deleteComment(Discuss discuss) {
+        try {
+            String sql = "DELETE FROM discuss WHERE musicId = ? AND userId = ? AND publishTime = ?";
+            int result = DBUtils.doUpdate(sql, discuss.getMusicId(), discuss.getUserId(), discuss.getPublishTime());
+            if (result > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return false;
+    }
 }

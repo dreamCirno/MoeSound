@@ -37,101 +37,99 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 
 <div class="am-sticky-placeholder" style="height: 51px; margin: 0px 0px 19.2px;">
-    <div class="am-sticky-placeholder" style="height: 51px; margin: 0px;">
-        <header class="am-topbar am-topbar-inverse am-sticky am-animation-slide-top"
-                data-am-sticky="{animation: 'slide-top'}" style="margin: 0px; top: 0px; left: 0px; width: 1654px;">
-            <div class="am-center topbar">
-                <h1 class="am-topbar-brand">
-                    <a href="/web.jsp">
-                        <svg style="fill:#FFF;width:100px;height:45px;margin-top:2px;"
-                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.67 45">
-                            <path d="M37.71,27.05c0,1.94-0.89,4.18-2.58,6.21c-1.61,1.9-5.75,5.58-12.08,11.58l-5.15-4.65l10.23-9.68
+    <header class="am-topbar am-topbar-inverse" data-am-sticky="{animation: 'slide-top'}" style="margin: 0px;">
+        <div class="am-center topbar">
+            <h1 class="am-topbar-brand">
+                <a href="/web.jsp">
+                    <svg style="fill:#FFF;width:100px;height:45px;margin-top:2px;" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 89.67 45">
+                        <path d="M37.71,27.05c0,1.94-0.89,4.18-2.58,6.21c-1.61,1.9-5.75,5.58-12.08,11.58l-5.15-4.65l10.23-9.68
           c1.23-1.14,1.86-2.2,1.86-3.42c0-1.82-1.56-3.13-4.56-5.07c2.54-2.07,3.89-3.72,3.89-5.45c0-2.07-2.2-3.04-6.51-4.65v22.69h-7.27
           V8.79l7.86-3.25c9,3.51,13.6,5.41,13.6,10.06c0,2.07-0.89,3.89-2.75,5.58C36.57,22.82,37.71,24.68,37.71,27.05z"></path>
-                            <rect x="41.38" y="12.98" width="7.14" height="21.63"></rect>
-                            <path d="M68.14,35.46l-1.86-3.63l-7.27,3.63c-4.39-1.82-6.34-4.73-6.34-9.63v-12.8h6.93v11.66
+                        <rect x="41.38" y="12.98" width="7.14" height="21.63"></rect>
+                        <path d="M68.14,35.46l-1.86-3.63l-7.27,3.63c-4.39-1.82-6.34-4.73-6.34-9.63v-12.8h6.93v11.66
           c0,1.65,0.55,2.7,1.82,3.38c0.46-0.21,1.86-0.89,4.1-2.11V13.02h7.01v13.22c0,1.61,0.8,3.59,2.45,5.87L68.14,35.46z"></path>
-                            <path d="M49.25,6.01c0,1.45-1.21,2.66-2.23,3.35c-0.56,0.38-1.63,1.34-2.03,2.09c-0.35-0.78-1.47-1.7-2.01-2.08
+                        <path d="M49.25,6.01c0,1.45-1.21,2.66-2.23,3.35c-0.56,0.38-1.63,1.34-2.03,2.09c-0.35-0.78-1.47-1.7-2.01-2.08
           c-1.21-0.87-2.26-1.9-2.26-3.36c0-2.1,1.91-3.81,4.27-3.81C47.33,2.21,49.25,3.91,49.25,6.01z"></path>
-                        </svg>
-                    </a>
-                </h1>
+                    </svg>
+                </a>
+            </h1>
 
-                <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-                        data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-                        class="am-icon-bars"></span></button>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                    data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
 
-                <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-                    <ul class="am-nav am-nav-pills am-topbar-nav">
-                        <li id="nav-index"><a href="/web.jsp">首页</a></li>
-                        <li class="am-dropdown" data-am-dropdown="">
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li id="nav-index"><a href="/web.jsp">首页</a></li>
+                    <li class="am-dropdown" data-am-dropdown="">
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                            分类 <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li id="it1"><a href="/Classify?sort=1&page=1">动画</a></li>
+                            <li id="it2"><a href="/Classify?sort=2&page=1">Galgame</a></li>
+                            <li id="it3"><a href="/Classify?sort=3&page=1">偶像</a></li>
+                            <li id="it4"><a href="/Classify?sort=4&page=1">东方Project</a></li>
+                            <li id="it5"><a href="/Classify?sort=5&page=1">VOCALOID</a></li>
+                            <li id="it6"><a href="/Classify?sort=6&page=1">同人</a></li>
+                            <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
+                            <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
+                        </ul>
+                    </li>
+
+                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
+                    <c:if test="${sessionScope.user.grade<1}">
+                        <li><a href="/User?action=usermanage">用户管理</a></li>
+                    </c:if>
+                </ul>
+
+                <c:if test="${empty sessionScope.user}">
+                    <div class="am-topbar-right">
+                        <div class="am-topbar-right">
+                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                    onclick="location.href='/login.jsp';">登录
+                            </button>
+                            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                                    onclick="location.href='/register.jsp';">注册
+                            </button>
+                        </div>
+                    </div>
+                </c:if>
+<c:if test="${not empty sessionScope.user}">
+                    <div class="am-topbar-right">
+                        <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
+                             data-am-dropdown="">
                             <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                                分类 <span class="am-icon-caret-down"></span>
+                                <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
+                                     class="am-circle my-avatar">
                             </a>
-                            <ul class="am-dropdown-content">
-                                <li id="it1"><a href="/Classify?sort=1&page=1&type=动画">动画</a></li>
-                                <li id="it2"><a href="/Classify?sort=2&page=1&type=Galgame">Galgame</a></li>
-                                <li id="it3"><a href="/Classify?sort=3&page=1&type=偶像">偶像</a></li>
-                                <li id="it4"><a href="/Classify?sort=4&page=1&type=东方Project">东方Project</a></li>
-                                <li id="it5"><a href="/Classify?sort=5&page=1&type=VOCALOID">VOCALOID</a></li>
-                                <li id="it6"><a href="/Classify?sort=6&page=1&type=同人">同人</a></li>
-                                <%--<li id="it7"><a href="/Index/type/t/7">纯音乐</a></li>--%>
-                                <%--<li id="it0"><a href="/Index/type/t/0">未分类</a></li>--%>
+                            <ul id="avatarMenu" class="am-dropdown-content">
+                                <li><i class="avatarMenuI"></i><a
+                                        href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
+                                <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
+                                    <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
+                                <!--li><a href="/Live/manage">直播间管理</a></li-->
+                                    <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
+                                <li><a href="/User?action=selectInfo&userId=${sessionScope.user.id}">个人资料管理</a></li>
+
+                                <li><a href="/User?action=logout">退出登录</a></li>
                             </ul>
-                        </li>
-
-                        <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
-                        <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
-                    </ul>
-
-
-                    <c:if test="${empty sessionScope.user}">
-                        <div class="am-topbar-right">
-                            <div class="am-topbar-right">
-                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                        onclick="location.href='/login.jsp';">登录
-                                </button>
-                                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                                        onclick="location.href='/register.jsp';">注册
-                                </button>
-                            </div>
                         </div>
-                    </c:if>
-                    <c:if test="${not empty sessionScope.user}">
-                        <div class="am-topbar-right">
-                            <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
-                                 data-am-dropdown="">
-                                <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                                    <img src="https://biu.moe/Public/face/9/3309.jpg" width="40" height="40"
-                                         class="am-circle my-avatar">
-                                </a>
-<ul id="avatarMenu" class="am-dropdown-content">
-                                    <li><i class="avatarMenuI"></i><a
-                                            href="/User?action=userdetail&id=${sessionScope.user.id}">我的主页</a></li>
-                                    <li><a href="/List?action=select&list=${sessionScope.user.id}">我喜欢的音乐</a></li>
-                                        <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
-                                    <!--li><a href="/Live/manage">直播间管理</a></li-->
-                                        <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
-                                    <li><a href="/info.jsp">个人资料管理</a></li>
+                    </div>
+                </c:if>
 
-                                    <li><a href="/User?action=logout">退出登录</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </c:if>
-
-
-                    <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
-                          action="/Search?page=1">
-                        <div class="am-form-group">
-                            <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
-                                   placeholder="歌曲名、出处">
-                        </div>
-                    </form>
-                </div>
-            </div><!--最外围-->
-        </header>
-    </div>
+                <form class="am-topbar-form am-topbar-right am-form-inline" role="search" method="POST"
+                      action="/Search?page=1">
+                    <div class="am-form-group">
+                        <input type="text" class="am-form-field am-input-sm" name="keyword" value=""
+                               placeholder="歌曲名、出处">
+                    </div>
+                </form>
+            </div>
+        </div><!--最外围-->
+    </header>
 </div>
 
 <div class="am-g am-g-fixed">

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.List;
 
 @WebServlet(name = "DiscussServlet")
@@ -28,21 +29,46 @@ public class DiscussServlet extends HttpServlet {
         out = response.getWriter();
         String action = request.getParameter("action");
 
-        session = request.getSession();
-        int musicId = Integer.parseInt(request.getParameter("sid"));
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            int userId = user.getId();
-            String content = request.getParameter("content");
-            Discuss discuss = new Discuss(musicId, userId, content);
-            if (Factory.getDiscussDaoInstance().insertComment(musicId, userId, content)) {
-                out.write(String.format("<script>location.href='/Music?musicId=%s'</script>", musicId));
-            } else {
-                out.write(String.format("<script>alert('评论失败');location.href='/Music?musicId=%s'</script>", musicId));
-            }
-        } else {
-            out.write(String.format("<script>alert('请先登录');location.href='/login.jsp'</script>'", musicId));
+        switch (action) {
+            case "publish":
+                session = request.getSession();
+                int musicId = Integer.parseInt(request.getParameter("sid"));
+                User user = (User) session.getAttribute("user");
+                if (user != null) {
+                    int userId = user.getId();
+                    String content = request.getParameter("content");
+                    Discuss discuss = new Discuss(musicId, userId, content);
+                    if (Factory.getDiscussDaoInstance().insertComment(musicId, userId, content)) {
+                        out.write(String.format("<script>location.href='/Music?musicId=%s'</script>", musicId));
+                    } else {
+                        out.write(String.format("<script>alert('评论失败');location.href='/Music?musicId=%s'</script>", musicId));
+                    }
+                } else {
+                    out.write(String.format("<script>alert('请先登录');location.href='/login.jsp'</script>'"));
+                }
+                break;
+            case "delete":
+                user = (User) request.getSession().getAttribute("user");
+                if (user != null) {
+                    if (user.getGrade() < 2) {
+                        musicId = Integer.parseInt(request.getParameter("musicId"));
+                        int userId = Integer.parseInt(request.getParameter("userId"));
+                        Timestamp time = (Timestamp.valueOf(request.getParameter("time")));
+                        Discuss discuss = new Discuss(musicId, userId, time);
+                        if (Factory.getDiscussDaoInstance().deleteComment(discuss)) {
+                            out.write(String.format("<script>alert('删除成功');location.href='/Music?musicId=%s'</script>'", musicId));
+                        } else {
+                            out.write(String.format("<script>alert('删除失败');location.href='/Music?musicId=%s'</script>'", musicId));
+                        }
+                    } else {
+                        out.write(String.format("<script>alert('非法操作');location.href='/web.jsp'</script>'"));
+                    }
+                } else {
+                    out.write(String.format("<script>alert('请先登录');location.href='/login.jsp'</script>'"));
+                }
+                break;
         }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

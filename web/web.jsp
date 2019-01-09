@@ -94,6 +94,9 @@
 
                     <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
                     <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
+                    <c:if test="${sessionScope.user.grade<1}">
+                        <li><a href="/User?action=usermanage">用户管理</a></li>
+                    </c:if>
                 </ul>
 
                 <c:if test="${empty sessionScope.user}">
@@ -123,7 +126,7 @@
                                     <%--<li><a href="/Collect/myLike">我收藏的歌单</a></li>--%>
                                 <!--li><a href="/Live/manage">直播间管理</a></li-->
                                     <%--<li><a href="/Upload/myList">我上传的音乐</a></li>--%>
-                                <li><a href="/info.jsp">个人资料管理</a></li>
+                                <li><a href="/User?action=selectInfo&userId=${sessionScope.user.id}">个人资料管理</a></li>
 
                                 <li><a href="/User?action=logout">退出登录</a></li>
                             </ul>
@@ -178,7 +181,7 @@
         request.setAttribute("totalCount", totalCount);
     %>
     <div class="am-u-sm-2 am-text-middle"><h3>
-        <span>网页在线：1人<br>一周更新：${weekCount}首<br>收录歌曲：${totalCount}首<br>四斋蒸鹅心 项目组</span>
+        <span>网页在线：1人<br>一周更新：${weekCount}首<br>收录歌曲：${totalCount}首</span>
     </h3>
     </div>
 
@@ -288,8 +291,10 @@
             <h2>全站动态</h2>
             <ul class="index-news">
                 <c:forEach items="${active}" var="item">
-                    <li class="index-new"><a class="user-link" href="/User?action=userdetail&id=${item.getUserId(item.username)}"><img class="am-circle index-song-avatar"
-                                                                                 src="/img/cirno.png">
+                    <li class="index-new"><a class="user-link"
+                                             href="/User?action=userdetail&id=${item.getUserId(item.username)}"><img
+                            class="am-circle index-song-avatar"
+                            src="/img/cirno.png">
                             ${item.username}</a> ${item.getTimeDifference(item.getPlayTime())}前
                         播放 <a href="/Music?musicId=${item.musicId}">${item.musicName}</a>
                     </li>

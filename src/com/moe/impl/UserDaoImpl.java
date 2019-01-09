@@ -8,6 +8,8 @@ import com.moe.factory.Factory;
 import com.moe.utils.DBUtils;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
@@ -80,8 +82,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean changePassword(User user) {
         try {
-            String sql = "UPDATE user SET password = ? WHERE username = ?";
-            int result = DBUtils.doUpdate(sql, user.getPassword(), user.getUsername());
+            String sql = "UPDATE user SET password = ? WHERE userid = ?";
+            int result = DBUtils.doUpdate(sql, user.getPassword(), user.getId());
             if (result > 0) {
                 return true;
             }
@@ -164,10 +166,10 @@ public class UserDaoImpl implements UserDao {
     public User selectUserSession(int id) {
         User user = null;
         try {
-            String sql = "SELECT userId,username,sex FROM user WHERE userid = ?";
+            String sql = "SELECT userId,username,sex,grade FROM user WHERE userid = ?";
             ResultSet rs = DBUtils.doQuery(sql, id);
             while (rs.next()) {
-                user = new User(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                user = new User(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,8 +182,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean updateUser(User user) {
         try {
-            String sql = "UPDATE user SET username = ? , sex = ? , password = ? WHERE userid = ?";
-            int result = DBUtils.doUpdate(sql, user.getUsername(), user.getSex(), user.getPassword(), user.getId());
+            String sql = "UPDATE user SET username = ? , sex = ? , question = ? , answer = ? WHERE userid = ?";
+            int result = DBUtils.doUpdate(sql, user.getUsername(), user.getSex(), user.getQuestion().getQuestion(), user.getQuestion().getAnswer(), user.getId());
             if (result > 0) {
                 return true;
             }
@@ -251,5 +253,108 @@ public class UserDaoImpl implements UserDao {
             DBUtils.closeAll();
         }
         return id;
+    }
+
+    @Override
+    public List<User> selectUserList(int page, int count) {
+        List<User> list = new ArrayList<User>();
+        try {
+            String sql = "SELECT userId,userName,sex,grade,time FROM user ORDER BY userId LIMIT " + (page - 1) * count + "," + count;
+            ResultSet rs = DBUtils.doQuery(sql);
+            while (rs.next()) {
+                list.add(new User(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getTimestamp(5)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return list;
+    }
+
+    @Override
+    public boolean deleteUser(int userId) {
+        try {
+            String sql = "DELETE FROM discuss WHERE userId = ?";
+            int result = DBUtils.doUpdate(sql, userId);
+            sql = "SELECT listID FROM list WHERE userId = ?";
+            ResultSet rs = DBUtils.doQuery(sql, userId);
+            int listId = -1;
+            while (rs.next()) {
+                listId = rs.getInt(1);
+            }
+            sql = "DELETE FROM listconnect WHERE listId = ?";
+            result += DBUtils.doUpdate(sql, listId);
+            sql = "DELETE FROM list WHERE userId = ?";
+            result += DBUtils.doUpdate(sql, userId);
+            sql = "DELETE FROM login WHERE userId = ?";
+            result += DBUtils.doUpdate(sql, userId);
+
+            sql = "SELECT musicId FROM music WHERE userId = ?";
+            rs = DBUtils.doQuery(sql, userId);
+            int musicId = -1;
+            while (rs.next()) {
+                musicId = rs.getInt(1);
+                sql = "DELETE FROM nplaymusic WHERE musicId = ?";
+                DBUtils.doUpdate(sql, musicId);
+                sql = "DELETE FROM yplaymusic WHERE musicId = ?";
+                DBUtils.doUpdate(sql, musicId);
+                sql = "DELETE FROM music WHERE musicId = ?";
+                DBUtils.doUpdate(sql, musicId);
+            }
+
+            sql = "DELETE FROM secret WHERE userId = ?";
+            result += DBUtils.doUpdate(sql, userId);
+            sql = "DELETE FROM yplaymusic WHERE userId = ?";
+            result += DBUtils.doUpdate(sql, userId);
+            sql = "DELETE FROM notice WHERE userId = ?";
+            result += DBUtils.doUpdate(sql, userId);
+            sql = "DELETE FROM user WHERE userId = ?";
+            result += DBUtils.doUpdate(sql, userId);
+            if (result > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateUserToAdmin(int userId) {
+        try {
+            String sql = "UPDATE user SET grade = 0 WHERE userid = ?";
+            int result = DBUtils.doUpdate(sql, userId);
+            if (result > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return false;
+    }
+
+    @Override
+    public User selectUserInfo(int userId) {
+        User user = new User();
+        try {
+            String sql = "SELECT userId,username,sex,question,answer FROM user WHERE userId = ?";
+            ResultSet rs = DBUtils.doQuery(sql, userId);
+            while (rs.next()) {
+                user.setId(rs.getInt(1));
+                user.setUsername(rs.getString(2));
+                user.setSex(rs.getInt(3));
+                user.setQuestion(new Question(rs.getString(4), rs.getString(5)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll();
+        }
+        return user;
     }
 }
