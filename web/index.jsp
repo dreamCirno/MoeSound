@@ -154,7 +154,7 @@
         <span class="fui-eye"></span>
         <span class="fui-user"></span>
         <span class="fui-photo"></span>
-        <span class="fui-info-circle"></span>
+        <%--<span class="fui-info-circle"></span>--%>
         <span class="fui-cross"></span>
     </div>
 </div>
@@ -209,30 +209,55 @@
     <div class="player-bottom">
         <div class="player-body">
             <div class="player-ctrl l">
-                <button id="prev">
-                    <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/img/i.svg#prev"></use>
-                    </svg>
-                </button>
-                <button id="play" class="play"><span class="playing"><svg><use
-                        xlink:href="/static/img/i.svg#play"></use></svg></span> <span class="pauseing"><svg><use
-                        xlink:href="/static/img/i.svg#pause"></use></svg></span></button>
-                <button id="next">
-                    <svg>
-                        <use xlink:href="/static/img/i.svg#next"></use>
-                    </svg>
-                </button>
+                <%--<button id="prev">--%>
+                <%--<svg>--%>
+                <%--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/img/i.svg#prev"></use>--%>
+                <%--</svg>--%>
+                <%--</button>--%>
+                <%--<button id="play" class="play">--%>
+                    <image id="playButton" src="/img/play.png" onclick="bf()" style="width: 45px;height: 45px"/>
+                    <%--<span class="playing" onclick="bf()"><svg>--%>
+                    <%--<use xlink:href="/static/img/i.svg#play"></use></svg></span>--%>
+                    <%--<span class="pauseing"><svg><use xlink:href="/static/img/i.svg#pause"></use></svg></span>
+                    --%>
+                    <%--</button>--%>
+                <script>
+                    function bf() {
+                        var audio = document.getElementById('myaudio');
+                        if (audio !== null) {
+                            //检测播放是否已暂停.audio.paused 在播放器播放时返回false.
+                            if (audio.paused) {
+                                audio.play();//audio.play();// 这个就是播放
+                                $("#playButton").attr("src", "img/play.png")
+                            } else {
+                                audio.pause();// 这个就是暂停
+                                $("#playButton").attr("src", "img/pause.png")
+                            }
+                            var toggle = true;
+                            // $("#playButton").toggle(function() {
+                            //     $(this).attr("src", "img/biu.png");
+                            // }, function() {
+                            //     $(this).attr("src", "img/cirno.png");
+                            // }).attr("src", "img/biu.png");
+                        }
+                    }
+                </script>
+                <%--<button id="next">--%>
+                <%--<svg>--%>
+                <%--<use xlink:href="/static/img/i.svg#next"></use>--%>
+                <%--</svg>--%>
+                <%--</button>--%>
             </div>
             <div class="player-ctrl r">
-                <button id="mode" mode="while" class="while"><span class="randing"><svg><use
-                        xlink:href="/static/img/i.svg#rand"></use></svg></span> <span class="whileing"><svg><use
-                        xlink:href="/static/img/i.svg#while"></use></svg></span> <span class="oneing"><svg><use
-                        xlink:href="/static/img/i.svg#one"></use></svg></span></button>
-                <button>
-                    <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/img/i.svg#list"></use>
-                    </svg>
-                </button>
+                <%--<button id="mode" mode="while" class="while"><span class="randing"><svg><use--%>
+                <%--xlink:href="/static/img/i.svg#rand"></use></svg></span> <span class="whileing"><svg><use--%>
+                <%--xlink:href="/static/img/i.svg#while"></use></svg></span> <span class="oneing"><svg><use--%>
+                <%--xlink:href="/static/img/i.svg#one"></use></svg></span></button>--%>
+                <%--<button>--%>
+                <%--<svg>--%>
+                <%--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/img/i.svg#list"></use>--%>
+                <%--</svg>--%>
+                <%--</button>--%>
             </div>
             <div class="player-info">
                 <div class="player-cover"><img id="player-cover-img" src="https://web.biu.moe/Public/img/biu.png"
@@ -240,8 +265,8 @@
                 <h2 style="color: rgb(255, 255, 255);">欢迎光临 MoeSound </h2>
                 <h3> 「请在网页里点击歌曲的播放按钮」</h3>
                 <%--<h4>--%>
-                    <%--<span class="level-info">无损</span> <span>44.1kHz</span> <span--%>
-                    <%--style="margin-right: 5px;">16bits</span> 00:00 / 00:00--%>
+                <%--<span class="level-info">无损</span> <span>44.1kHz</span> <span--%>
+                <%--style="margin-right: 5px;">16bits</span> 00:00 / 00:00--%>
                 <%--</h4>--%>
                 <div class="slider">
                     <div class="bar-bottom">
@@ -265,7 +290,9 @@
         </div>
     </div>
 </div>
-
+<%--<script type="text/javascript" src="/static/js/manifest.112acbeafc600fa5f7f7.js"></script>--%>
+<%--<script type="text/javascript" src="/static/js/vendor.de61b8556fead8d60573.js"></script>--%>
+<%--<script type="text/javascript" src="/static/js/app.e1dd4f0f9a131cc3414c.js"></script>--%>
 <%--<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->--%>
 <%--<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>--%>
 <%--<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->--%>

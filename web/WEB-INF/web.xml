@@ -75,4 +75,12 @@
         <servlet-name>ManageServlet</servlet-name>
         <url-pattern>/Manage</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CountServlet</servlet-name>
+    <servlet-class>com.moe.servlet.CountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CountServlet</servlet-name>
+        <url-pattern>/Count</url-pattern>
+    </servlet-mapping>
 </web-app>

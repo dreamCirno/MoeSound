@@ -78,7 +78,7 @@
                         </ul>
                     </li>
 
-                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <!--<li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>-->
                     <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     <c:if test="${sessionScope.user.grade<1}">
                         <li><a href="/User?action=usermanage">用户管理</a></li>
@@ -294,7 +294,7 @@
     </script>
 
     <div class="am-u-sm-12">
-        <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
+        <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
 
 </div>

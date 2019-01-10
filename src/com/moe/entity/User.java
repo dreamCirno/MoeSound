@@ -149,6 +149,10 @@ public class User implements java.io.Serializable {
         this.question = question;
     }
 
+    public boolean checkBan() {
+        return Factory.getUserBanDaoInstance().checkUserBan(id);
+    }
+
     public String getTimeDifference(Timestamp formatTime) {
         String str = "";
         long t1 = 0;

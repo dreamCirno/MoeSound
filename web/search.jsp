@@ -84,7 +84,7 @@
                         </ul>
                     </li>
 
-                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <!--<li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>-->
                     <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     <c:if test="${sessionScope.user.grade<1}">
                         <li><a href="/User?action=usermanage">用户管理</a></li>
@@ -175,8 +175,7 @@
                         <td class="am-text-truncate"><a href="/Music?musicId=${item.id}">${item.name}</a></td>
                         <td class="am-text-truncate">${item.singer}</td>
                         <td>${item.duration}秒</td>
-                        <td><a class="am-icon-play am-text-default" style="cursor:pointer;"
-                               onclick="playOne('${item.path}');" href="###"></a>
+                        <td><a class="am-icon-play am-text-default" style="cursor:pointer;" href="/Count?src='/music${item.path}'&&musicId=${item.id}"></a>
                             <a class="am-icon-plus am-text-default" style="cursor:pointer;" onclick="addOne(3835);"
                                href="###"></a>
                             <a class="am-icon-edit am-text-default" style="cursor:pointer;" href="/Manage?action=select&musicId=${item.id}"></a>

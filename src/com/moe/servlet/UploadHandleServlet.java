@@ -73,8 +73,8 @@ public class UploadHandleServlet extends HttpServlet {
                 return;
             }
 
-            //设置上传单个文件的大小的最大值，目前是设置为1024*1024字节，也就是40MB
-            upload.setFileSizeMax(1024 * 1024 * 40);
+            //设置上传单个文件的大小的最大值，目前是设置为1024*1024字节，也就是50MB
+            upload.setFileSizeMax(1024 * 1024 * 50);
             //设置上传文件总量的最大值，最大值=同时上传的多个文件的大小的最大值的和，目前设置为200MB
             upload.setSizeMax(1024 * 1024 * 200);
             //4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项

@@ -90,7 +90,7 @@
                         </ul>
                     </li>
 
-                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <!--<li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>-->
                     <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     <c:if test="${sessionScope.user.grade<1}">
                         <li><a href="/User?action=usermanage">用户管理</a></li>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </c:if>
-<c:if test="${not empty sessionScope.user}">
+                <c:if test="${not empty sessionScope.user}">
                     <div class="am-topbar-right">
                         <div class="am-dropdown am-topbar-right" id="myAvatar" onmouseover="showAvatarMenu()"
                              data-am-dropdown="">
@@ -161,11 +161,12 @@
                    style="table-layout:fixed;">
                 <thead>
                 <tr>
-                    <th style="width:100px;">用户ID</th>
-                    <th style="width:185px;">用户名称</th>
+                    <th style="width:50px;">用户ID</th>
+                    <th style="width:120px;">用户名称</th>
                     <th style="width:30px;">性别</th>
-                    <th style="width:185px;">注册时间</th>
+                    <th style="width:120px;">注册时间</th>
                     <th style="width:30px;">管理</th>
+                    <th style="width:30px;">状态</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -173,7 +174,7 @@
                     <tr>
                         <td class="am-text-truncate"><a href="/User?action=userdetail&id=${item.id}">
                             <c:if test="${item.grade==0}">
-                            <span class="am-badge am-badge-danger">管理员</span> ${item.id} </a>
+                            <span class="am-badge am-badge-warning">管理员</span> ${item.id} </a>
                             </c:if>
                             <c:if test="${item.grade==1}">
                                 <span class="am-badge am-badge-secondary">普通用户</span> ${item.id} </a>
@@ -201,26 +202,63 @@
                                href="/User?action=getInfo&userId=${item.id}"></a>
                             <a class="am-icon-level-up am-text-default" style="cursor:pointer;"
                                href="/User?action=levelup&userId=${item.id}"></a>
+                            <c:if test="${item.checkBan()==false}">
+                                <a class="am-icon-check am-text-default" style="cursor:pointer;"
+                                   href="/User?action=disban&userId=${item.id}"></a>
+                            </c:if>
+                            <c:if test="${item.checkBan()==true}">
+                                <a class="am-icon-ban am-text-default" style="cursor:pointer;"
+                                   data-am-modal="{target: '#sharebox', closeViaDimmer: 0, width: 450, height: 250}"
+                                   onclick='$("#banId").attr("value",${item.id})' ;></a>
+                            </c:if>
                             <a class="am-icon-remove am-text-default" style="cursor:pointer;"
                                href="/User?action=delete&userId=${item.id}"></a>
+                        </td>
+                        <td>
+                            <c:if test="${item.checkBan()==false}">
+                                <span class="am-badge am-badge-danger">封禁</span>
+                            </c:if>
+                            <c:if test="${item.checkBan()==true}">
+                                <span class="am-badge am-badge-success">正常</span>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
+        <form action="/User?action=ban" method="post">
+            <input id="banId" hidden="hidden" name="banId">
+            <div class="am-modal am-modal-no-btn" tabindex="-1" id="sharebox">
+                <div class="am-modal-dialog">
+                    <div class="am-modal-hd">
+                        <p>封禁用户</p>
+                        <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a>
+                        <p class="am-badge am-badge-danger">封禁天数</p>
+                    </div>
+                    <div class="am-modal-bd">
+                        <input type="text" class="am-form-field" name="banDate"
+                               value="">
+                        <hr>
+                        <input type="submit" class="am-btn am-btn-primary am-btn-sm" value="封禁"/>
+                        <%--<a class="am-btn am-btn-primary am-btn-sm" target="_self" href=""><i--%>
+                        <%--class="am-icon-ban"></i> 封禁 </a>--%>
+                    </div>
+                </div>
+            </div>
+        </form>
         <%--<div>--%>
-            <%--<ul class="am-pagination">--%>
-                <%--共7首--%>
-                <%--<li class="am-disabled"><a href="###">上一页</a></li>--%>
-                <%--<li class="am-disabled"><a href="###">下一页</a></li>--%>
-            <%--</ul>--%>
+        <%--<ul class="am-pagination">--%>
+        <%--共7首--%>
+        <%--<li class="am-disabled"><a href="###">上一页</a></li>--%>
+        <%--<li class="am-disabled"><a href="###">下一页</a></li>--%>
+        <%--</ul>--%>
         <%--</div>--%>
     </div>
 
 
     <div class="am-u-sm-12">
-        <h6>© 2013-2019 Biu.Moe 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
+        <h6>© 2018-2019 MoeSound 分享高音质 ACG 音乐 <a href="/Index/about">关于本站</a></h6>
     </div>
 
 </div>

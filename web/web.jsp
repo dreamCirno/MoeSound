@@ -92,7 +92,7 @@
                         </ul>
                     </li>
 
-                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <!--<li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>-->
                     <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     <c:if test="${sessionScope.user.grade<1}">
                         <li><a href="/User?action=usermanage">用户管理</a></li>
@@ -209,7 +209,7 @@
                                 <div class="recom-ctrl">
                                         <%--<button class="fm-play" onclick="playOne('/music/${item.path}');return false;">播放--%>
                                         <%--</button>--%>
-                                    <a class="fm-play" onclick="playOne('/music/${item.path}');return false;" href="#"
+                                    <a class="fm-play" href="/Count?src='/music${item.path}'&&musicId=${item.id}"
                                        target="_self">播放</a>
                                     <a class="fm-add" href="/List?action=mark&musicid=${item.id}" target="_self">收藏</a>
                                 </div>
@@ -240,14 +240,17 @@
                         </a>
                         <div class="recom-info">
                             <div class="recom-ctrl">
-                                <a href="###" class="am-icon-play index-song-button"
-                                   onclick="playOne('/music/${item.path}');"></a>
+                                    <%--<a href="" class="am-icon-play index-song-button"--%>
+                                    <%--onclick="playOne('/music/${item.path}');"></a>--%>
+                                <a href="/Count?src='/music${item.path}'&&musicId=${item.id}"
+                                   class="am-icon-play index-song-button"></a>
                                 <a href="/List?action=mark&musicid=${item.id}"
                                    class="am-icon-plus index-song-button"></a>
                             </div>
                             <span class="recom-time">${item.getTimeDifference(item.getUploadTime())}前</span>
-                            <a class="user-link" href="/u118"><img class="am-circle index-song-avatar"
-                                                                   src="/img/cirno.png"></a>
+                            <a class="user-link" href="/User?action=userdetail&id=${item.userId}"><img
+                                    class="am-circle index-song-avatar"
+                                    src="/img/cirno.png"></a>
                         </div>
                     </li>
                 </c:forEach>
@@ -270,14 +273,15 @@
                         </a>
                         <div class="recom-info">
                             <div class="recom-ctrl">
-                                <a href="###" class="am-icon-play index-song-button"
-                                   onclick="playOne('/music/${item.path}');"></a>
+                                <a href="/Count?src='/music${item.path}'&&musicId=${item.id}"
+                                   class="am-icon-play index-song-button"></a>
                                 <a href="/List?action=mark&musicid=${item.id}"
                                    class="am-icon-plus index-song-button"></a>
                             </div>
                             <span class="recom-time"></span>
-                            <a class="user-link" href="/u30"><img class="am-circle index-song-avatar"
-                                                                  src="/img/cirno.png"></a>
+                            <a class="user-link" href="/User?action=userdetail&id=${item.userId}"><img
+                                    class="am-circle index-song-avatar"
+                                    src="/img/cirno.png"></a>
                         </div>
                     </li>
                 </c:forEach>

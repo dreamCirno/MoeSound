@@ -82,7 +82,7 @@
                         </ul>
                     </li>
 
-                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <!--<li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>-->
                     <li id="nav-upload" class="am-active"><a href="/load.jsp">上传音乐</a></li>
                 </ul>
 

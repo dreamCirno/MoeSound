@@ -23,4 +23,8 @@ public class Factory {
     public static ClassifyDao getClassifyDaoInstance() {
         return new ClassifyDaoImpl();
     }
+
+    public static UserBanDao getUserBanDaoInstance() {
+        return new UserBanImpl();
+    }
 }

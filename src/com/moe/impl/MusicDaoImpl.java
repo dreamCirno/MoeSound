@@ -274,7 +274,7 @@ public class MusicDaoImpl implements MusicDao {
 
     @Override
     public int selectUserPlayCount(int id) {
-        int count = -1;
+        int count = 0;
         try {
             String sql = "SELECT COUNT(*) FROM yplaymusic WHERE MusicID = ?";
             ResultSet rs = DBUtils.doQuery(sql, id);
@@ -291,7 +291,7 @@ public class MusicDaoImpl implements MusicDao {
 
     @Override
     public int selectGuestPlayCount(int id) {
-        int count = -1;
+        int count = 0;
         try {
             String sql = "SELECT count FROM nplaymusic WHERE musicID= ?";
             ResultSet rs = DBUtils.doQuery(sql, id);

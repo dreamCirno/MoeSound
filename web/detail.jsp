@@ -47,14 +47,6 @@
                 Music music  = (Music)request.getAttribute("music");
                 int id = music.getId();
                 MusicDaoImpl musicDao = new MusicDaoImpl();
-                if(request.getSession().getAttribute("user")==null)
-                {
-                    musicDao.updatePlayCount(id);
-                }
-                else{
-                    User user  = (User) request.getSession().getAttribute("user");
-                    musicDao.updatePlayCount(id,user.getId());
-                }
             %>
             $("#myaudio", parent.document).attr('src', src);
             $("#myaudio", parent.document)[0].play();
@@ -109,7 +101,7 @@
                         </ul>
                     </li>
 
-                    <li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>
+                    <!--<li id="nav-fm"><a href="https://biu.moe/fm" target="_blank">弹幕电台</a></li>-->
                     <li id="nav-upload"><a href="/load.jsp">上传音乐</a></li>
                     <c:if test="${sessionScope.user.grade<1}">
                         <li><a href="/User?action=usermanage">用户管理</a></li>
@@ -191,10 +183,11 @@
                 </div>
                 <div class="am-text-lg">${requestScope.music.singer}</div>
                 <div class="info-bottom">
-                    <button class="am-btn am-btn-primary am-btn-sm"
-                            onclick="playOne('/music/${requestScope.music.path}');"><i
-                            class="am-icon-play"></i> 播放
-                    </button>
+                    <a class="am-btn am-btn-primary am-btn-sm" href="/Count?src='/music${music.path}'&&musicId=${music.id}"><i class="am-icon-play"></i> 播放</a>
+                    <%--<button class="am-btn am-btn-primary am-btn-sm"--%>
+                            <%--onclick="playOne('/music/${requestScope.music.path}');"><i--%>
+                            <%--class="am-icon-play"></i> 播放--%>
+                    <%--</button>--%>
                     <%--<a class="am-btn am-btn-primary am-btn-sm" href="https://biu.moe/fm#!6051" target="_blank"><i--%>
                     <%--class="am-icon-music"></i> 弹幕</a>--%>
                     <a class="am-btn am-btn-primary am-btn-sm" href="/List?action=mark&musicid=${requestScope.music.id}"
@@ -212,10 +205,6 @@
                     <%--<button class="am-btn am-btn-primary am-btn-sm" onclick="location.href='/Upload/fix/sid/6051'"--%>
                     <%--data-am-popover="{content: '上传更高音质的源文件或者修复有问题的源文件', trigger: 'hover focus'}"><i--%>
                     <%--class="am-icon-file-sound-o"></i> 上传--%>
-                    <%--</button>--%>
-                    <%--<button class="am-btn am-btn-primary am-btn-sm"--%>
-                    <%--data-am-modal="{target: '#sharebox', closeViaDimmer: 0, width: 450, height: 250}"><i--%>
-                    <%--class="am-icon-share"></i> 分享--%>
                     <%--</button>--%>
                 </div>
             </div>
@@ -340,24 +329,6 @@
                 これから始まる日々を<br>[03:34.81]心にフタをしないで あるがまま歩いていこう<br>[03:42.12]繰り返す日々の中で 見つけてゆく宝物<br>[03:49.43]いつの日も胸に抱いて
                 大切な輝く笑顔に<br>[03:59.13]<br>[04:00.28]何度でも会いに行くよ<br>[04:07.35]<br>[04:13.32]Lyrics Contents Copyright
                 Reserved for O.L.W.<br>[04:14.85]<br>[04:15.42]終わり<br>[04:16.08]<br></div>
-        </div>
-    </div>
-
-    <div class="am-modal am-modal-no-btn" tabindex="-1" id="sharebox">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">Iframe 分享到外部网站
-                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a>
-            </div>
-            <div class="am-modal-bd">
-                <input type="text" readonly="" class="am-form-field"
-                       value="<iframe src=&quot;http://biu.moe/Api/shareBox?sid=6051&amp;autoPlay=0&quot; frameborder=&quot;0&quot; height=&quot;50&quot;></iframe>">
-                <p>
-                    ※ 宽度自适应，autoPlay 参数可设置是否自动播放<br>※ 目前只支持 HTTP 引用
-                </p>
-                <hr>
-                <a class="am-btn am-btn-primary am-btn-sm" target="_blank" href="/Api/appShare/sid/6051"><i
-                        class="am-icon-weibo"></i> 分享到微博</a>
-            </div>
         </div>
     </div>
     <!--div data-role="dialog" id="shareBox" class="padding10" data-close-button="true">
